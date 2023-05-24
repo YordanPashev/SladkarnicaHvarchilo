@@ -6,11 +6,11 @@
     using System.Threading;
     using System.Threading.Tasks;
 
-    using SladkarnicaHvarchilo.Data.Common.Models;
-    using SladkarnicaHvarchilo.Data.Models;
-
     using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
     using Microsoft.EntityFrameworkCore;
+
+    using SladkarnicaHvarchilo.Data.Common.Models;
+    using SladkarnicaHvarchilo.Data.Models;
 
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser, ApplicationRole, string>
     {
@@ -23,6 +23,8 @@
             : base(options)
         {
         }
+
+        public DbSet<Cake> Cakes { get; set; }
 
         public DbSet<Setting> Settings { get; set; }
 

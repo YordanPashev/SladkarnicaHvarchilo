@@ -1,4 +1,7 @@
-﻿namespace SladkarnicaHvarchilo.Web
+using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
+using SladkarnicaHvarchilo.Data;
+namespace SladkarnicaHvarchilo.Web
 {
     using System.Reflection;
 
