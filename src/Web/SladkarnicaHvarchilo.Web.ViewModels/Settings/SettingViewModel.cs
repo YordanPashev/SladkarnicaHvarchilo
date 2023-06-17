@@ -1,9 +1,9 @@
 ﻿namespace SladkarnicaHvarchilo.Web.ViewModels.Settings
 {
+    using AutoMapper;
+
     using SladkarnicaHvarchilo.Data.Models;
     using SladkarnicaHvarchilo.Services.Mapping;
-
-    using AutoMapper;
 
     public class SettingViewModel : IMapFrom<Setting>, IHaveCustomMappings
     {

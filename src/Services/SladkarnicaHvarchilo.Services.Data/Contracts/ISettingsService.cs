@@ -1,4 +1,4 @@
-﻿namespace SladkarnicaHvarchilo.Services.Data
+﻿namespace SladkarnicaHvarchilo.Services.Data.Contracts
 {
     using System.Collections.Generic;
 

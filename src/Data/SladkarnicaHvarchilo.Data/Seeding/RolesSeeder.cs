@@ -4,11 +4,11 @@
     using System.Linq;
     using System.Threading.Tasks;
 
-    using SladkarnicaHvarchilo.Common;
-    using SladkarnicaHvarchilo.Data.Models;
-
     using Microsoft.AspNetCore.Identity;
     using Microsoft.Extensions.DependencyInjection;
+
+    using SladkarnicaHvarchilo.Common;
+    using SladkarnicaHvarchilo.Data.Models;
 
     internal class RolesSeeder : ISeeder
     {

@@ -21,6 +21,7 @@
   <ItemGroup>
     <ProjectReference Include="..\..\Data\SladkarnicaHvarchilo.Data.Common\SladkarnicaHvarchilo.Data.Common.csproj" />
     <ProjectReference Include="..\..\Data\SladkarnicaHvarchilo.Data.Models\SladkarnicaHvarchilo.Data.Models.csproj" />
+    <ProjectReference Include="..\..\SladkarnicaHvarchilo.Common\SladkarnicaHvarchilo.Common.csproj" />
     <ProjectReference Include="..\SladkarnicaHvarchilo.Services.Mapping\SladkarnicaHvarchilo.Services.Mapping.csproj" />
   </ItemGroup>
 

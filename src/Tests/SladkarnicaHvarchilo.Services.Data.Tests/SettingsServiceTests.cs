@@ -4,15 +4,14 @@
     using System.Linq;
     using System.Threading.Tasks;
 
+    using Microsoft.EntityFrameworkCore;
+    using Moq;
+
     using SladkarnicaHvarchilo.Data;
     using SladkarnicaHvarchilo.Data.Common.Repositories;
     using SladkarnicaHvarchilo.Data.Models;
     using SladkarnicaHvarchilo.Data.Repositories;
-
-    using Microsoft.EntityFrameworkCore;
-
-    using Moq;
-
+    using SladkarnicaHvarchilo.Services.Data.Contracts;
     using Xunit;
 
     public class SettingsServiceTests

@@ -1,20 +1,6 @@
-using Microsoft.AspNetCore.Identity;
-using Microsoft.EntityFrameworkCore;
-using SladkarnicaHvarchilo.Data;
 namespace SladkarnicaHvarchilo.Web
 {
     using System.Reflection;
-
-    using SladkarnicaHvarchilo.Data;
-    using SladkarnicaHvarchilo.Data.Common;
-    using SladkarnicaHvarchilo.Data.Common.Repositories;
-    using SladkarnicaHvarchilo.Data.Models;
-    using SladkarnicaHvarchilo.Data.Repositories;
-    using SladkarnicaHvarchilo.Data.Seeding;
-    using SladkarnicaHvarchilo.Services.Data;
-    using SladkarnicaHvarchilo.Services.Mapping;
-    using SladkarnicaHvarchilo.Services.Messaging;
-    using SladkarnicaHvarchilo.Web.ViewModels;
 
     using Microsoft.AspNetCore.Builder;
     using Microsoft.AspNetCore.Http;
@@ -23,6 +9,18 @@ namespace SladkarnicaHvarchilo.Web
     using Microsoft.Extensions.Configuration;
     using Microsoft.Extensions.DependencyInjection;
     using Microsoft.Extensions.Hosting;
+
+    using SladkarnicaHvarchilo.Data;
+    using SladkarnicaHvarchilo.Data.Common;
+    using SladkarnicaHvarchilo.Data.Common.Repositories;
+    using SladkarnicaHvarchilo.Data.Models;
+    using SladkarnicaHvarchilo.Data.Repositories;
+    using SladkarnicaHvarchilo.Data.Seeding;
+    using SladkarnicaHvarchilo.Services.Data;
+    using SladkarnicaHvarchilo.Services.Data.Contracts;
+    using SladkarnicaHvarchilo.Services.Mapping;
+    using SladkarnicaHvarchilo.Services.Messaging;
+    using SladkarnicaHvarchilo.Web.ViewModels;
 
     public class Program
     {
@@ -68,6 +66,7 @@ namespace SladkarnicaHvarchilo.Web
             // Application services
             services.AddTransient<IEmailSender, NullMessageSender>();
             services.AddTransient<ISettingsService, SettingsService>();
+            services.AddTransient<ICakesService, CakesService>();
         }
 
         private static void Configure(WebApplication app)

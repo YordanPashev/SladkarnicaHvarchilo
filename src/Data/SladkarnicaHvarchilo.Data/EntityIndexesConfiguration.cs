@@ -2,9 +2,9 @@
 {
     using System.Linq;
 
-    using SladkarnicaHvarchilo.Data.Common.Models;
-
     using Microsoft.EntityFrameworkCore;
+
+    using SladkarnicaHvarchilo.Data.Common.Models;
 
     internal static class EntityIndexesConfiguration
     {

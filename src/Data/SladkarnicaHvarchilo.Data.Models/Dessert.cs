@@ -4,12 +4,11 @@
     using System.ComponentModel.DataAnnotations;
 
     using SladkarnicaHvarchilo.Common;
-    using SladkarnicaHvarchilo.Data.Common.Models;
     using SladkarnicaHvarchilo.Data.Models.Enums;
 
-    public class Cake : BaseDeletableModel<int>
+    public class Dessert
     {
-        public Cake() => this.Id = Guid.NewGuid().ToString();
+        public Dessert() => this.Id = Guid.NewGuid().ToString();
 
         [Key]
         [Required]
@@ -26,9 +25,6 @@
         [Required]
         [MaxLength(GlobalConstants.DessertsValidationConstants.IngredientsMaxLength)]
         public string Ingredients { get; set; }
-
-        [Required]
-        public int Pieces { get; set; }
 
         [MaxLength(GlobalConstants.DessertsValidationConstants.AllergensMaxLength)]
         public string Allergens { get; set; }

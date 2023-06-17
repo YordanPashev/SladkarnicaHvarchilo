@@ -14,38 +14,40 @@ namespace SladkarnicaHvarchilo.Web.Areas.Identity.Pages.Account
     using Microsoft.AspNetCore.Mvc.RazorPages;
     using Microsoft.Extensions.Logging;
 
+    using SladkarnicaHvarchilo.Data.Models;
+
     public class LoginModel : PageModel
     {
-        private readonly SignInManager<IdentityUser> signInManager;
+        private readonly SignInManager<ApplicationUser> signInManager;
         private readonly ILogger<LoginModel> logger;
 
-        public LoginModel(SignInManager<IdentityUser> signInManager, ILogger<LoginModel> logger)
+        public LoginModel(SignInManager<ApplicationUser> signInManager, ILogger<LoginModel> logger)
         {
             this.signInManager = signInManager;
             this.logger = logger;
         }
 
         /// <summary>
-        ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
+        ///     Gets or sets this API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
         ///     directly from your code. This API may change or be removed in future releases.
         /// </summary>
         [BindProperty]
         public InputModel Input { get; set; }
 
         /// <summary>
-        ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
+        ///     Gets or sets this API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
         ///     directly from your code. This API may change or be removed in future releases.
         /// </summary>
         public IList<AuthenticationScheme> ExternalLogins { get; set; }
 
         /// <summary>
-        ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
+        ///     Gets or sets this API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
         ///     directly from your code. This API may change or be removed in future releases.
         /// </summary>
         public string ReturnUrl { get; set; }
 
         /// <summary>
-        ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
+        ///     Gets or sets this API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
         ///     directly from your code. This API may change or be removed in future releases.
         /// </summary>
         [TempData]
@@ -58,7 +60,7 @@ namespace SladkarnicaHvarchilo.Web.Areas.Identity.Pages.Account
         public class InputModel
         {
             /// <summary>
-            ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
+            ///     Gets or sets this API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
             ///     directly from your code. This API may change or be removed in future releases.
             /// </summary>
             [Required]
@@ -66,7 +68,7 @@ namespace SladkarnicaHvarchilo.Web.Areas.Identity.Pages.Account
             public string Email { get; set; }
 
             /// <summary>
-            ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
+            ///     Gets or sets this API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
             ///     directly from your code. This API may change or be removed in future releases.
             /// </summary>
             [Required]
@@ -74,7 +76,7 @@ namespace SladkarnicaHvarchilo.Web.Areas.Identity.Pages.Account
             public string Password { get; set; }
 
             /// <summary>
-            ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
+            ///     Gets or sets a value indicating whether this API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
             ///     directly from your code. This API may change or be removed in future releases.
             /// </summary>
             [Display(Name = "Remember me?")]
@@ -83,55 +85,57 @@ namespace SladkarnicaHvarchilo.Web.Areas.Identity.Pages.Account
 
         public async Task OnGetAsync(string returnUrl = null)
         {
-            if (!string.IsNullOrEmpty(ErrorMessage))
+            if (!string.IsNullOrEmpty(this.ErrorMessage))
             {
-                ModelState.AddModelError(string.Empty, this.ErrorMessage);
+                this.ModelState.AddModelError(string.Empty, this.ErrorMessage);
             }
 
-            returnUrl ??= Url.Content("~/");
+            returnUrl ??= this.Url.Content("~/");
 
             // Clear the existing external cookie to ensure a clean login process
-            await HttpContext.SignOutAsync(IdentityConstants.ExternalScheme);
+            await this.HttpContext.SignOutAsync(IdentityConstants.ExternalScheme);
 
-            ExternalLogins = (await signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
+            this.ExternalLogins = (await this.signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
 
-            ReturnUrl = returnUrl;
+            this.ReturnUrl = returnUrl;
         }
 
         public async Task<IActionResult> OnPostAsync(string returnUrl = null)
         {
-            returnUrl ??= Url.Content("~/");
+            returnUrl ??= this.Url.Content("~/");
 
-            ExternalLogins = (await signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
+            this.ExternalLogins = (await this.signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
 
-            if (ModelState.IsValid)
+            if (this.ModelState.IsValid)
             {
                 // This doesn't count login failures towards account lockout
                 // To enable password failures to trigger account lockout, set lockoutOnFailure: true
-                var result = await signInManager.PasswordSignInAsync(Input.Email, Input.Password, Input.RememberMe, lockoutOnFailure: false);
+                var result = await this.signInManager.PasswordSignInAsync(this.Input.Email, this.Input.Password, this.Input.RememberMe, lockoutOnFailure: false);
                 if (result.Succeeded)
                 {
-                    logger.LogInformation("User logged in.");
-                    return LocalRedirect(returnUrl);
+                    this.logger.LogInformation("User logged in.");
+                    return this.LocalRedirect(returnUrl);
                 }
+
                 if (result.RequiresTwoFactor)
                 {
-                    return RedirectToPage("./LoginWith2fa", new { ReturnUrl = returnUrl, RememberMe = Input.RememberMe });
+                    return this.RedirectToPage("./LoginWith2fa", new { ReturnUrl = returnUrl, RememberMe = this.Input.RememberMe });
                 }
+
                 if (result.IsLockedOut)
                 {
-                    logger.LogWarning("User account locked out.");
-                    return RedirectToPage("./Lockout");
+                    this.logger.LogWarning("User account locked out.");
+                    return this.RedirectToPage("./Lockout");
                 }
                 else
                 {
-                    ModelState.AddModelError(string.Empty, "Invalid login attempt.");
-                    return Page();
+                    this.ModelState.AddModelError(string.Empty, "Invalid login attempt.");
+                    return this.Page();
                 }
             }
 
             // If we got this far, something failed, redisplay form
-            return Page();
+            return this.Page();
         }
     }
 }

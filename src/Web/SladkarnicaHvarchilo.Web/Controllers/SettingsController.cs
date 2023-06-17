@@ -5,10 +5,10 @@
 
     using SladkarnicaHvarchilo.Data.Common.Repositories;
     using SladkarnicaHvarchilo.Data.Models;
-    using SladkarnicaHvarchilo.Services.Data;
     using SladkarnicaHvarchilo.Web.ViewModels.Settings;
 
     using Microsoft.AspNetCore.Mvc;
+    using SladkarnicaHvarchilo.Services.Data.Contracts;
 
     public class SettingsController : BaseController
     {

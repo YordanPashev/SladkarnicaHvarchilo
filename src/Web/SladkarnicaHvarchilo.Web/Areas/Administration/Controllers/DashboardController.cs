@@ -1,9 +1,9 @@
 ﻿namespace SladkarnicaHvarchilo.Web.Areas.Administration.Controllers
 {
-    using SladkarnicaHvarchilo.Services.Data;
     using SladkarnicaHvarchilo.Web.ViewModels.Administration.Dashboard;
 
     using Microsoft.AspNetCore.Mvc;
+    using SladkarnicaHvarchilo.Services.Data.Contracts;
 
     public class DashboardController : AdministrationController
     {

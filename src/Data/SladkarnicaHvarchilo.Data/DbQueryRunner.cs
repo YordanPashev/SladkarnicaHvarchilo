@@ -3,9 +3,9 @@
     using System;
     using System.Threading.Tasks;
 
-    using SladkarnicaHvarchilo.Data.Common;
-
     using Microsoft.EntityFrameworkCore;
+
+    using SladkarnicaHvarchilo.Data.Common;
 
     public class DbQueryRunner : IDbQueryRunner
     {

@@ -1,8 +1,9 @@
 ﻿namespace SladkarnicaHvarchilo.Data.Configurations
 {
-    using SladkarnicaHvarchilo.Data.Models;
     using Microsoft.EntityFrameworkCore;
     using Microsoft.EntityFrameworkCore.Metadata.Builders;
+
+    using SladkarnicaHvarchilo.Data.Models;
 
     public class ApplicationUserConfiguration : IEntityTypeConfiguration<ApplicationUser>
     {

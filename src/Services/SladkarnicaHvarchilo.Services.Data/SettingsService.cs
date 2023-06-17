@@ -5,6 +5,7 @@
 
     using SladkarnicaHvarchilo.Data.Common.Repositories;
     using SladkarnicaHvarchilo.Data.Models;
+    using SladkarnicaHvarchilo.Services.Data.Contracts;
     using SladkarnicaHvarchilo.Services.Mapping;
 
     public class SettingsService : ISettingsService

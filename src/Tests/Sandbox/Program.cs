@@ -5,6 +5,12 @@
     using System.IO;
     using System.Threading.Tasks;
 
+
+    using Microsoft.EntityFrameworkCore;
+    using Microsoft.Extensions.Configuration;
+    using Microsoft.Extensions.DependencyInjection;
+    using Microsoft.Extensions.Logging;
+
     using SladkarnicaHvarchilo.Data;
     using SladkarnicaHvarchilo.Data.Common;
     using SladkarnicaHvarchilo.Data.Common.Repositories;
@@ -12,14 +18,10 @@
     using SladkarnicaHvarchilo.Data.Repositories;
     using SladkarnicaHvarchilo.Data.Seeding;
     using SladkarnicaHvarchilo.Services.Data;
+    using SladkarnicaHvarchilo.Services.Data.Contracts;
     using SladkarnicaHvarchilo.Services.Messaging;
 
     using CommandLine;
-
-    using Microsoft.EntityFrameworkCore;
-    using Microsoft.Extensions.Configuration;
-    using Microsoft.Extensions.DependencyInjection;
-    using Microsoft.Extensions.Logging;
 
     public static class Program
     {
