@@ -2,9 +2,9 @@
 {
     using System.Diagnostics;
 
-    using SladkarnicaHvarchilo.Web.ViewModels;
-
     using Microsoft.AspNetCore.Mvc;
+
+    using SladkarnicaHvarchilo.Web.ViewModels;
 
     public class HomeController : BaseController
     {

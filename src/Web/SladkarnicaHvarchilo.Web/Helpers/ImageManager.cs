@@ -7,14 +7,14 @@
 
     public class ImageManager
     {
-        public async Task SaveImageToFile(string imagesFolderPath, string imagePath, IFormFile imageFile)
+        public async Task SaveImageToFileAsync(IFormFile imageFile)
         {
-            if (Directory.Exists(imagesFolderPath))
+            string imagesFolderPath = Path.GetFullPath(Path.Combine(Directory.GetCurrentDirectory(), @"wwwroot\img\cakes\"));
+            string imagePath = imagesFolderPath + imageFile.FileName;
+
+            using (Stream fileStream = new FileStream(imagePath, FileMode.Create))
             {
-                using (Stream fileStream = new FileStream(imagePath, FileMode.Create))
-                {
-                    await imageFile.CopyToAsync(fileStream);
-                }
+                await imageFile.CopyToAsync(fileStream);
             }
         }
     }

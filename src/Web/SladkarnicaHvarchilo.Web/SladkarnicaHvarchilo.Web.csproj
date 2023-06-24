@@ -9,6 +9,10 @@
   <PropertyGroup>
     <CodeAnalysisRuleSet>..\..\Rules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
+
+  <ItemGroup>
+    <Content Remove="Areas\Administration\Views\CakeManager\AllCakes.cshtml" />
+  </ItemGroup>
 	<ItemGroup>
 		<AdditionalFiles Include="..\..\stylecop.json" />
 	</ItemGroup>

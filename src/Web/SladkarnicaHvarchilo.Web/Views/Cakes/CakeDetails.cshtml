@@ -1,0 +1,58 @@
+﻿@using System.Text
+@using SladkarnicaHvarchilo.Common;
+@using SladkarnicaHvarchilo.Web.ViewModels.Cakes;
+
+@model CakeDetailsViewModel
+
+@{
+    this.ViewData["Title"] = $"{this.Model.Name}";
+}
+
+@if (this.ViewBag.UserMessage != null)
+{
+    <h1 class="userInfoMessage">
+        <i>@this.ViewBag.UserMessage</i>
+    </h1>
+    <br />
+}
+
+<h1 style="text-align:center"><strong>@this.ViewData["Title"]</strong></h1>
+<div class="d-flex justify-content-center container mt-3">
+    <div class="container text-center" style="background-color: gray; border: 2px solid; border-color: transparent; border-radius: 15px">
+        <i class="fa fa-apple"></i>
+        <div class="about-product text-center mt-2 mb-2"><img alt="No image" src="~/img/cakes/@(this.Model.ImageFileName)" width="1000"></div>
+        <div style="font-size: 20px"><strong>Описание:</strong> <pre>@this.Model.Description</pre></div>
+        <div style="font-size: 20px"><strong>Съставки:</strong> @this.Model.Ingredients</div>
+        <div style="font-size: 20px"><strong>Брой Парчета:</strong> @this.Model.Pieces</div>
+        @if (!string.IsNullOrEmpty(this.Model.Allergens))
+        {
+            <div style="font-size: 20px"><strong>Алергени:</strong> @this.Model.Allergens</div>
+        }
+        <div class="mt-2" style="font-size: 20px"><strong>Цена: <text style="color: red">@Math.Round(this.Model.Price, 2) лв.</text></strong></div>
+
+        @if (this.User.IsInRole(GlobalConstants.AdministratorRoleName))
+        {
+            <p class="d-flex justify-content-center container mt-3">
+                <div class="mb-2" style="font-size: 24px">
+                    <i><strong>Администраторска секция</strong></i>
+                </div>
+                <div class="container text-center" style="width: 40%; backdrop-filter: blur(100px); border: 2px solid; border-color: white; border-radius: 15px">
+                    <i class="fa fa-apple"></i>
+                    <div>
+                        <p style="font-size: 20px"><strong>Тортата е добавена на:</strong> @this.Model.CreatedOn.ToString(GlobalConstants.AdministrationSettingsDateTimeFormat)</p>
+                        @if (this.Model.ModifiedOn != null)
+                        {
+                            <p style="font-size: 20px"><i><strong>Последни промени са направени на:</strong></i> @this.Model.ModifiedOn.Value.ToString(GlobalConstants.AdministrationSettingsDateTimeFormat)</p>
+                        }
+                        <br />
+                    </div>
+                    <p class="d-grid gap-2 mx-auto">
+                        <a class="btn btn-secondary" style="font-size: 16pt;" asp-area="Administration" asp-controller="CakeManager" asp-action="EditCake" asp-route-id="@this.Model.Id">Редактирай</a>
+                        <a class="btn btn-danger" style="font-size: 16pt;" onclick="return confirm('Сигурни ли сте, че искате да премахнете торта @this.Model.Name ?');" asp-area="Administration" asp-controller="CakeManager" asp-action="DeleteCake" asp-route-id="@this.Model.Id">Премахни</a>
+                        <input class="btn btn-dark" style="font-size: 16pt;" value="Назад" onclick="history.back()">
+                    </p>
+                </div>
+            </p>
+        }
+    </div>
+</div>

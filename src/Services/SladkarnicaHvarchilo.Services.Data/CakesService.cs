@@ -28,18 +28,53 @@
             => await this.cakeRepo.AllAsNoTracking()
                             .AnyAsync(c => c.Name == cakeName);
 
-        public IQueryable<Cake> GettAllCakesInSale(string orderCriteria)
+        public bool CheckIfCakeHasBeenEdited(Cake cakeBeforeEdit, Cake userIputCakeData)
         {
-            IQueryable<Cake> cakes = this.cakeRepo.AllAsNoTracking();
-
-            if (string.IsNullOrEmpty(orderCriteria))
+            if (cakeBeforeEdit.Name == userIputCakeData.Name && cakeBeforeEdit.Description == userIputCakeData.Description &&
+                cakeBeforeEdit.Ingredients == userIputCakeData.Ingredients && cakeBeforeEdit.Pieces == userIputCakeData.Pieces &&
+                cakeBeforeEdit.Allergens == userIputCakeData.Allergens && cakeBeforeEdit.Price == userIputCakeData.Price &&
+                cakeBeforeEdit.ImageFileName == userIputCakeData.ImageFileName)
             {
-                return cakes.OrderBy(c => c.Name);
+                return false;
             }
 
+            return true;
+        }
+
+        public async Task DeteleCake(Cake cake)
+        {
+            this.cakeRepo.Delete(cake);
+
+            await this.cakeRepo.SaveChangesAsync();
+        }
+
+        public IQueryable<Cake> GetAllCakesInSale(string orderCriteria)
+        {
+            IQueryable<Cake> cakes = this.cakeRepo.AllAsNoTracking();
             IQueryable<Cake> orderedCakes = this.OrderByCriteria(orderCriteria, cakes);
 
             return orderedCakes;
+        }
+
+        public async Task<Cake> GetCakeByIdAsync(string id)
+            => await this.cakeRepo.AllAsNoTracking()
+                            .FirstOrDefaultAsync(c => c.Id == id);
+
+        public async Task<Cake> GetCakeByIdForEditAsync(string id)
+            => await this.cakeRepo.All()
+                            .FirstOrDefaultAsync(c => c.Id == id);
+
+        public async Task UpdateCakeDataAsync(Cake cakeBeforeEdit, Cake userIputCakeData)
+        {
+            cakeBeforeEdit.Name = userIputCakeData.Name;
+            cakeBeforeEdit.Description = userIputCakeData.Description;
+            cakeBeforeEdit.Ingredients = userIputCakeData.Ingredients;
+            cakeBeforeEdit.Pieces = userIputCakeData.Pieces;
+            cakeBeforeEdit.Allergens = userIputCakeData.Allergens;
+            cakeBeforeEdit.Price = userIputCakeData.Price;
+            cakeBeforeEdit.ImageFileName = userIputCakeData.ImageFileName;
+
+            await this.cakeRepo.SaveChangesAsync();
         }
 
         private IQueryable<Cake> OrderByCriteria(string orderCriteria, IQueryable<Cake> cakes)

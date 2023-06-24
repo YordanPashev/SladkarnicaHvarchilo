@@ -11,13 +11,9 @@
     using SladkarnicaHvarchilo.Data.Models.Enums;
     using SladkarnicaHvarchilo.Services.Mapping;
 
-    public class CreateCakeViewModel : IMapTo<Cake>
+    public class EditCakeViewModel : IMapFrom<Cake>, IMapTo<Cake>
     {
-        public CreateCakeViewModel()
-        {
-            this.Id = Guid.NewGuid().ToString();
-            this.Category = FoodTastingCategory.Sweet;
-        }
+        public EditCakeViewModel() => this.Category = FoodTastingCategory.Sweet;
 
         [Required]
         public string Id { get; set; }
@@ -52,6 +48,7 @@
         [NotMapped]
         public IFormFile ImageFile { get; set; }
 
+        [Required]
         [MinLength(GlobalConstants.DessertsValidationConstants.ImageFileDirectoryPathMinLength)]
         [MaxLength(GlobalConstants.DessertsValidationConstants.ImageFileDirectoryPathMaxLength)]
         public string ImageFileName { get; set; }

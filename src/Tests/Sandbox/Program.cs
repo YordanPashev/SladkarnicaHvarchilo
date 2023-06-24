@@ -5,7 +5,7 @@
     using System.IO;
     using System.Threading.Tasks;
 
-
+    using CommandLine;
     using Microsoft.EntityFrameworkCore;
     using Microsoft.Extensions.Configuration;
     using Microsoft.Extensions.DependencyInjection;
@@ -20,8 +20,6 @@
     using SladkarnicaHvarchilo.Services.Data;
     using SladkarnicaHvarchilo.Services.Data.Contracts;
     using SladkarnicaHvarchilo.Services.Messaging;
-
-    using CommandLine;
 
     public static class Program
     {

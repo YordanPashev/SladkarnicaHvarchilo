@@ -10,6 +10,8 @@
 
         public const string AdministratorRoleName = "Administrator";
 
+        public const string AdministrationSettingsDateTimeFormat = "dd/MM/yyyy, HH:mm:ss";
+
         public static class DessertsValidationConstants
         {
             public const int NameMinLength = 1;
@@ -56,13 +58,19 @@
 
         public static class UserMessage
         {
-            public const string InvalidInputData = "Невалидни Данни.";
+            public const string InvalidInputData = "Невалидни Данни";
 
-            public const string CakeAlreadyExist = "Торта със същото име вече съществува.";
+            public const string CakeAlreadyExist = "Торта със същото име вече съществува";
 
-            public const string SuccessfullyAddedNewCake = "Успешно добавихте нова торта: ";
+            public const string SuccessfullyAddedNewCake = "Успешно добавихте нова торта. Резултат:";
 
-            public const string InvalidImageFile = "Невалиден или повреден файл.";
+            public const string SuccessfullyEditedCake = "Успешно редактирахте торта. Резултат:";
+
+            public const string InvalidImageFile = "Невалиден или повреден файл";
+
+            public const string CakeDoesNotExist = "Не е намерена торта с въведенте данни";
+
+            public const string SuccessfullyDeletedCake = "Успешно премахнахте тортата ";
         }
     }
 }

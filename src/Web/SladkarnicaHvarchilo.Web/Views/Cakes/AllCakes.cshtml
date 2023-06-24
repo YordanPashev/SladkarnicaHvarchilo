@@ -1,0 +1,112 @@
+﻿@using SladkarnicaHvarchilo.Common
+@using SladkarnicaHvarchilo.Web.ViewModels.Cakes;
+
+@model AllCakesViewModel
+
+@{
+    this.ViewData["Title"] = "Торти";
+}
+
+@if (this.ViewBag.UserMessage != null)
+{
+    <h1 class="userInfoMessage">
+        @this.ViewBag.UserMessage
+    </h1>
+}
+
+<h1 class="text-center"><strong>@this.ViewData["Title"]</strong></h1>
+
+@if (this.Model.Cakes.Length > 0)
+{
+    <form method="get" asp-controller="Pets" asp-action="Index" autocomplete="off">
+        <div class="container mt-2">
+            <div class="row align-items-start">
+                <div class="col-md-4 justify-content-start">
+                </div>
+                <div class="col-md-4 justify-content-start">
+                    <div class="input-group">
+                        @if (this.Model.SearchQuery == null)
+                        {
+                            <input style="font-size: 15pt" type="text" id="SearchQuery" name="SearchQuery" class="form-control" placeholder="Search for pet" />
+                        }
+                        else
+                        {
+                            <input style="font-size: 15pt" type="text" id="SearchQuery" name="SearchQuery" class="form-control" value="@this.Model.SearchQuery" />
+                        }
+                        <div class="input-group-btn">
+                            <button class="btn btn-success m-auto" style="font-size: 15pt" onclick="this.form.submit()">Search</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row align-items-start">
+            <div class="col-md-5 justify-content-start">
+                <div class="navbar">
+                    <div class="dropdown">
+                        <button class="btn dropdown-toggle" style="font-size: 16pt; background-color: white; color: black; font-weight: bold; border-color: transparent;" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                            Order by
+                        </button>
+                        <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1" style="width: 200px; font-size: 14pt;">
+                            @foreach (string orderCriteria in this.Model.OderCriteria)
+                            {
+                                <li>
+                                    <button class="btn m-auto" style="background-color: transparent" onclick="this.form.submit()" id="OrderCriteria" name="OrderCriteria" value="@orderCriteria">@orderCriteria</button>
+                                </li>
+                            }
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 mt-3 justify-content-start">
+                @if (this.Model.SearchQuery != null)
+                {
+                    string searchedTypeNoun = this.Model.Cakes.Length == 1 ? "торта" : "торти";
+                    <h3 style="font-style: italic; font-weight: bold">Резултат: @this.Model.Cakes.Length @searchedTypeNoun</h3>
+                }
+            </div>
+        </div>
+    </form>
+    <table class="table table-hover" style="border-bottom: 2px solid; border-radius: 15px; border-color: black; backdrop-filter: blur(20px);">
+        <thead>
+            <tr>
+                <th></th>
+                <th>Име</th>
+                <th style="color: blue;">Брой парчета</th>
+                <th style="color: darkorange;">Цена</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var cake in this.Model.Cakes)
+            {
+                <tr name="trData">
+                    <td onclick="location.href='@Url.Action("Details", "Pets", new { cake.Id })'"><img src="~/img/cakes/@(cake.ImageFileName)" alt="No Image" style="height: 120px; width: 160px;"></td>
+                    <td onclick="location.href='@Url.Action("Details", "Pets", new { cake.Id })'">@Html.DisplayFor(modelItem => cake.Name) </td>
+                    <td onclick="location.href='@Url.Action("Details", "Pets", new { cake.Id })'">@Html.DisplayFor(modelItem => cake.Pieces)</td>
+                    <td onclick="location.href='@Url.Action("Details", "Pets", new { cake.Id })'">@Html.DisplayFor(modelItem => cake.Price) лв.</td>
+                    <td class="optionButtonsCol">
+                        <a class="btn btn-info" style="font-size: 15pt" asp-area="" asp-controller="Cakes" asp-action="CakeDetails" asp-route-id="@cake.Id">Повече информация</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+else
+{
+    <h1 style="text-align: center">Не са открити торти</h1>
+    <br />
+}
+
+@if (this.User.IsInRole(GlobalConstants.AdministratorRoleName))
+{
+    <div class="bottomPageButtons">
+        <a class="btn btn-success mb-2" style="font-size: 16pt;  width: 20%;" asp-area="Administration" asp-controller="Cakemanager" asp-action="AddNewCake">Добави торта</a>
+    </div>
+}
+
+<div class="bottomPageButtons">
+    <input class="btn btn-dark" style="font-size: 16pt; width: 20%;" value="Назад" onclick="history.back()">
+</div>
+

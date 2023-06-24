@@ -15,6 +15,6 @@
 
         public int Pieces { get; set; }
 
-        public DateTime CreatedOn { get; set; }
+        public string ImageFileName { get; set; }
     }
 }

@@ -39,7 +39,7 @@
 
         [Required]
         [MaxLength(GlobalConstants.DessertsValidationConstants.ImageFileDirectoryPathMaxLength)]
-        public string ImageFileDirectoryPath { get; set; }
+        public string ImageFileName { get; set; }
 
         [Required]
         public FoodTastingCategory Category { get; set; }
