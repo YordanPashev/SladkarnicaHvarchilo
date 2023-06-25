@@ -35,15 +35,15 @@
 
         public static class OrderCriteria
         {
-            public const string PriceAscending = "Price Ascending";
+            public const string PriceAscending = "Цене възходящо";
 
-            public const string PriceDescending = "Price Descending";
+            public const string PriceDescending = "Цена низходящо";
 
-            public const string Pieces = "Pieces";
+            public const string Pieces = "Брой парчета";
 
-            public const string Recent = "Recent";
+            public const string Recent = "Последно добавени";
 
-            public const string Name = "Name";
+            public const string Name = "Име";
 
             public static readonly string[] AllOrderCriteria = new ReadOnlyCollection<string>(new List<string>
                                                                {

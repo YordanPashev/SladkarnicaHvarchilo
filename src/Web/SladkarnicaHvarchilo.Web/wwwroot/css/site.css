@@ -63,7 +63,7 @@ html {
 body {
     /* Margin bottom by footer height */
     margin-bottom: 60px;
-    background-image: url('../img/Body Background Image.jpg') !important;
+    background-image: url('../img/Common/Backgorund image.jpg') !important;
     background-size: cover;
     background-repeat: no-repeat !important;
     background-color: #FFFFFF !important;

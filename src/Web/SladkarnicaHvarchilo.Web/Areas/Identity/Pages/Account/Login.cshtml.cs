@@ -63,16 +63,19 @@ namespace SladkarnicaHvarchilo.Web.Areas.Identity.Pages.Account
             ///     Gets or sets this API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
             ///     directly from your code. This API may change or be removed in future releases.
             /// </summary>
-            [Required]
-            [EmailAddress]
+            [Required(ErrorMessage = "Моля въведете имейл адрес")]
+            [EmailAddress(ErrorMessage = "Невалиден имейл адрес")]
+            [Display(Name = "Имейл")]
             public string Email { get; set; }
 
             /// <summary>
             ///     Gets or sets this API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
             ///     directly from your code. This API may change or be removed in future releases.
             /// </summary>
-            [Required]
+            [Required(ErrorMessage = "Моля въведете парола")]
+            [StringLength(100, ErrorMessage = "Паролата трябва да съдържа най-малко {2} и максимум {1} символа.", MinimumLength = 6)]
             [DataType(DataType.Password)]
+            [Display(Name = "Парола")]
             public string Password { get; set; }
 
             /// <summary>

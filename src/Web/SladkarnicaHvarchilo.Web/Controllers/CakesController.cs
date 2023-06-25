@@ -18,12 +18,12 @@
             => this.cakesService = cakesService;
 
         [HttpGet]
-        public async Task<IActionResult> AllCakes(string orderCriteria, string userMessage = null)
+        public async Task<IActionResult> AllCakes(string selectedOrderCriteria, string userMessage = null)
         {
             AllCakesViewModel model = new AllCakesViewModel()
             {
                 Cakes = await this.cakesService
-                                  .GetAllCakesInSale(orderCriteria)
+                                  .GetAllCakesInSale(selectedOrderCriteria)
                                   .To<CakesShortInfoViewModel>()
                                   .ToArrayAsync(),
             };

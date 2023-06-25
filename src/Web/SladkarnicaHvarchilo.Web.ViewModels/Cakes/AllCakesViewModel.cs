@@ -4,12 +4,14 @@
 
     public class AllCakesViewModel
     {
-        public CakesShortInfoViewModel[] Cakes { get; set; }
+        public AllCakesViewModel() => this.OrderCriteria = GlobalConstants.OrderCriteria.AllOrderCriteria;
 
-        public string[] OderCriteria => GlobalConstants.OrderCriteria.AllOrderCriteria;
+        public CakesShortInfoViewModel[] Cakes { get; set; }
 
         public string SearchQuery { get; set; }
 
-        public string OrderCriteria { get; set; }
+        public string[] OrderCriteria { get; }
+
+        public string SelectedOrderCriteria { get; set; }
     }
 }

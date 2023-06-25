@@ -27,14 +27,14 @@
                     <div class="input-group">
                         @if (this.Model.SearchQuery == null)
                         {
-                            <input style="font-size: 15pt" type="text" id="SearchQuery" name="SearchQuery" class="form-control" placeholder="Search for pet" />
+                            <input style="font-size: 15pt" type="text" id="SearchQuery" name="SearchQuery" class="form-control" placeholder="Въведи име на торта" />
                         }
                         else
                         {
                             <input style="font-size: 15pt" type="text" id="SearchQuery" name="SearchQuery" class="form-control" value="@this.Model.SearchQuery" />
                         }
                         <div class="input-group-btn">
-                            <button class="btn btn-success m-auto" style="font-size: 15pt" onclick="this.form.submit()">Search</button>
+                            <button class="btn btn-success m-auto" style="font-size: 15pt" onclick="this.form.submit()">Търси</button>
                         </div>
                     </div>
                 </div>
@@ -45,13 +45,13 @@
                 <div class="navbar">
                     <div class="dropdown">
                         <button class="btn dropdown-toggle" style="font-size: 16pt; background-color: white; color: black; font-weight: bold; border-color: transparent;" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
-                            Order by
+                            Подреди по
                         </button>
                         <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1" style="width: 200px; font-size: 14pt;">
-                            @foreach (string orderCriteria in this.Model.OderCriteria)
+                            @foreach (string orderCriteria in this.Model.OrderCriteria)
                             {
                                 <li>
-                                    <button class="btn m-auto" style="background-color: transparent" onclick="this.form.submit()" id="OrderCriteria" name="OrderCriteria" value="@orderCriteria">@orderCriteria</button>
+                                    <button class="btn m-auto" style="background-color: transparent" onclick="this.form.submit()" id="SelectedOrderCriteria" name="SelectedOrderCriteria" value="@orderCriteria">@orderCriteria</button>
                                 </li>
                             }
                         </ul>
@@ -67,7 +67,7 @@
             </div>
         </div>
     </form>
-    <table class="table table-hover" style="border-bottom: 2px solid; border-radius: 15px; border-color: black; backdrop-filter: blur(20px);">
+    <table class="table" style="background-color: transparent; border-bottom: 2px solid; border-radius: 15px; border-color: black; backdrop-filter: blur(20px);">
         <thead>
             <tr>
                 <th></th>
