@@ -15,11 +15,17 @@
 
         Task DeteleCake(Cake cake);
 
-        IQueryable<Cake> GetAllCakesInSale(string orderCriteria);
+        IQueryable<Cake> GetAllCakesInSale();
 
         Task<Cake> GetCakeByIdAsync(string id);
 
         Task<Cake> GetCakeByIdForEditAsync(string id);
+
+        IQueryable<Cake> GetCakesAccoringToFilters(string selectedOrderCriteria, string searchQuery);
+
+        IQueryable<Cake> GetCakesByOrderCriteria(string selectedOrderCriteria);
+
+        IQueryable<Cake> GetSearchedCakes(string searchQuery);
 
         Task UpdateCakeDataAsync(Cake cakeBeforeEdit, Cake userIputCakeData);
     }

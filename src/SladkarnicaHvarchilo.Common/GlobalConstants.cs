@@ -35,7 +35,7 @@
 
         public static class OrderCriteria
         {
-            public const string PriceAscending = "Цене възходящо";
+            public const string PriceAscending = "Цена възходящо";
 
             public const string PriceDescending = "Цена низходящо";
 

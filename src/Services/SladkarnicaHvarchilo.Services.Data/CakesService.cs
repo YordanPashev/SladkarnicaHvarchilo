@@ -48,13 +48,8 @@
             await this.cakeRepo.SaveChangesAsync();
         }
 
-        public IQueryable<Cake> GetAllCakesInSale(string orderCriteria)
-        {
-            IQueryable<Cake> cakes = this.cakeRepo.AllAsNoTracking();
-            IQueryable<Cake> orderedCakes = this.OrderByCriteria(orderCriteria, cakes);
-
-            return orderedCakes;
-        }
+        public IQueryable<Cake> GetAllCakesInSale()
+            => this.cakeRepo.AllAsNoTracking().OrderBy(c => c.Name);
 
         public async Task<Cake> GetCakeByIdAsync(string id)
             => await this.cakeRepo.AllAsNoTracking()
@@ -63,6 +58,45 @@
         public async Task<Cake> GetCakeByIdForEditAsync(string id)
             => await this.cakeRepo.All()
                             .FirstOrDefaultAsync(c => c.Id == id);
+
+        public IQueryable<Cake> GetCakesAccoringToFilters(string selectedOrderCriteria, string searchQuery)
+            => this.GetCakesByOrderCriteria(selectedOrderCriteria)
+                        .Where(c => c.Name.ToUpper().Contains(searchQuery));
+
+        public IQueryable<Cake> GetCakesByOrderCriteria(string selectedOrderCriteria)
+        {
+            if (selectedOrderCriteria == OrderCriteria.PriceAscending)
+            {
+                return this.cakeRepo.AllAsNoTracking()
+                            .OrderBy(c => c.Price)
+                            .ThenBy(c => c.Name);
+            }
+            else if (selectedOrderCriteria == OrderCriteria.PriceDescending)
+            {
+                return this.cakeRepo.AllAsNoTracking()
+                            .OrderByDescending(c => c.Price)
+                            .ThenBy(c => c.Name);
+            }
+            else if (selectedOrderCriteria == OrderCriteria.Pieces)
+            {
+                return this.cakeRepo.AllAsNoTracking()
+                            .OrderByDescending(c => c.Pieces)
+                            .ThenBy(c => c.Name);
+            }
+            else if (selectedOrderCriteria == OrderCriteria.Recent)
+            {
+                return this.cakeRepo.AllAsNoTracking()
+                            .OrderByDescending(c => c.CreatedOn)
+                            .ThenBy(c => c.Name);
+            }
+
+            return this.cakeRepo.AllAsNoTracking().OrderBy(c => c.Name);
+        }
+
+        public IQueryable<Cake> GetSearchedCakes(string searchQuery)
+            => this.cakeRepo.AllAsNoTracking()
+                            .Where(c => c.Name.ToUpper().Contains(searchQuery))
+                            .OrderBy(c => c.Name);
 
         public async Task UpdateCakeDataAsync(Cake cakeBeforeEdit, Cake userIputCakeData)
         {
@@ -75,32 +109,6 @@
             cakeBeforeEdit.ImageFileName = userIputCakeData.ImageFileName;
 
             await this.cakeRepo.SaveChangesAsync();
-        }
-
-        private IQueryable<Cake> OrderByCriteria(string orderCriteria, IQueryable<Cake> cakes)
-        {
-            if (orderCriteria == OrderCriteria.PriceAscending)
-            {
-                return cakes.OrderByDescending(c => c.Price)
-                            .ThenBy(c => c.Name);
-            }
-            else if (orderCriteria == OrderCriteria.PriceDescending)
-            {
-                return cakes.OrderByDescending(c => c.Price)
-                            .ThenBy(c => c.Name);
-            }
-            else if (orderCriteria == OrderCriteria.Pieces)
-            {
-                return cakes.OrderBy(c => c.Pieces)
-                            .ThenBy(c => c.Name);
-            }
-            else if (orderCriteria == OrderCriteria.Recent)
-            {
-                return cakes.OrderByDescending(c => c.CreatedOn)
-                            .ThenBy(c => c.Name);
-            }
-
-            return cakes.OrderBy(c => c.Name);
         }
     }
 }
