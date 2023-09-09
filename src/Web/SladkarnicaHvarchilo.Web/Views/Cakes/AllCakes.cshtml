@@ -45,14 +45,14 @@
             <div class="col-md-5 justify-content-start">
                 <div class="navbar">
                     <div class="dropdown">
-                        <button class="btn dropdown-toggle" style="font-size: 16pt; background-color: white; color: black; font-weight: bold; border-color: transparent;" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                        <button class="btn dropdown-toggle" style="color: white; font-size: 16pt; font-weight: bold; background: rgba(71, 90, 54, 0.7); backdrop-filter: blur(15px); border-color: transparent;" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
                             Подреди по
                         </button>
-                        <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1" style="width: 200px; font-size: 14pt;">
+                        <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1" style="font-size: 16pt; background: rgba(71, 90, 54, 0.7); backdrop-filter: blur(15px); width: 200px; font-size: 14pt;">
                             @foreach (string orderCriteria in this.Model.OrderCriteria)
                             {
                                 <li>
-                                    <button class="btn m-auto" style="background-color: transparent" onclick="this.form.submit()" name="selectedOrderCriteria" value="@orderCriteria">@orderCriteria</button>
+                                    <button class="btn m-auto" style="color: white; background-color: transparent" onclick="this.form.submit()" name="selectedOrderCriteria" value="@orderCriteria">@orderCriteria</button>
                                 </li>
                             }
                         </ul>
@@ -64,36 +64,22 @@
                 @if (this.Model.SearchQuery != null)
                 {
                     string searchedTypeNoun = this.Model.Cakes.Length == 1 ? "торта" : "торти";
-                    <h3 style="font-style: italic; font-weight: bold">Резултат: @this.Model.Cakes.Length @searchedTypeNoun</h3>
+                    <h3 style="width: 75%; font-style: italic; font-weight: bold; background-color: antiquewhite;">Намерени са @this.Model.Cakes.Length @searchedTypeNoun</h3>
                 }
             </div>
         </div>
     </form>
-    <table class="table" style="background-color: transparent; border-bottom: 2px solid; border-radius: 15px; border-color: black; backdrop-filter: blur(20px);">
-        <thead>
-            <tr>
-                <th></th>
-                <th>Име</th>
-                <th style="color: blue;">Брой парчета</th>
-                <th style="color: darkorange;">Цена</th>
-                <th></th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var cake in this.Model.Cakes)
-            {
-                <tr name="trData">
-                    <td onclick="location.href='@Url.Action("Details", "Pets", new { cake.Id })'"><img src="~/img/cakes/@(cake.ImageFileName)" alt="No Image" style="height: 120px; width: 160px;"></td>
-                    <td onclick="location.href='@Url.Action("Details", "Pets", new { cake.Id })'">@Html.DisplayFor(modelItem => cake.Name) </td>
-                    <td onclick="location.href='@Url.Action("Details", "Pets", new { cake.Id })'">@Html.DisplayFor(modelItem => cake.Pieces)</td>
-                    <td onclick="location.href='@Url.Action("Details", "Pets", new { cake.Id })'">@Html.DisplayFor(modelItem => cake.Price) лв.</td>
-                    <td class="optionButtonsCol">
-                        <a class="btn btn-info" style="font-size: 15pt" asp-area="" asp-controller="Cakes" asp-action="CakeDetails" asp-route-id="@cake.Id">Повече информация</a>
-                    </td>
-                </tr>
-            }
-        </tbody>
-    </table>
+    <div class="text-center row" style="text-align: center">
+        @foreach (var cake in this.Model.Cakes)
+        {
+            <div class="card col-4 mb-2 mt-2" style="margin-left: 1rem; width: 26rem; background: rgba(71, 90, 54, 0.7); backdrop-filter: blur(10px); border: 2px solid; border-radius: 15px; border-color: antiquewhite;" onclick="location.href='@Url.Action("CakeDetails", "Cakes", new { cake.Id })'">
+                <img class="card mt-2" style="width: 24.3rem; height: 15rem;" src="~/img/cakes/@(cake.ImageFileName)" alt="No Image">
+                <h2 class="card-title" style="color: white; font-weight: bold">@cake.Name</h2>
+                <p class="mb-2" style="color: white; font-weight: bold">@cake.Pieces парчета</p>
+                <h4 style="color: yellow; font-weight: bold"><i>Цена: @cake.Price лв.</i></h4>
+            </div>
+        }
+    </div>
 }
 else
 {
@@ -103,12 +89,12 @@ else
 
 @if (this.User.IsInRole(GlobalConstants.AdministratorRoleName))
 {
-    <div class="bottomPageButtons">
+    <div class="bottomPageButtons text-center">
         <a class="btn btn-success mb-2" style="font-size: 16pt;  width: 20%;" asp-area="Administration" asp-controller="Cakemanager" asp-action="AddNewCake">Добави торта</a>
     </div>
 }
 
-<div class="bottomPageButtons">
+<div class="bottomPageButtons text-center">
     <input class="btn btn-dark" style="font-size: 16pt; width: 20%;" value="Назад" onclick="history.back()">
 </div>
 
