@@ -4,12 +4,11 @@
 	ViewData["Title"] = "Регистрирай се";
 }
 
-<h1 class="text-center"><strong>@ViewData["Title"]</strong></h1>
-<div class="container" style="width: 60%; backdrop-filter: blur(10px); border: 2px solid; border-color: white; border-radius: 15px">
+<div class="container" style="width: 60%; background: rgba(71, 90, 54, 0.7); backdrop-filter: blur(10px);; border: 2px solid; border-color: white; border-radius: 15px">
 	<div class="col-md-8 mx-auto">
 		<section>
 			<form id="registerForm" asp-route-returnUrl="@Model.ReturnUrl" method="post">
-				<h2 class="text-center mt-3"><i>Създай нов акаунт</i></h2>
+				<h2 class="text-center mt-3" style="color: white"><i>Създай нов акаунт</i></h2>
 				<div class="form-floating mt-3">
 					<input asp-for="Input.Email" class="form-control" autocomplete="Въведете имейл" aria-required="true" />
 					<label asp-for="Input.Email">Въведете имейл</label>

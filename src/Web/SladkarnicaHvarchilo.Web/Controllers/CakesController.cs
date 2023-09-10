@@ -1,18 +1,18 @@
 ﻿namespace SladkarnicaHvarchilo.Web.Controllers
 {
-    using System;
-    using System.Collections;
-    using System.Collections.Generic;
     using System.Linq;
+    using System.Threading;
     using System.Threading.Tasks;
 
     using Microsoft.AspNetCore.Mvc;
+    using Microsoft.AspNetCore.Mvc.ModelBinding;
     using Microsoft.EntityFrameworkCore;
-    using SladkarnicaHvarchilo.Common;
     using SladkarnicaHvarchilo.Data.Models;
     using SladkarnicaHvarchilo.Services.Data.Contracts;
     using SladkarnicaHvarchilo.Services.Mapping;
     using SladkarnicaHvarchilo.Web.ViewModels.Cakes;
+
+    using static SladkarnicaHvarchilo.Common.GlobalConstants;
 
     public class CakesController : Controller
     {
@@ -22,34 +22,23 @@
             => this.cakesService = cakesService;
 
         [HttpGet]
-        public async Task<IActionResult> AllCakes(string userMessage = null)
-        {
-            AllCakesViewModel model = new AllCakesViewModel(string.Empty)
-            {
-                Cakes = await this.cakesService
-                                  .GetAllCakesInSale()
-                                  .To<CakesShortInfoViewModel>()
-                                  .ToArrayAsync(),
-            };
-
-            this.ViewBag.UserMessage = userMessage;
-
-            return this.View(model);
-        }
-
-        [HttpPost]
-        public async Task<IActionResult> AllCakes(string selectedOrderCriteria, string searchQuery, string userMessage = null)
+        public async Task<IActionResult> AllCakes(string selectedOrderCriteria = null, string searchQuery = null, string userMessage = null)
         {
             AllCakesViewModel model = new AllCakesViewModel(selectedOrderCriteria);
 
             if (string.IsNullOrEmpty(selectedOrderCriteria) && string.IsNullOrEmpty(searchQuery))
             {
-                this.RedirectToAction(nameof(this.AllCakes));
+                model.Cakes = await this.cakesService
+                                      .GetAllCakesInSale()
+                                      .To<CakesShortInfoViewModel>()
+                                      .ToArrayAsync();
             }
-
-            model.Cakes = await this.GetFilteredCakesAsync(selectedOrderCriteria, searchQuery);
-            model.SearchQuery = searchQuery;
-            model.SelectedOrderCriteria = selectedOrderCriteria;
+            else
+            {
+                model.Cakes = await this.GetFilteredCakesAsync(selectedOrderCriteria, searchQuery);
+                model.SearchQuery = searchQuery;
+                model.SelectedOrderCriteria = selectedOrderCriteria;
+            }
 
             this.ViewBag.UserMessage = userMessage;
 
@@ -63,7 +52,7 @@
 
             if (cake == null)
             {
-                return this.View(nameof(this.AllCakes), new { GlobalConstants.UserMessage.CakeDoesNotExist });
+                return this.View(nameof(this.AllCakes), new { UserMessage.CakeDoesNotExist });
             }
 
             CakeDetailsViewModel model = AutoMapperConfig.MapperInstance.Map<CakeDetailsViewModel>(cake);
