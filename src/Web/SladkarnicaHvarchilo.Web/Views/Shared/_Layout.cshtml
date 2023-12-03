@@ -6,29 +6,27 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@this.ViewData["Title"] - @GlobalConstants.SystemName</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" asp-append-version="true" />
-    <link rel="stylesheet" href="~/css/site.min.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/site.min.css?version=1" asp-append-version="true" />
 </head>
 <body>
     <header>
-        <nav class="navbar navbar-expand-sm navbar-light border-bottom box-shadow mb-3" style="background: rgba(71, 90, 54, 0.8); backdrop-filter: blur(10px);">
-            <div class="container">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index" style="margin-left: 10px">
-                    <img src="~/img/Common/Logo.jpg" width="60">
+        <nav class="navBar" style="background-image: linear-gradient(rgb(174, 62, 37, 0.9), rgb(239, 145, 54, 0.95));backdrop-filter: blur(7px);">
+            <div class="navBarItems">
+                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index" style="margin-left: 10px; background-color: transparent !important;">
+                    <img src="~/img/Common/Logo.png" width="60">
                 </a>
-                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
-                    <ul class="navbar-nav flex-grow-1">
+                    <ul style="display: flex; flex-direction: row !important; gap: 1em; list-style-type: none; font-size: 1.5em; align-content: center; padding-top: 0.4em; color: White;">
                         <li class="nav-item">
-                            <a class="nav-link text-light" style="text: white; font-size: 16pt;" asp-area="" asp-controller="Cakes" asp-action="AllCakes">Торти</a>
+                            <a class="nav-link" asp-area="" asp-controller="Cakes" asp-action="AllCakes">Торти</a>
                         </li>
                         @if (this.User.IsInRole(GlobalConstants.AdministratorRoleName))
                         {
                             <li class="nav-item">
-                                <a class="nav-link text-light" style="font-size: 16pt;" asp-area="Administration" asp-controller="CakeManager" asp-action="AddNewCake">Добави нанова торта</a>
+                                <a class="nav-link" asp-area="Administration" asp-controller="CakeManager" asp-action="AddNewCake">Добави нанова торта</a>
                             </li>
                         }
                     </ul>
                     <partial name="_LoginPartial" />
-                </div>
             </div>
         </nav>
     </header>

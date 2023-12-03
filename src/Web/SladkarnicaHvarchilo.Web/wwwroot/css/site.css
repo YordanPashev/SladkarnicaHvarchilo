@@ -63,10 +63,9 @@ html {
 body {
     /* Margin bottom by footer height */
     margin-bottom: 60px;
-    background-image: url('../img/Common/Backgorund image.jpg') !important;
     background-size: cover;
     background-repeat: no-repeat !important;
-    background-color: #FFFFFF !important;
+    background-color: ghostwhite !important;
     background-position: center top !important;
     background-attachment: fixed !important;
 }
@@ -77,6 +76,34 @@ body {
     width: 100%;
     white-space: nowrap;
     line-height: 60px; /* Vertically center the text there */
+}
+
+/* Site Bar */
+.navBar {
+    display: flex;
+    position: fixed;
+    justify-content: space-between;
+    align-items: center;
+    gap: 0.5em;
+    top: 0px;
+    height: 4em;
+    width: 100%;
+    z-index: 1;
+    font-weight: bold;
+}
+
+.navBarItems {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 0.5em;
+}
+
+.navBarLoginSection {
+    display: flex;
+    list-style: none;
+    gap: 1em;
+    font-size: 1.2em !important;
 }
 
 /* User Messages styles */

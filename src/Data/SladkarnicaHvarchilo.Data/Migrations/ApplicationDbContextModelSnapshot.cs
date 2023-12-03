@@ -302,7 +302,7 @@ namespace SladkarnicaHvarchilo.Data.Migrations
 
                     b.HasIndex("IsDeleted");
 
-                    b.ToTable("Cakes");
+                    b.ToTable("Cakes", (string)null);
                 });
 
             modelBuilder.Entity("SladkarnicaHvarchilo.Data.Models.Dessert", b =>
@@ -342,7 +342,7 @@ namespace SladkarnicaHvarchilo.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Desserts");
+                    b.ToTable("Desserts", (string)null);
                 });
 
             modelBuilder.Entity("SladkarnicaHvarchilo.Data.Models.Setting", b =>
@@ -375,7 +375,7 @@ namespace SladkarnicaHvarchilo.Data.Migrations
 
                     b.HasIndex("IsDeleted");
 
-                    b.ToTable("Settings");
+                    b.ToTable("Settings", (string)null);
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
