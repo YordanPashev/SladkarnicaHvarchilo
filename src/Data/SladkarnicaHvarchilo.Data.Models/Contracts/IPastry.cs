@@ -1,22 +1,14 @@
-﻿namespace SladkarnicaHvarchilo.Data.Models
+﻿namespace SladkarnicaHvarchilo.Data.Models.Contracts
 {
     using System;
     using System.ComponentModel.DataAnnotations;
     using System.ComponentModel.DataAnnotations.Schema;
 
     using SladkarnicaHvarchilo.Common;
-    using SladkarnicaHvarchilo.Data.Common.Models;
-    using SladkarnicaHvarchilo.Data.Models.Contracts;
     using SladkarnicaHvarchilo.Data.Models.Enums;
 
-    public class Cake : BaseDeletableModel<int>, IPastry
+    public interface IPastry
     {
-        public Cake() => this.Id = Guid.NewGuid().ToString();
-
-        [Key]
-        [Required]
-        public string Id { get; set; }
-
         [Required]
         [MaxLength(GlobalConstants.DessertsValidationConstants.NameMaxLength)]
         public string Name { get; set; }
@@ -48,6 +40,6 @@
         [ForeignKey(nameof(NutritionInfo))]
         public string NutritionInfoId { get; set; }
 
-        public virtual NutritionInfo NutritionInfo { get; set; }
+        public NutritionInfo NutritionInfo { get; set; }
     }
 }

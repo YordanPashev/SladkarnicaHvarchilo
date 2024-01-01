@@ -2,11 +2,14 @@
 {
     using System;
     using System.ComponentModel.DataAnnotations;
+    using System.ComponentModel.DataAnnotations.Schema;
 
     using SladkarnicaHvarchilo.Common;
+    using SladkarnicaHvarchilo.Data.Common.Models;
+    using SladkarnicaHvarchilo.Data.Models.Contracts;
     using SladkarnicaHvarchilo.Data.Models.Enums;
 
-    public class Dessert
+    public class Dessert : BaseDeletableModel<int>, IPastry
     {
         public Dessert() => this.Id = Guid.NewGuid().ToString();
 
@@ -30,6 +33,7 @@
         public string Allergens { get; set; }
 
         [Required]
+        [Column(TypeName = "decimal(18, 2)")]
         [Range(GlobalConstants.DessertsValidationConstants.PriceMinValue, GlobalConstants.DessertsValidationConstants.PriceMaxValue)]
         public decimal Price { get; set; }
 
@@ -39,5 +43,11 @@
 
         [Required]
         public FoodTastingCategory Category { get; set; }
+
+        [Required]
+        [ForeignKey(nameof(NutritionInfo))]
+        public string NutritionInfoId { get; set; }
+
+        public virtual NutritionInfo NutritionInfo { get; set; }
     }
 }

@@ -22,9 +22,9 @@
         public CakeManagerController(ICakesService cakesService) => this.cakesService = cakesService;
 
         [HttpGet]
-        public IActionResult AddNewCake(string userMessage = null)
+        public IActionResult AddNewCake()
         {
-            this.ViewBag.UserMessage = userMessage;
+            CreateCakeViewModel model = new CreateCakeViewModel();
 
             return this.View();
         }
@@ -110,17 +110,17 @@
             await this.imageManager.SaveImageToFileAsync(model.ImageFile);
 
             Cake cake = AutoMapperConfig.MapperInstance.Map<Cake>(model);
-            cake.ImageFileName = model.ImageFile.FileName;
+            cake.ImageFileDirectoryPath = model.ImageFile.FileName;
 
             await this.cakesService.AddNewCake(cake);
         }
 
         private async Task UpdateCake(Cake cakeBeforeEdit, Cake userIputCakeData, IFormFile iamgeFile)
         {
-            if (cakeBeforeEdit.ImageFileName != userIputCakeData.ImageFileName)
+            if (cakeBeforeEdit.ImageFileDirectoryPath != userIputCakeData.ImageFileDirectoryPath)
             {
                 await this.imageManager.SaveImageToFileAsync(iamgeFile);
-                userIputCakeData.ImageFileName = iamgeFile.FileName;
+                userIputCakeData.ImageFileDirectoryPath = iamgeFile.FileName;
             }
 
             await this.cakesService.UpdateCakeDataAsync(cakeBeforeEdit, userIputCakeData);

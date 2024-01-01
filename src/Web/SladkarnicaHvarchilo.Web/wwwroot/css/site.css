@@ -1,6 +1,8 @@
 ﻿/* Please see documentation at https://docs.microsoft.com/aspnet/core/client-side/bundling-and-minification
 for details on configuring this project to bundle and minify static web assets. */
 
+@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@200&display=swap');
+
 a.navbar-brand {
     white-space: normal;
     text-align: center;
@@ -90,6 +92,7 @@ body {
     width: 100%;
     z-index: 1;
     font-weight: bold;
+    backdrop-filter: blur(7px);
 }
 
 .navBarItems {
@@ -99,11 +102,82 @@ body {
     gap: 0.5em;
 }
 
+.navBarItems  > ul {
+    display: flex;
+    flex-direction: row !important;
+    gap: 1em;
+    list-style-type: none;
+    font-size: 1.5em;
+    align-content: center;
+    padding-top: 0.4em;
+    color: White;
+}
+
 .navBarLoginSection {
     display: flex;
     list-style: none;
     gap: 1em;
     font-size: 1.2em !important;
+    padding-top: 0.55em !important;
+}
+
+.navBarLoginSection > li > a {
+    text-decoration: none;
+    color: white;
+    font-size: 1.2em !important;
+
+}
+
+/* Buttons */
+.homeButton {
+    margin-top: 4.5em;
+    margin-left: 1em;
+    background-color: transparent !important;
+}
+
+.inputNavButtonsSection {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 0.5em;
+    margin-bottom: 1em;
+}
+
+.inputNavButtonsSection > div > input {
+    width: 10em !important;
+    font-size: 1.2em;
+}
+
+/* Sections */
+.inputSection {
+    width: 50em !important;
+    background-color: antiquewhite;
+    opacity: 0.97;
+    border: 0.2em solid;
+    border-color: white;
+    border-radius: 1em;
+    margin-top: 6em;
+    color: coral !important;
+    font-family: Nunito;
+}
+
+.nutritionInfo {
+    display: flex;
+    gap: 1em;
+    justify-content: space-evenly
+}
+
+.nutritionInfo > div > label {
+    padding-top: 0.25em; 
+    font-size: 1.2em;
+}
+
+.nutritionInfo > div > input {
+    width: 6em;
+}
+
+.inputSection > div > form > div > label {
+    font-size: 1.2em !important;
+    font-weight: bold !important;
 }
 
 /* User Messages styles */

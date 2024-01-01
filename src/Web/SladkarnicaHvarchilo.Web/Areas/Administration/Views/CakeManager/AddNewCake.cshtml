@@ -10,47 +10,121 @@
     <h1 class="userErrorMessage">@this.ViewBag.UserMessage</h1>
 }
 
-<h1 class="text-center"><strong>@this.ViewData["Title"]</strong></h1>
-<div class="container text-center" style="width: 70%; background-color: antiquewhite; opacity: 0.97; border: 2px solid; border-color: white; border-radius: 15px">
+<div class="container text-center inputSection">
+    <h1 class="text-center mt-2"><strong>@this.ViewData["Title"]</strong></h1>
     <div class="col-md-10 mx-auto">
         <form method="post" asp-area="Administration" asp-controller="CakeManager" asp-action="AddNewCake" autocomplete="off" enctype="multipart/form-data">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group mt-3 mb-3">
-                <label for="Name" class="control-label" style="font-size: 14pt; font-weight: bold;">Име</label>
+                <label for="Name" class="control-label">Име</label>
                 <input name="Name" placeholder="Име..." class="form-control" type="text" minlength="@GlobalConstants.DessertsValidationConstants.NameMinLength" maxlength="@GlobalConstants.DessertsValidationConstants.NameMaxLength" required />
             </div>
             <div class="form-group mt-3 mb-3">
-                <label for="Description" class="control-label" style="font-size: 14pt; font-weight: bold;">Описание</label>
-                <textarea name="Description" placeholder="Описание..." class="form-control" type="text" rows="3" cols="6" style="white-space: pre-line" minlength="@GlobalConstants.DessertsValidationConstants.DescriptionMinLength" maxlength="@GlobalConstants.DessertsValidationConstants.DescriptionMinLength" required></textarea>
+                <label for="Description" class="control-label">Описание</label>
+                <textarea name="Description" placeholder="Описание..." class="form-control" type="text" rows="3" cols="6" style="white-space: pre-line" minlength="@GlobalConstants.DessertsValidationConstants.DescriptionMinLength" maxlength="@GlobalConstants.DessertsValidationConstants.DescriptionMaxLength" required></textarea>
             </div>
             <div class="form-group mt-3 mb-3">
-                <label for="Ingredients" class="control-label" style="font-size: 14pt; font-weight: bold;">Съставки</label>
+                <label for="Ingredients" class="control-label">Съставки</label>
                 <input name="Ingredients" placeholder="Съставки..." class="form-control" type="text" minlength="@GlobalConstants.DessertsValidationConstants.IngredientsMinLength" maxlength="@GlobalConstants.DessertsValidationConstants.IngredientsMaxLength" required />
             </div>
             <div class="form-group mt-3 mb-3">
-                <label for="Allergens" class="control-label" style="font-size: 14pt; font-weight: bold;">Алергени(полето не е задължинелно)</label>
+                <label for="Allergens" class="control-label">Алергени (полето не е задължинелно)</label>
                 <input name="Allergens" placeholder="Алергени..." class="form-control" type="text" minlength="@GlobalConstants.DessertsValidationConstants.AllergensMinLength" maxlength="@GlobalConstants.DessertsValidationConstants.AllergensMaxLength" />
             </div>
-            <div class="form-group mt-3 mb-3">
-                <label for="Pieces" class="control-label" style="font-size: 14pt; font-weight: bold;">Брой парчета</label>
-                <input name="Pieces" placeholder="0" class="form-control" type="number" step="1" required />
-            </div>
             <div class="form-group mb-3">
-                <label for="Price" class="control-label" style="font-size: 14pt; font-weight: bold;">Цена(лв.)</label>
-                <input name="Price" placeholder="0.00" class="form-control" type="number" step=".01" min="@GlobalConstants.DessertsValidationConstants.PriceMinValue" max="@GlobalConstants.DessertsValidationConstants.PriceMaxValue" required />
-            </div>
-            <div class="form-group mb-3">
-                <label class="form-label" for="ImageFile" style="font-size: 14pt; font-weight: bold;">Симнка</label>
+                <label class="form-label" for="ImageFile">Сминка</label>
                 <input type="file" class="form-control" name="ImageFile" required />
             </div>
-            <br />
-            <div class="d-grid gap-2 col-4 mx-auto">
-                <input class="btn btn-success" style="width: 70%; font-size: 14pt; font-weight: bold;" value="Добави" type="submit" />
-                <input class="btn btn-dark mb-3" style="width: 70%; font-size: 14pt; font-weight: bold;"  value="Назад" onclick="history.back()">
+            <div class="form-group mt-3 mb-3">
+                <div class="nutritionInfo">
+                    <div>
+                        <label for="Pieces1" class="control-label">Брой парчета</label>
+                        <input name="Pieces1" placeholder="0" class="form-control" type="number" step="1" required />
+                    </div>
+                    <div>
+                        <label for="Price1" class="control-label">Цена (лв.)</label>
+                        <input name="Price1" placeholder="0.00" class="form-control" type="number" step=".01" min="@GlobalConstants.DessertsValidationConstants.PriceMinValue" max="@GlobalConstants.DessertsValidationConstants.PriceMaxValue" required />
+                    </div>
+                    <div id="addSecondPiecesOptionBtn">
+                        <nav class="input-group-btn" style="padding-top: 2.1em;">
+                            <button type="button" class="btn btn-success" title="Добави втора опция за брой парчета" onclick="addSecondPiecesOption()"><i class="fa-regular fa-square-plus"></i></button>
+                        </nav>
+                    </div>
+                    <div id="removeSecondPiecesOptionBtn" style="display: none;">
+                        <nav class="input-group-btn" style="padding-top: 2.1em;">
+                            <button type="button" class="btn btn-danger" title="Премахни втора опция за брой парчета" onclick="removeSecondPiecesOption()"><i class="fa-solid fa-xmark"></i></button>
+                        </nav>
+                    </div>
+                </div>
+                <div id="addSecondPiecesOptionSection" class="nutritionInfo" style="display: none;">
+                    <div>
+                        <label for="Pieces2" class="control-label">Брой парчета</label>
+                        <input name="Pieces2" placeholder="0" class="form-control" type="number" step="1" required />
+                    </div>
+                    <div>
+                        <label for="Price2" class="control-label">Цена (лв.)</label>
+                        <input name="Price2" placeholder="0.00" class="form-control" type="number" step=".01" min="@GlobalConstants.DessertsValidationConstants.PriceMinValue" max="@GlobalConstants.DessertsValidationConstants.PriceMaxValue" required />
+                    </div>
+                    <div style="width: 2.4em;"></div>
+                </div>
+            </div>
+            <div class="form-group mt-4 mb-4">
+                <label class="form-label mb-0" for="NutritionInfo">Хратинелна стойност за 100 гр. (гр.)</label>
+                <hr />
+                <div class="nutritionInfo">
+                    <div>
+                        <label for="NutritionInfo.Fats" class="control-label" style="">Мазнини</label>
+                        <input name="NutritionInfo.Fats" style="" placeholder="0.00" class="form-control" type="number" step=".01" min="@GlobalConstants.NutritionInfoConstants.MacrosMinValue" max="@GlobalConstants.NutritionInfoConstants.MacrosMaxValue" required />
+                    </div>
+                    <div>
+                        <label for="NutritionInfo.Carbs" class="control-label">Въглехидрати</label>
+                        <input name="NutritionInfo.Carbs" placeholder="0.00" class="form-control" type="number" step=".01" min="@GlobalConstants.NutritionInfoConstants.MacrosMinValue" max="@GlobalConstants.NutritionInfoConstants.MacrosMaxValue" required />
+                    </div>
+                    <div>
+                        <label for="NutritionInfo.Sugar" class="control-label">Захар</label>
+                        <input name="NutritionInfo.Sugar" placeholder="0.00" class="form-control" type="number" step=".01" min="@GlobalConstants.NutritionInfoConstants.MacrosMinValue" max="@GlobalConstants.NutritionInfoConstants.MacrosMaxValue" required />
+                    </div>
+                    <div>
+                        <label for="NutritionInfo.Protein" class="control-label">Протеин</label>
+                        <input name="NutritionInfo.Protein" placeholder="0.00" class="form-control" type="number" step=".01" min="@GlobalConstants.NutritionInfoConstants.MacrosMinValue" max="@GlobalConstants.NutritionInfoConstants.MacrosMaxValue" required />
+                    </div>
+                    <div>
+                        <label for="NutritionInfo.Salt" class="control-label">Сол</label>
+                        <input name="NutritionInfo.Salt" placeholder="0.00" class="form-control" type="number" step=".01" min="@GlobalConstants.NutritionInfoConstants.MacrosMinValue" max="@GlobalConstants.NutritionInfoConstants.MacrosMaxValue" required />
+                    </div>
+                </div>
+                <hr />
+            </div>
+            <div class="inputNavButtonsSection">
+                <div>
+                    <input class="btn btn-success" value="Добави" type="submit" />
+                </div>
+                <div>
+                    <input class="btn btn-dark" value="Назад" onclick="history.back()">
+                </div>
             </div>
         </form>
     </div>
 </div>
+
+<script>
+
+    function addSecondPiecesOption() {
+        document.getElementById('addSecondPiecesOptionBtn').style.display = "none";
+        document.getElementById('addSecondPiecesOptionSection').style.display = "flex";
+        document.getElementById('removeSecondPiecesOptionBtn').style.display = "block";
+
+    }
+
+    function removeSecondPiecesOption() {
+        document.getElementById('addSecondPiecesOptionBtn').style.display = "block";
+        document.getElementById('addSecondPiecesOptionSection').style.display = "none";
+        document.getElementById('removeSecondPiecesOptionBtn').style.display = "none";
+
+    }
+
+</script>
+
 
 @section Scripts {
     @{

@@ -3,12 +3,12 @@
     using System;
     using System.Threading.Tasks;
 
+    using Microsoft.AspNetCore.Mvc;
+
     using SladkarnicaHvarchilo.Data.Common.Repositories;
     using SladkarnicaHvarchilo.Data.Models;
-    using SladkarnicaHvarchilo.Web.ViewModels.Settings;
-
-    using Microsoft.AspNetCore.Mvc;
     using SladkarnicaHvarchilo.Services.Data.Contracts;
+    using SladkarnicaHvarchilo.Web.ViewModels.Settings;
 
     public class SettingsController : BaseController
     {

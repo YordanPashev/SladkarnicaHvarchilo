@@ -26,6 +26,8 @@
 
         public DbSet<Cake> Cakes { get; set; }
 
+        public DbSet<CakePiecesInfo> CakePiecesInfo { get; set; }
+
         public DbSet<Dessert> Desserts { get; set; }
 
         public DbSet<Setting> Settings { get; set; }

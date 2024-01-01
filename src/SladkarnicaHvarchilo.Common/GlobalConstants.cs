@@ -12,6 +12,12 @@
 
         public const string AdministrationSettingsDateTimeFormat = "dd/MM/yyyy, HH:mm:ss";
 
+        public static class NutritionInfoConstants
+        {
+            public const double MacrosMinValue = 0.0;
+            public const double MacrosMaxValue = 100.0;
+        }
+
         public static class DessertsValidationConstants
         {
             public const int NameMinLength = 1;

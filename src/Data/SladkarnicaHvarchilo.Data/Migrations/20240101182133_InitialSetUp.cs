@@ -5,8 +5,10 @@ namespace SladkarnicaHvarchilo.Data.Migrations
 
     using Microsoft.EntityFrameworkCore.Migrations;
 
+    /// <inheritdoc />
     public partial class InitialSetUp : Migration
     {
+        /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
@@ -54,6 +56,26 @@ namespace SladkarnicaHvarchilo.Data.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_AspNetUsers", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "NutritionInfo",
+                columns: table => new
+                {
+                    Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    Fats = table.Column<double>(type: "float", nullable: false),
+                    Carbs = table.Column<double>(type: "float", nullable: false),
+                    Sugar = table.Column<double>(type: "float", nullable: false),
+                    Protein = table.Column<double>(type: "float", nullable: false),
+                    Salt = table.Column<double>(type: "float", nullable: false),
+                    CreatedOn = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    ModifiedOn = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    IsDeleted = table.Column<bool>(type: "bit", nullable: false),
+                    DeletedOn = table.Column<DateTime>(type: "datetime2", nullable: true),
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_NutritionInfo", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -180,6 +202,87 @@ namespace SladkarnicaHvarchilo.Data.Migrations
                         onDelete: ReferentialAction.Restrict);
                 });
 
+            migrationBuilder.CreateTable(
+                name: "Cakes",
+                columns: table => new
+                {
+                    Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    Name = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
+                    Description = table.Column<string>(type: "nvarchar(1500)", maxLength: 1500, nullable: false),
+                    Ingredients = table.Column<string>(type: "nvarchar(1000)", maxLength: 1000, nullable: false),
+                    Allergens = table.Column<string>(type: "nvarchar(500)", maxLength: 500, nullable: true),
+                    Price = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
+                    ImageFileDirectoryPath = table.Column<string>(type: "nvarchar(260)", maxLength: 260, nullable: false),
+                    Category = table.Column<int>(type: "int", nullable: false),
+                    NutritionInfoId = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    CreatedOn = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    ModifiedOn = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    IsDeleted = table.Column<bool>(type: "bit", nullable: false),
+                    DeletedOn = table.Column<DateTime>(type: "datetime2", nullable: true),
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Cakes", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Cakes_NutritionInfo_NutritionInfoId",
+                        column: x => x.NutritionInfoId,
+                        principalTable: "NutritionInfo",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Desserts",
+                columns: table => new
+                {
+                    Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    Name = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
+                    Description = table.Column<string>(type: "nvarchar(1500)", maxLength: 1500, nullable: false),
+                    Ingredients = table.Column<string>(type: "nvarchar(1000)", maxLength: 1000, nullable: false),
+                    Allergens = table.Column<string>(type: "nvarchar(500)", maxLength: 500, nullable: true),
+                    Price = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
+                    ImageFileDirectoryPath = table.Column<string>(type: "nvarchar(260)", maxLength: 260, nullable: false),
+                    Category = table.Column<int>(type: "int", nullable: false),
+                    NutritionInfoId = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    CreatedOn = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    ModifiedOn = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    IsDeleted = table.Column<bool>(type: "bit", nullable: false),
+                    DeletedOn = table.Column<DateTime>(type: "datetime2", nullable: true),
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Desserts", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Desserts_NutritionInfo_NutritionInfoId",
+                        column: x => x.NutritionInfoId,
+                        principalTable: "NutritionInfo",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "CakePiecesInfo",
+                columns: table => new
+                {
+                    Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    CakeId = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    Piece = table.Column<int>(type: "int", nullable: false),
+                    CreatedOn = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    ModifiedOn = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    IsDeleted = table.Column<bool>(type: "bit", nullable: false),
+                    DeletedOn = table.Column<DateTime>(type: "datetime2", nullable: true),
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_CakePiecesInfo", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_CakePiecesInfo_Cakes_CakeId",
+                        column: x => x.CakeId,
+                        principalTable: "Cakes",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
                 table: "AspNetRoleClaims",
@@ -230,11 +333,47 @@ namespace SladkarnicaHvarchilo.Data.Migrations
                 filter: "[NormalizedUserName] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
+                name: "IX_CakePiecesInfo_CakeId",
+                table: "CakePiecesInfo",
+                column: "CakeId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_CakePiecesInfo_IsDeleted",
+                table: "CakePiecesInfo",
+                column: "IsDeleted");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Cakes_IsDeleted",
+                table: "Cakes",
+                column: "IsDeleted");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Cakes_NutritionInfoId",
+                table: "Cakes",
+                column: "NutritionInfoId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Desserts_IsDeleted",
+                table: "Desserts",
+                column: "IsDeleted");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Desserts_NutritionInfoId",
+                table: "Desserts",
+                column: "NutritionInfoId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_NutritionInfo_IsDeleted",
+                table: "NutritionInfo",
+                column: "IsDeleted");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Settings_IsDeleted",
                 table: "Settings",
                 column: "IsDeleted");
         }
 
+        /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
@@ -253,6 +392,12 @@ namespace SladkarnicaHvarchilo.Data.Migrations
                 name: "AspNetUserTokens");
 
             migrationBuilder.DropTable(
+                name: "CakePiecesInfo");
+
+            migrationBuilder.DropTable(
+                name: "Desserts");
+
+            migrationBuilder.DropTable(
                 name: "Settings");
 
             migrationBuilder.DropTable(
@@ -260,6 +405,12 @@ namespace SladkarnicaHvarchilo.Data.Migrations
 
             migrationBuilder.DropTable(
                 name: "AspNetUsers");
+
+            migrationBuilder.DropTable(
+                name: "Cakes");
+
+            migrationBuilder.DropTable(
+                name: "NutritionInfo");
         }
     }
 }

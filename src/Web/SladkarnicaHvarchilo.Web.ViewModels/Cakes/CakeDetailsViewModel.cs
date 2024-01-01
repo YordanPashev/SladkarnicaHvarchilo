@@ -5,6 +5,7 @@
     using SladkarnicaHvarchilo.Data.Models;
     using SladkarnicaHvarchilo.Data.Models.Enums;
     using SladkarnicaHvarchilo.Services.Mapping;
+    using SladkarnicaHvarchilo.Web.ViewModels.NutritionInfo;
 
     public class CakeDetailsViewModel : IMapFrom<Cake>
     {
@@ -29,5 +30,7 @@
         public DateTime CreatedOn { get; set; }
 
         public DateTime? ModifiedOn { get; set; }
+
+        public NutritionInfoViewModel NutritionInfo { get; set; }
     }
 }

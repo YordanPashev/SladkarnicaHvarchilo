@@ -31,9 +31,9 @@
         public bool CheckIfCakeHasBeenEdited(Cake cakeBeforeEdit, Cake userIputCakeData)
         {
             if (cakeBeforeEdit.Name == userIputCakeData.Name && cakeBeforeEdit.Description == userIputCakeData.Description &&
-                cakeBeforeEdit.Ingredients == userIputCakeData.Ingredients && cakeBeforeEdit.Pieces == userIputCakeData.Pieces &&
-                cakeBeforeEdit.Allergens == userIputCakeData.Allergens && cakeBeforeEdit.Price == userIputCakeData.Price &&
-                cakeBeforeEdit.ImageFileName == userIputCakeData.ImageFileName)
+                cakeBeforeEdit.Ingredients == userIputCakeData.Ingredients && cakeBeforeEdit.Allergens == userIputCakeData.Allergens &&
+                cakeBeforeEdit.ImageFileDirectoryPath == userIputCakeData.ImageFileDirectoryPath &&
+                cakeBeforeEdit.Price == userIputCakeData.Price)
             {
                 return false;
             }
@@ -80,8 +80,8 @@
             else if (selectedOrderCriteria == OrderCriteria.Pieces)
             {
                 return this.cakeRepo.AllAsNoTracking()
-                            .OrderByDescending(c => c.Pieces)
-                            .ThenBy(c => c.Name);
+                            //.OrderByDescending(c => c.Pieces)
+                            .OrderBy(c => c.Name);
             }
             else if (selectedOrderCriteria == OrderCriteria.Recent)
             {
@@ -103,10 +103,10 @@
             cakeBeforeEdit.Name = userIputCakeData.Name;
             cakeBeforeEdit.Description = userIputCakeData.Description;
             cakeBeforeEdit.Ingredients = userIputCakeData.Ingredients;
-            cakeBeforeEdit.Pieces = userIputCakeData.Pieces;
+            //cakeBeforeEdit.Pieces = userIputCakeData.Pieces;
             cakeBeforeEdit.Allergens = userIputCakeData.Allergens;
             cakeBeforeEdit.Price = userIputCakeData.Price;
-            cakeBeforeEdit.ImageFileName = userIputCakeData.ImageFileName;
+            cakeBeforeEdit.ImageFileDirectoryPath = userIputCakeData.ImageFileDirectoryPath;
 
             await this.cakeRepo.SaveChangesAsync();
         }

@@ -12,8 +12,8 @@ using SladkarnicaHvarchilo.Data;
 namespace SladkarnicaHvarchilo.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20230624175902_UpdateColName")]
-    partial class UpdateColName
+    [Migration("20240101182133_InitialSetUp")]
+    partial class InitialSetUp
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -274,7 +274,7 @@ namespace SladkarnicaHvarchilo.Data.Migrations
                         .HasMaxLength(1500)
                         .HasColumnType("nvarchar(1500)");
 
-                    b.Property<string>("ImageFileName")
+                    b.Property<string>("ImageFileDirectoryPath")
                         .IsRequired()
                         .HasMaxLength(260)
                         .HasColumnType("nvarchar(260)");
@@ -295,17 +295,53 @@ namespace SladkarnicaHvarchilo.Data.Migrations
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
-                    b.Property<int>("Pieces")
-                        .HasColumnType("int");
+                    b.Property<string>("NutritionInfoId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<decimal>("Price")
-                        .HasColumnType("decimal(18,2)");
+                        .HasColumnType("decimal(18, 2)");
 
                     b.HasKey("Id");
 
                     b.HasIndex("IsDeleted");
 
+                    b.HasIndex("NutritionInfoId");
+
                     b.ToTable("Cakes");
+                });
+
+            modelBuilder.Entity("SladkarnicaHvarchilo.Data.Models.CakePiecesInfo", b =>
+                {
+                    b.Property<string>("Id")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("CakeId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<DateTime>("CreatedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("DeletedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTime?>("ModifiedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("Piece")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CakeId");
+
+                    b.HasIndex("IsDeleted");
+
+                    b.ToTable("CakePiecesInfo");
                 });
 
             modelBuilder.Entity("SladkarnicaHvarchilo.Data.Models.Dessert", b =>
@@ -319,6 +355,12 @@ namespace SladkarnicaHvarchilo.Data.Migrations
 
                     b.Property<int>("Category")
                         .HasColumnType("int");
+
+                    b.Property<DateTime>("CreatedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("DeletedOn")
+                        .HasColumnType("datetime2");
 
                     b.Property<string>("Description")
                         .IsRequired()
@@ -335,17 +377,70 @@ namespace SladkarnicaHvarchilo.Data.Migrations
                         .HasMaxLength(1000)
                         .HasColumnType("nvarchar(1000)");
 
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTime?>("ModifiedOn")
+                        .HasColumnType("datetime2");
+
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
+                    b.Property<string>("NutritionInfoId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
                     b.Property<decimal>("Price")
-                        .HasColumnType("decimal(18,2)");
+                        .HasColumnType("decimal(18, 2)");
 
                     b.HasKey("Id");
 
+                    b.HasIndex("IsDeleted");
+
+                    b.HasIndex("NutritionInfoId");
+
                     b.ToTable("Desserts");
+                });
+
+            modelBuilder.Entity("SladkarnicaHvarchilo.Data.Models.NutritionInfo", b =>
+                {
+                    b.Property<string>("Id")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<double>("Carbs")
+                        .HasColumnType("float");
+
+                    b.Property<DateTime>("CreatedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("DeletedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<double>("Fats")
+                        .HasColumnType("float");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTime?>("ModifiedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<double>("Protein")
+                        .HasColumnType("float");
+
+                    b.Property<double>("Salt")
+                        .HasColumnType("float");
+
+                    b.Property<double>("Sugar")
+                        .HasColumnType("float");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("IsDeleted");
+
+                    b.ToTable("NutritionInfo");
                 });
 
             modelBuilder.Entity("SladkarnicaHvarchilo.Data.Models.Setting", b =>
@@ -430,6 +525,39 @@ namespace SladkarnicaHvarchilo.Data.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("SladkarnicaHvarchilo.Data.Models.Cake", b =>
+                {
+                    b.HasOne("SladkarnicaHvarchilo.Data.Models.NutritionInfo", "NutritionInfo")
+                        .WithMany()
+                        .HasForeignKey("NutritionInfoId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("NutritionInfo");
+                });
+
+            modelBuilder.Entity("SladkarnicaHvarchilo.Data.Models.CakePiecesInfo", b =>
+                {
+                    b.HasOne("SladkarnicaHvarchilo.Data.Models.Cake", "Cake")
+                        .WithMany()
+                        .HasForeignKey("CakeId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Cake");
+                });
+
+            modelBuilder.Entity("SladkarnicaHvarchilo.Data.Models.Dessert", b =>
+                {
+                    b.HasOne("SladkarnicaHvarchilo.Data.Models.NutritionInfo", "NutritionInfo")
+                        .WithMany()
+                        .HasForeignKey("NutritionInfoId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("NutritionInfo");
                 });
 
             modelBuilder.Entity("SladkarnicaHvarchilo.Data.Models.ApplicationUser", b =>
