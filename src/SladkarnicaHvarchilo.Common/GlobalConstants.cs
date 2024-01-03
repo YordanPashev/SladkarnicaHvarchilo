@@ -18,7 +18,7 @@
             public const double MacrosMaxValue = 100.0;
         }
 
-        public static class DessertsValidationConstants
+        public static class PastryValidationConstants
         {
             public const int NameMinLength = 1;
             public const int NameMaxLength = 50;
@@ -35,8 +35,11 @@
             public const int AllergensMinLength = 5;
             public const int AllergensMaxLength = 500;
 
-            public const double PriceMinValue = 0.01d;
+            public const double PriceMinValue = 0.01;
             public const double PriceMaxValue = 1000.00d;
+
+            public const double PiecesMinValue = 1;
+            public const double PiecesMaxValue = 100;
         }
 
         public static class OrderCriteria

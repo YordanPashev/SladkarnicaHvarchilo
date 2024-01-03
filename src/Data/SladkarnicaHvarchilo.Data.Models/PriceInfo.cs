@@ -6,19 +6,20 @@
     using SladkarnicaHvarchilo.Data.Common.Models;
     using SladkarnicaHvarchilo.Data.Models.Contracts;
 
-    public class CakePiecesInfo : BaseDeletableModel<int>
+    public class PriceInfo : BaseDeletableModel<int>
     {
         [Key]
         [Required]
         public string Id { get; set; }
 
-        [ForeignKey(nameof(Cake))]
         [Required]
-        public string CakeId { get; set; }
-
-        public Cake Cake { get; set; }
+        public string PastryId { get; set; }
 
         [Required]
-        public int Piece { get; set; }
+        public int Pieces { get; set; }
+
+        [Required]
+        [Column(TypeName = "decimal(18, 2)")]
+        public decimal Price { get; set; }
     }
 }

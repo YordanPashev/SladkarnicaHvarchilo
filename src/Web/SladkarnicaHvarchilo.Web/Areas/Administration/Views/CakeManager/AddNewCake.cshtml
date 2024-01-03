@@ -2,7 +2,6 @@
 
 @{
     this.ViewData["Title"] = "Добави нова торта";
-    string currentDate = @DateTime.Now.ToString("yyyy-MM-dd");
 }
 
 @if (!string.IsNullOrEmpty(this.ViewBag.UserMessage))
@@ -17,19 +16,19 @@
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group mt-3 mb-3">
                 <label for="Name" class="control-label">Име</label>
-                <input name="Name" placeholder="Име..." class="form-control" type="text" minlength="@GlobalConstants.DessertsValidationConstants.NameMinLength" maxlength="@GlobalConstants.DessertsValidationConstants.NameMaxLength" required />
+                <input name="Name" placeholder="Име..." class="form-control" type="text" minlength="@GlobalConstants.PastryValidationConstants.NameMinLength" maxlength="@GlobalConstants.PastryValidationConstants.NameMaxLength" required />
             </div>
             <div class="form-group mt-3 mb-3">
                 <label for="Description" class="control-label">Описание</label>
-                <textarea name="Description" placeholder="Описание..." class="form-control" type="text" rows="3" cols="6" style="white-space: pre-line" minlength="@GlobalConstants.DessertsValidationConstants.DescriptionMinLength" maxlength="@GlobalConstants.DessertsValidationConstants.DescriptionMaxLength" required></textarea>
+                <textarea name="Description" placeholder="Описание..." class="form-control" type="text" rows="3" cols="6" style="white-space: pre-line" minlength="@GlobalConstants.PastryValidationConstants.DescriptionMinLength" maxlength="@GlobalConstants.PastryValidationConstants.DescriptionMaxLength" required></textarea>
             </div>
             <div class="form-group mt-3 mb-3">
                 <label for="Ingredients" class="control-label">Съставки</label>
-                <input name="Ingredients" placeholder="Съставки..." class="form-control" type="text" minlength="@GlobalConstants.DessertsValidationConstants.IngredientsMinLength" maxlength="@GlobalConstants.DessertsValidationConstants.IngredientsMaxLength" required />
+                <input name="Ingredients" placeholder="Съставки..." class="form-control" type="text" minlength="@GlobalConstants.PastryValidationConstants.IngredientsMinLength" maxlength="@GlobalConstants.PastryValidationConstants.IngredientsMaxLength" required />
             </div>
             <div class="form-group mt-3 mb-3">
                 <label for="Allergens" class="control-label">Алергени (полето не е задължинелно)</label>
-                <input name="Allergens" placeholder="Алергени..." class="form-control" type="text" minlength="@GlobalConstants.DessertsValidationConstants.AllergensMinLength" maxlength="@GlobalConstants.DessertsValidationConstants.AllergensMaxLength" />
+                <input name="Allergens" placeholder="Алергени..." class="form-control" type="text" minlength="@GlobalConstants.PastryValidationConstants.AllergensMinLength" maxlength="@GlobalConstants.PastryValidationConstants.AllergensMaxLength" />
             </div>
             <div class="form-group mb-3">
                 <label class="form-label" for="ImageFile">Сминка</label>
@@ -38,16 +37,16 @@
             <div class="form-group mt-3 mb-3">
                 <div class="nutritionInfo">
                     <div>
-                        <label for="Pieces1" class="control-label">Брой парчета</label>
-                        <input name="Pieces1" placeholder="0" class="form-control" type="number" step="1" required />
+                        <label for="PriceInfo[0].Pieces" class="control-label">Брой парчета</label>
+                        <input name="PriceInfo[0].Pieces" placeholder="0" class="form-control" type="number" step="1" min="@GlobalConstants.PastryValidationConstants.PiecesMinValue" max="@GlobalConstants.PastryValidationConstants.PiecesMaxValue" required />
                     </div>
                     <div>
-                        <label for="Price1" class="control-label">Цена (лв.)</label>
-                        <input name="Price1" placeholder="0.00" class="form-control" type="number" step=".01" min="@GlobalConstants.DessertsValidationConstants.PriceMinValue" max="@GlobalConstants.DessertsValidationConstants.PriceMaxValue" required />
+                        <label for="PriceInfo[0].Price" class="control-label">Цена (лв.)</label>
+                        <input name="PriceInfo[0].Price" placeholder="0.00" class="form-control" type="number" step=".01" min="@GlobalConstants.PastryValidationConstants.PriceMinValue" max="@GlobalConstants.PastryValidationConstants.PriceMaxValue" required />
                     </div>
                     <div id="addSecondPiecesOptionBtn">
                         <nav class="input-group-btn" style="padding-top: 2.1em;">
-                            <button type="button" class="btn btn-success" title="Добави втора опция за брой парчета" onclick="addSecondPiecesOption()"><i class="fa-regular fa-square-plus"></i></button>
+                            <button type="button" class="btn btn-success" title="Добави втора опция за брой парчета" onclick="addSecondPiecesOption()" ><i class="fa-regular fa-square-plus"></i></button>
                         </nav>
                     </div>
                     <div id="removeSecondPiecesOptionBtn" style="display: none;">
@@ -58,12 +57,12 @@
                 </div>
                 <div id="addSecondPiecesOptionSection" class="nutritionInfo" style="display: none;">
                     <div>
-                        <label for="Pieces2" class="control-label">Брой парчета</label>
-                        <input name="Pieces2" placeholder="0" class="form-control" type="number" step="1" required />
+                        <label for="PriceInfo[1].Pieces" class="control-label">Брой парчета</label>
+                        <input name="PriceInfo[1].Pieces" placeholder="0" class="form-control" type="number" step="1" value="null" min="@GlobalConstants.PastryValidationConstants.PiecesMinValue" max="@GlobalConstants.PastryValidationConstants.PiecesMaxValue" />
                     </div>
                     <div>
-                        <label for="Price2" class="control-label">Цена (лв.)</label>
-                        <input name="Price2" placeholder="0.00" class="form-control" type="number" step=".01" min="@GlobalConstants.DessertsValidationConstants.PriceMinValue" max="@GlobalConstants.DessertsValidationConstants.PriceMaxValue" required />
+                        <label for="PriceInfo[1].Price" class="control-label">Цена (лв.)</label>
+                        <input name="PriceInfo[1].Price" placeholder="0.00" class="form-control" type="number" step=".01" value="null" min="@GlobalConstants.PastryValidationConstants.PriceMinValue" max="@GlobalConstants.PastryValidationConstants.PriceMaxValue" />
                     </div>
                     <div style="width: 2.4em;"></div>
                 </div>

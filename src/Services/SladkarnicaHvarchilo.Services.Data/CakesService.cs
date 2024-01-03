@@ -32,8 +32,7 @@
         {
             if (cakeBeforeEdit.Name == userIputCakeData.Name && cakeBeforeEdit.Description == userIputCakeData.Description &&
                 cakeBeforeEdit.Ingredients == userIputCakeData.Ingredients && cakeBeforeEdit.Allergens == userIputCakeData.Allergens &&
-                cakeBeforeEdit.ImageFileDirectoryPath == userIputCakeData.ImageFileDirectoryPath &&
-                cakeBeforeEdit.Price == userIputCakeData.Price)
+                cakeBeforeEdit.ImageFileDirectoryPath == userIputCakeData.ImageFileDirectoryPath)
             {
                 return false;
             }
@@ -68,14 +67,14 @@
             if (selectedOrderCriteria == OrderCriteria.PriceAscending)
             {
                 return this.cakeRepo.AllAsNoTracking()
-                            .OrderBy(c => c.Price)
-                            .ThenBy(c => c.Name);
+                            //.OrderBy(c => c.Price)
+                            .OrderBy(c => c.Name);
             }
             else if (selectedOrderCriteria == OrderCriteria.PriceDescending)
             {
                 return this.cakeRepo.AllAsNoTracking()
-                            .OrderByDescending(c => c.Price)
-                            .ThenBy(c => c.Name);
+                            //.OrderByDescending(c => c.Price)
+                            .OrderBy(c => c.Name);
             }
             else if (selectedOrderCriteria == OrderCriteria.Pieces)
             {
@@ -103,9 +102,7 @@
             cakeBeforeEdit.Name = userIputCakeData.Name;
             cakeBeforeEdit.Description = userIputCakeData.Description;
             cakeBeforeEdit.Ingredients = userIputCakeData.Ingredients;
-            //cakeBeforeEdit.Pieces = userIputCakeData.Pieces;
             cakeBeforeEdit.Allergens = userIputCakeData.Allergens;
-            cakeBeforeEdit.Price = userIputCakeData.Price;
             cakeBeforeEdit.ImageFileDirectoryPath = userIputCakeData.ImageFileDirectoryPath;
 
             await this.cakeRepo.SaveChangesAsync();

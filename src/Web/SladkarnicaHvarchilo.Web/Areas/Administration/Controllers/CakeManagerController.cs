@@ -1,6 +1,7 @@
 ﻿namespace SladkarnicaHvarchilo.Web.Areas.Administration.Controllers
 {
-    using System.Reflection;
+    using System.Collections.Generic;
+    using System.Linq;
     using System.Threading.Tasks;
 
     using Microsoft.AspNetCore.Http;
@@ -10,16 +11,22 @@
     using SladkarnicaHvarchilo.Data.Models;
     using SladkarnicaHvarchilo.Services.Data.Contracts;
     using SladkarnicaHvarchilo.Services.Mapping;
-    using SladkarnicaHvarchilo.Web.Controllers;
     using SladkarnicaHvarchilo.Web.Helpers;
+    using SladkarnicaHvarchilo.Web.ViewModels.CakePiecesInfo;
     using SladkarnicaHvarchilo.Web.ViewModels.Cakes;
 
     public class CakeManagerController : AdministrationController
     {
         private readonly ICakesService cakesService;
+        private readonly ICakePiecesInfoService cakePiecesInfoService;
+
         private ImageManager imageManager = new ImageManager();
 
-        public CakeManagerController(ICakesService cakesService) => this.cakesService = cakesService;
+        public CakeManagerController(ICakesService cakesService, ICakePiecesInfoService cakePiecesInfoService)
+        {
+            this.cakesService = cakesService;
+            this.cakePiecesInfoService = cakePiecesInfoService;
+        }
 
         [HttpGet]
         public IActionResult AddNewCake()
@@ -32,6 +39,11 @@
         [HttpPost]
         public async Task<IActionResult> AddNewCake(CreateCakeViewModel userIputModel)
         {
+            for (int infoIndex = 0; infoIndex < userIputModel.PriceInfo.Count; infoIndex++)
+            {
+                userIputModel.PriceInfo[infoIndex].PastryId = userIputModel.Id;
+            }
+
             if (!this.ModelState.IsValid)
             {
                 return this.RedirectToAction(nameof(this.AddNewCake), new { userMessage = GlobalConstants.UserMessage.InvalidInputData });
@@ -111,7 +123,9 @@
 
             Cake cake = AutoMapperConfig.MapperInstance.Map<Cake>(model);
             cake.ImageFileDirectoryPath = model.ImageFile.FileName;
+            List<PriceInfo> cakePiecesInfo = AutoMapperConfig.MapperInstance.Map<List<PriceInfo>>(model.PriceInfo);
 
+            await this.cakePiecesInfoService.AddCakePiecesInfo(cakePiecesInfo);
             await this.cakesService.AddNewCake(cake);
         }
 

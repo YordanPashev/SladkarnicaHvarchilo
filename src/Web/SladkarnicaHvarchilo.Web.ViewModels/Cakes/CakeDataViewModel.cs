@@ -1,6 +1,7 @@
 ﻿namespace SladkarnicaHvarchilo.Web.ViewModels.Cakes
 {
     using System;
+    using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
     using System.ComponentModel.DataAnnotations.Schema;
 
@@ -8,6 +9,7 @@
 
     using SladkarnicaHvarchilo.Common;
     using SladkarnicaHvarchilo.Data.Models.Enums;
+    using SladkarnicaHvarchilo.Web.ViewModels.CakePiecesInfo;
     using SladkarnicaHvarchilo.Web.ViewModels.NutritionInfo;
 
     public class CakeDataViewModel
@@ -16,44 +18,33 @@
         public string Id { get; set; }
 
         [Required]
-        [MinLength(GlobalConstants.DessertsValidationConstants.NameMinLength)]
-        [MaxLength(GlobalConstants.DessertsValidationConstants.NameMaxLength)]
+        [MinLength(GlobalConstants.PastryValidationConstants.NameMinLength)]
+        [MaxLength(GlobalConstants.PastryValidationConstants.NameMaxLength)]
         public string Name { get; set; }
 
         [Required]
-        [MinLength(GlobalConstants.DessertsValidationConstants.DescriptionMinLength)]
-        [MaxLength(GlobalConstants.DessertsValidationConstants.DescriptionMaxLength)]
+        [MinLength(GlobalConstants.PastryValidationConstants.DescriptionMinLength)]
+        [MaxLength(GlobalConstants.PastryValidationConstants.DescriptionMaxLength)]
         public string Description { get; set; }
 
         [Required]
-        [MinLength(GlobalConstants.DessertsValidationConstants.IngredientsMinLength)]
-        [MaxLength(GlobalConstants.DessertsValidationConstants.IngredientsMaxLength)]
+        [MinLength(GlobalConstants.PastryValidationConstants.IngredientsMinLength)]
+        [MaxLength(GlobalConstants.PastryValidationConstants.IngredientsMaxLength)]
         public string Ingredients { get; set; }
 
         [Required]
-        public int Pieces1 { get; set; }
+        public List<PriceInfoViewModel> PriceInfo { get; set; }
 
-        [Required]
-        public int Pieces2 { get; set; }
-
-        [MinLength(GlobalConstants.DessertsValidationConstants.AllergensMinLength)]
-        [MaxLength(GlobalConstants.DessertsValidationConstants.AllergensMaxLength)]
+        [MinLength(GlobalConstants.PastryValidationConstants.AllergensMinLength)]
+        [MaxLength(GlobalConstants.PastryValidationConstants.AllergensMaxLength)]
         public string Allergens { get; set; }
-
-        [Required]
-        [Range(GlobalConstants.DessertsValidationConstants.PriceMinValue, GlobalConstants.DessertsValidationConstants.PriceMaxValue)]
-        public decimal Price1 { get; set; }
-
-        [Required]
-        [Range(GlobalConstants.DessertsValidationConstants.PriceMinValue, GlobalConstants.DessertsValidationConstants.PriceMaxValue)]
-        public decimal Price2 { get; set; }
 
         [Required]
         [NotMapped]
         public IFormFile ImageFile { get; set; }
 
-        [MinLength(GlobalConstants.DessertsValidationConstants.ImageFileDirectoryPathMinLength)]
-        [MaxLength(GlobalConstants.DessertsValidationConstants.ImageFileDirectoryPathMaxLength)]
+        [MinLength(GlobalConstants.PastryValidationConstants.ImageFileDirectoryPathMinLength)]
+        [MaxLength(GlobalConstants.PastryValidationConstants.ImageFileDirectoryPathMaxLength)]
         public string ImageFileName { get; set; }
 
         [Required]
