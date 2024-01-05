@@ -15,7 +15,7 @@
 
         public string Id { get; set; }
 
-        public string PastryId { get; set; }
+        public string DessertId { get; set; }
 
         [Range(GlobalConstants.PastryValidationConstants.PiecesMinValue, GlobalConstants.PastryValidationConstants.PiecesMaxValue)]
         public int? Pieces { get; set; }

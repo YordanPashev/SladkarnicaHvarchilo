@@ -73,7 +73,7 @@
         @foreach (var cake in this.Model.Cakes)
         {
             <button class="card col-4 mb-2 mt-2" style="margin-left: 1rem; width: 26rem; background: rgba(71, 90, 54, 0.7); backdrop-filter: blur(10px); border: 2px solid; border-radius: 15px; border-color: antiquewhite;" onclick="location.href='@Url.Action("CakeDetails", "Cakes", new { cake.Id })'">
-                <img class="card mt-2" style="width: 24.3rem; height: 15rem;" src="~/img/cakes/@(cake.ImageFileName)" alt="No Image">
+                <img class="card mt-2" style="width: 24.3rem; height: 15rem;" src="~/img/Cakes/@cake.ImageFileDirectoryPath" alt="No Image">
                 <div class="container text-center">
                 <h2 class="card-title" style="color: white; font-weight: bold">@cake.Name</h2>
                 <h5 class="mb-2" style="color: white; font-weight: bold">@cake.Pieces парчета</h5>

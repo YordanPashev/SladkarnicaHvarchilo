@@ -20,7 +20,7 @@
     <div class="container text-center" style="background: rgba(71, 90, 54, 0.7); border: 2px solid; border-color: #475A36 ; border-radius: 15px; backdrop-filter: blur(12px);">
         <i class="fa fa-apple"></i>
         <h1 style="color: white; text-align:center"><strong>@this.ViewData["Title"]</strong></h1>
-        <div class="about-product text-center mt-2 mb-2"><img alt="No image" src="~/img/cakes/@(this.Model.ImageFileName)" width="70%"></div>
+        <div class="about-product text-center mt-2 mb-2"><img alt="No image" src="~/img/Cakes/@this.Model.ImageFileDirectoryPath" width="70%"></div>
         <div class="mb-4" style="font-size: 20px; color: white; white-space: pre-line"><strong>Описание:</strong> @Environment.NewLine @this.Model.Description</div>
         <div style="font-size: 20px; color: white"><strong>Съставки:</strong> @this.Model.Ingredients</div>
         <div style="font-size: 20px; color: white"><strong>Брой Парчета:</strong> @this.Model.Pieces</div>

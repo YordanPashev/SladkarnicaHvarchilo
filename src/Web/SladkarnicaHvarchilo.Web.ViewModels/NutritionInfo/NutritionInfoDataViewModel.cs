@@ -2,9 +2,12 @@
 {
     using System.ComponentModel.DataAnnotations;
 
+    using SladkarnicaHvarchilo.Data.Models;
+    using SladkarnicaHvarchilo.Services.Mapping;
+
     using static SladkarnicaHvarchilo.Common.GlobalConstants;
 
-    public class NutritionInfoDataViewModel
+    public class NutritionInfoDataViewModel : IMapTo<NutritionInfo>
     {
         [Key]
         [Required]

@@ -45,10 +45,13 @@
 
         [MinLength(GlobalConstants.PastryValidationConstants.ImageFileDirectoryPathMinLength)]
         [MaxLength(GlobalConstants.PastryValidationConstants.ImageFileDirectoryPathMaxLength)]
-        public string ImageFileName { get; set; }
+        public string ImageFileDirectoryPath { get; set; }
 
         [Required]
         public FoodTastingCategory Category { get; set; }
+
+        [Required]
+        public DessertType Type { get; set; }
 
         [Required]
         public NutritionInfoDataViewModel NutritionInfo { get; set; }

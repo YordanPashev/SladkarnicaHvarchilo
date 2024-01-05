@@ -4,7 +4,7 @@
     using SladkarnicaHvarchilo.Data.Models.Enums;
     using SladkarnicaHvarchilo.Services.Mapping;
 
-    public class EditCakeViewModel : CakeDataViewModel, IMapFrom<Cake>, IMapTo<Cake>
+    public class EditCakeViewModel : CakeDataViewModel, IMapFrom<Dessert>, IMapTo<Dessert>
     {
         public EditCakeViewModel() => this.Category = FoodTastingCategory.Sweet;
     }

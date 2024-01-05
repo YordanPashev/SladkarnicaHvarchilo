@@ -53,6 +53,5 @@
 
   <ItemGroup>
     <Folder Include="Areas\Identity\Data\" />
-    <Folder Include="wwwroot\img\Cakes\" />
   </ItemGroup>
 </Project>

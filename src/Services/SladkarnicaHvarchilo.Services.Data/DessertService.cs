@@ -11,24 +11,24 @@
 
     using static SladkarnicaHvarchilo.Common.GlobalConstants;
 
-    public class CakesService : ICakesService
+    public class DessertService : IDessertService
     {
-        private readonly IDeletableEntityRepository<Cake> cakeRepo;
+        private readonly IDeletableEntityRepository<Dessert> dessertRepo;
 
-        public CakesService(IDeletableEntityRepository<Cake> cakeRepo)
-            => this.cakeRepo = cakeRepo;
+        public DessertService(IDeletableEntityRepository<Dessert> cakeRepo)
+            => this.dessertRepo = cakeRepo;
 
-        public async Task AddNewCake(Cake cake)
+        public async Task AddNewCake(Dessert cake)
         {
-            await this.cakeRepo.AddAsync(cake);
-            await this.cakeRepo.SaveChangesAsync();
+            await this.dessertRepo.AddAsync(cake);
+            await this.dessertRepo.SaveChangesAsync();
         }
 
         public async Task<bool> CheckIfCakeAlreadyExists(string cakeName)
-            => await this.cakeRepo.AllAsNoTracking()
+            => await this.dessertRepo.AllAsNoTracking()
                             .AnyAsync(c => c.Name == cakeName);
 
-        public bool CheckIfCakeHasBeenEdited(Cake cakeBeforeEdit, Cake userIputCakeData)
+        public bool CheckIfCakeHasBeenEdited(Dessert cakeBeforeEdit, Dessert userIputCakeData)
         {
             if (cakeBeforeEdit.Name == userIputCakeData.Name && cakeBeforeEdit.Description == userIputCakeData.Description &&
                 cakeBeforeEdit.Ingredients == userIputCakeData.Ingredients && cakeBeforeEdit.Allergens == userIputCakeData.Allergens &&
@@ -40,64 +40,66 @@
             return true;
         }
 
-        public async Task DeteleCake(Cake cake)
+        public async Task DeteleCake(Dessert cake)
         {
-            this.cakeRepo.Delete(cake);
+            this.dessertRepo.Delete(cake);
 
-            await this.cakeRepo.SaveChangesAsync();
+            await this.dessertRepo.SaveChangesAsync();
         }
 
-        public IQueryable<Cake> GetAllCakesInSale()
-            => this.cakeRepo.AllAsNoTracking().OrderBy(c => c.Name);
+        public IQueryable<Dessert> GetAllCakesInSale()
+            => this.dessertRepo.AllAsNoTracking()
+                            .Include(c => c.PriceInfo)
+                            .OrderBy(c => c.Name);
 
-        public async Task<Cake> GetCakeByIdAsync(string id)
-            => await this.cakeRepo.AllAsNoTracking()
+        public async Task<Dessert> GetCakeByIdAsync(string id)
+            => await this.dessertRepo.AllAsNoTracking()
                             .FirstOrDefaultAsync(c => c.Id == id);
 
-        public async Task<Cake> GetCakeByIdForEditAsync(string id)
-            => await this.cakeRepo.All()
+        public async Task<Dessert> GetCakeByIdForEditAsync(string id)
+            => await this.dessertRepo.All()
                             .FirstOrDefaultAsync(c => c.Id == id);
 
-        public IQueryable<Cake> GetCakesAccoringToFilters(string selectedOrderCriteria, string searchQuery)
+        public IQueryable<Dessert> GetCakesAccoringToFilters(string selectedOrderCriteria, string searchQuery)
             => this.GetCakesByOrderCriteria(selectedOrderCriteria)
                         .Where(c => c.Name.ToUpper().Contains(searchQuery));
 
-        public IQueryable<Cake> GetCakesByOrderCriteria(string selectedOrderCriteria)
+        public IQueryable<Dessert> GetCakesByOrderCriteria(string selectedOrderCriteria)
         {
             if (selectedOrderCriteria == OrderCriteria.PriceAscending)
             {
-                return this.cakeRepo.AllAsNoTracking()
+                return this.dessertRepo.AllAsNoTracking()
                             //.OrderBy(c => c.Price)
                             .OrderBy(c => c.Name);
             }
             else if (selectedOrderCriteria == OrderCriteria.PriceDescending)
             {
-                return this.cakeRepo.AllAsNoTracking()
+                return this.dessertRepo.AllAsNoTracking()
                             //.OrderByDescending(c => c.Price)
                             .OrderBy(c => c.Name);
             }
             else if (selectedOrderCriteria == OrderCriteria.Pieces)
             {
-                return this.cakeRepo.AllAsNoTracking()
+                return this.dessertRepo.AllAsNoTracking()
                             //.OrderByDescending(c => c.Pieces)
                             .OrderBy(c => c.Name);
             }
             else if (selectedOrderCriteria == OrderCriteria.Recent)
             {
-                return this.cakeRepo.AllAsNoTracking()
+                return this.dessertRepo.AllAsNoTracking()
                             .OrderByDescending(c => c.CreatedOn)
                             .ThenBy(c => c.Name);
             }
 
-            return this.cakeRepo.AllAsNoTracking().OrderBy(c => c.Name);
+            return this.dessertRepo.AllAsNoTracking().OrderBy(c => c.Name);
         }
 
-        public IQueryable<Cake> GetSearchedCakes(string searchQuery)
-            => this.cakeRepo.AllAsNoTracking()
+        public IQueryable<Dessert> GetSearchedCakes(string searchQuery)
+            => this.dessertRepo.AllAsNoTracking()
                             .Where(c => c.Name.ToUpper().Contains(searchQuery))
                             .OrderBy(c => c.Name);
 
-        public async Task UpdateCakeDataAsync(Cake cakeBeforeEdit, Cake userIputCakeData)
+        public async Task UpdateCakeDataAsync(Dessert cakeBeforeEdit, Dessert userIputCakeData)
         {
             cakeBeforeEdit.Name = userIputCakeData.Name;
             cakeBeforeEdit.Description = userIputCakeData.Description;
@@ -105,7 +107,7 @@
             cakeBeforeEdit.Allergens = userIputCakeData.Allergens;
             cakeBeforeEdit.ImageFileDirectoryPath = userIputCakeData.ImageFileDirectoryPath;
 
-            await this.cakeRepo.SaveChangesAsync();
+            await this.dessertRepo.SaveChangesAsync();
         }
     }
 }

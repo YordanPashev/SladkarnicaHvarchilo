@@ -1,15 +1,15 @@
 ﻿namespace SladkarnicaHvarchilo.Data.Models
 {
     using System;
+    using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
     using System.ComponentModel.DataAnnotations.Schema;
 
     using SladkarnicaHvarchilo.Common;
     using SladkarnicaHvarchilo.Data.Common.Models;
-    using SladkarnicaHvarchilo.Data.Models.Contracts;
     using SladkarnicaHvarchilo.Data.Models.Enums;
 
-    public class Dessert : BaseDeletableModel<int>, IPastry
+    public class Dessert : BaseDeletableModel<int>
     {
         public Dessert() => this.Id = Guid.NewGuid().ToString();
 
@@ -33,10 +33,6 @@
         public string Allergens { get; set; }
 
         [Required]
-        [Column(TypeName = "decimal(18, 2)")]
-        public decimal Price { get; set; }
-
-        [Required]
         [MaxLength(GlobalConstants.PastryValidationConstants.ImageFileDirectoryPathMaxLength)]
         public string ImageFileDirectoryPath { get; set; }
 
@@ -44,9 +40,14 @@
         public FoodTastingCategory Category { get; set; }
 
         [Required]
+        public DessertType Type { get; set; }
+
+        [Required]
         [ForeignKey(nameof(NutritionInfo))]
         public string NutritionInfoId { get; set; }
 
         public virtual NutritionInfo NutritionInfo { get; set; }
+
+        public virtual ICollection<PriceInfo> PriceInfo { get; set; }
     }
 }

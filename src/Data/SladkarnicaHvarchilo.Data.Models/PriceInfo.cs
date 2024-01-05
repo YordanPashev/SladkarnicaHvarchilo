@@ -4,7 +4,6 @@
     using System.ComponentModel.DataAnnotations.Schema;
 
     using SladkarnicaHvarchilo.Data.Common.Models;
-    using SladkarnicaHvarchilo.Data.Models.Contracts;
 
     public class PriceInfo : BaseDeletableModel<int>
     {
@@ -12,8 +11,11 @@
         [Required]
         public string Id { get; set; }
 
+        [ForeignKey(nameof(Dessert))]
         [Required]
-        public string PastryId { get; set; }
+        public string DessertId { get; set; }
+
+        public Dessert Dessert { get; set; }
 
         [Required]
         public int Pieces { get; set; }

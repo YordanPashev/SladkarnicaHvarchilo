@@ -7,7 +7,7 @@
     using SladkarnicaHvarchilo.Services.Mapping;
     using SladkarnicaHvarchilo.Web.ViewModels.NutritionInfo;
 
-    public class CakeDetailsViewModel : IMapFrom<Cake>
+    public class CakeDetailsViewModel : IMapFrom<Dessert>
     {
         public string Id { get; set; }
 
@@ -23,7 +23,7 @@
 
         public decimal Price { get; set; }
 
-        public string ImageFileName { get; set; }
+        public string ImageFileDirectoryPath { get; set; }
 
         public FoodTastingCategory Category { get; set; }
 

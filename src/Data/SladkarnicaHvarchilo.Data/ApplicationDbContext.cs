@@ -24,11 +24,9 @@
         {
         }
 
-        public DbSet<Cake> Cakes { get; set; }
+        public DbSet<Dessert> Desserts { get; set; }
 
         public DbSet<PriceInfo> PriceInfo { get; set; }
-
-        public DbSet<Dessert> Desserts { get; set; }
 
         public DbSet<Setting> Settings { get; set; }
 

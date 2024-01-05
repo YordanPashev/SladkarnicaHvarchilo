@@ -248,63 +248,6 @@ namespace SladkarnicaHvarchilo.Data.Migrations
                     b.ToTable("AspNetUsers", (string)null);
                 });
 
-            modelBuilder.Entity("SladkarnicaHvarchilo.Data.Models.Cake", b =>
-                {
-                    b.Property<string>("Id")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("Allergens")
-                        .HasMaxLength(500)
-                        .HasColumnType("nvarchar(500)");
-
-                    b.Property<int>("Category")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime>("CreatedOn")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime?>("DeletedOn")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("Description")
-                        .IsRequired()
-                        .HasMaxLength(1500)
-                        .HasColumnType("nvarchar(1500)");
-
-                    b.Property<string>("ImageFileDirectoryPath")
-                        .IsRequired()
-                        .HasMaxLength(260)
-                        .HasColumnType("nvarchar(260)");
-
-                    b.Property<string>("Ingredients")
-                        .IsRequired()
-                        .HasMaxLength(1000)
-                        .HasColumnType("nvarchar(1000)");
-
-                    b.Property<bool>("IsDeleted")
-                        .HasColumnType("bit");
-
-                    b.Property<DateTime?>("ModifiedOn")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
-
-                    b.Property<string>("NutritionInfoId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("IsDeleted");
-
-                    b.HasIndex("NutritionInfoId");
-
-                    b.ToTable("Cakes");
-                });
-
             modelBuilder.Entity("SladkarnicaHvarchilo.Data.Models.Dessert", b =>
                 {
                     b.Property<string>("Id")
@@ -353,8 +296,8 @@ namespace SladkarnicaHvarchilo.Data.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
-                    b.Property<decimal>("Price")
-                        .HasColumnType("decimal(18, 2)");
+                    b.Property<int>("Type")
+                        .HasColumnType("int");
 
                     b.HasKey("Id");
 
@@ -362,7 +305,7 @@ namespace SladkarnicaHvarchilo.Data.Migrations
 
                     b.HasIndex("NutritionInfoId");
 
-                    b.ToTable("Desserts");
+                    b.ToTable("Desserts", (string)null);
                 });
 
             modelBuilder.Entity("SladkarnicaHvarchilo.Data.Models.NutritionInfo", b =>
@@ -401,15 +344,12 @@ namespace SladkarnicaHvarchilo.Data.Migrations
 
                     b.HasIndex("IsDeleted");
 
-                    b.ToTable("NutritionInfo");
+                    b.ToTable("NutritionInfo", (string)null);
                 });
 
             modelBuilder.Entity("SladkarnicaHvarchilo.Data.Models.PriceInfo", b =>
                 {
                     b.Property<string>("Id")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("CakeId")
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<DateTime>("CreatedOn")
@@ -418,15 +358,15 @@ namespace SladkarnicaHvarchilo.Data.Migrations
                     b.Property<DateTime?>("DeletedOn")
                         .HasColumnType("datetime2");
 
+                    b.Property<string>("DessertId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
 
                     b.Property<DateTime?>("ModifiedOn")
                         .HasColumnType("datetime2");
-
-                    b.Property<string>("PastryId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("Pieces")
                         .HasColumnType("int");
@@ -436,11 +376,11 @@ namespace SladkarnicaHvarchilo.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("CakeId");
+                    b.HasIndex("DessertId");
 
                     b.HasIndex("IsDeleted");
 
-                    b.ToTable("PriceInfo");
+                    b.ToTable("PriceInfo", (string)null);
                 });
 
             modelBuilder.Entity("SladkarnicaHvarchilo.Data.Models.Setting", b =>
@@ -473,7 +413,7 @@ namespace SladkarnicaHvarchilo.Data.Migrations
 
                     b.HasIndex("IsDeleted");
 
-                    b.ToTable("Settings");
+                    b.ToTable("Settings", (string)null);
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -527,17 +467,6 @@ namespace SladkarnicaHvarchilo.Data.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("SladkarnicaHvarchilo.Data.Models.Cake", b =>
-                {
-                    b.HasOne("SladkarnicaHvarchilo.Data.Models.NutritionInfo", "NutritionInfo")
-                        .WithMany()
-                        .HasForeignKey("NutritionInfoId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.Navigation("NutritionInfo");
-                });
-
             modelBuilder.Entity("SladkarnicaHvarchilo.Data.Models.Dessert", b =>
                 {
                     b.HasOne("SladkarnicaHvarchilo.Data.Models.NutritionInfo", "NutritionInfo")
@@ -551,9 +480,13 @@ namespace SladkarnicaHvarchilo.Data.Migrations
 
             modelBuilder.Entity("SladkarnicaHvarchilo.Data.Models.PriceInfo", b =>
                 {
-                    b.HasOne("SladkarnicaHvarchilo.Data.Models.Cake", null)
-                        .WithMany("CakePiecesInfo")
-                        .HasForeignKey("CakeId");
+                    b.HasOne("SladkarnicaHvarchilo.Data.Models.Dessert", "Dessert")
+                        .WithMany("PriceInfo")
+                        .HasForeignKey("DessertId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Dessert");
                 });
 
             modelBuilder.Entity("SladkarnicaHvarchilo.Data.Models.ApplicationUser", b =>
@@ -565,9 +498,9 @@ namespace SladkarnicaHvarchilo.Data.Migrations
                     b.Navigation("Roles");
                 });
 
-            modelBuilder.Entity("SladkarnicaHvarchilo.Data.Models.Cake", b =>
+            modelBuilder.Entity("SladkarnicaHvarchilo.Data.Models.Dessert", b =>
                 {
-                    b.Navigation("CakePiecesInfo");
+                    b.Navigation("PriceInfo");
                 });
 #pragma warning restore 612, 618
         }

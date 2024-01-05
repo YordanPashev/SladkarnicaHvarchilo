@@ -9,13 +9,14 @@
     using SladkarnicaHvarchilo.Web.ViewModels.CakePiecesInfo;
     using SladkarnicaHvarchilo.Web.ViewModels.NutritionInfo;
 
-    public class CreateCakeViewModel : CakeDataViewModel, IMapTo<Cake>
+    public class CreateCakeViewModel : CakeDataViewModel, IMapTo<Dessert>
     {
         public CreateCakeViewModel()
         {
             this.NutritionInfo = new CreateNutritionInfoViewModel();
             this.Id = Guid.NewGuid().ToString();
             this.Category = FoodTastingCategory.Sweet;
+            this.Type = DessertType.Cake;
             this.PriceInfo = new List<PriceInfoViewModel>()
             {
                 new PriceInfoViewModel(),

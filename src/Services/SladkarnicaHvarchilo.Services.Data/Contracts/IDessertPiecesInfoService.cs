@@ -5,8 +5,8 @@
 
     using SladkarnicaHvarchilo.Data.Models;
 
-    public interface ICakePiecesInfoService
+    public interface IDessertPiecesInfoService
     {
-        Task AddCakePiecesInfo(List<PriceInfo> piecesInfo);
+        Task AddDesserrtPiecesInfo(List<PriceInfo> cakePiecesInfo, string id);
     }
 }
