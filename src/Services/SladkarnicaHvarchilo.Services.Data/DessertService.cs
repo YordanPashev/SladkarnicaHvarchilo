@@ -1,6 +1,8 @@
 ﻿namespace SladkarnicaHvarchilo.Services.Data
 {
+    using System;
     using System.Collections.Generic;
+    using System.Diagnostics;
     using System.Linq;
     using System.Threading.Tasks;
 
@@ -29,18 +31,6 @@
             => await this.dessertRepo.AllAsNoTracking()
                             .AnyAsync(c => c.Name == cakeName);
 
-        public bool CheckIfCakeHasBeenEdited(Dessert cakeBeforeEdit, Dessert userIputCakeData)
-        {
-            if (cakeBeforeEdit.Name == userIputCakeData.Name && cakeBeforeEdit.Description == userIputCakeData.Description &&
-                cakeBeforeEdit.Ingredients == userIputCakeData.Ingredients && cakeBeforeEdit.Allergens == userIputCakeData.Allergens &&
-                cakeBeforeEdit.ImageFileDirectoryPath == userIputCakeData.ImageFileDirectoryPath)
-            {
-                return false;
-            }
-
-            return true;
-        }
-
         public async Task DeteleCake(Dessert cake)
         {
             this.dessertRepo.Delete(cake);
@@ -62,6 +52,8 @@
 
         public async Task<Dessert> GetCakeByIdForEditAsync(string id)
             => await this.dessertRepo.All()
+                            .Include(c => c.PriceInfo)
+                            .Include(c => c.NutritionInfo)
                             .FirstOrDefaultAsync(c => c.Id == id);
 
         public IQueryable<Dessert> GetCakesAccoringToFilters(string selectedOrderCriteria, string searchQuery)
@@ -105,15 +97,66 @@
                             .Where(c => c.Name.ToUpper().Contains(searchQuery))
                             .OrderBy(c => c.Name);
 
-        public async Task UpdateCakeDataAsync(Dessert cakeBeforeEdit, Dessert userIputCakeData)
+        public async Task UpdateCakeDataAsync(Dessert originalCake, Dessert userIputCakeData)
         {
-            cakeBeforeEdit.Name = userIputCakeData.Name;
-            cakeBeforeEdit.Description = userIputCakeData.Description;
-            cakeBeforeEdit.Ingredients = userIputCakeData.Ingredients;
-            cakeBeforeEdit.Allergens = userIputCakeData.Allergens;
-            cakeBeforeEdit.ImageFileDirectoryPath = userIputCakeData.ImageFileDirectoryPath;
+            originalCake.Name = userIputCakeData.Name;
+            originalCake.Description = userIputCakeData.Description;
+            originalCake.Ingredients = userIputCakeData.Ingredients;
+            originalCake.Allergens = userIputCakeData.Allergens;
+            originalCake.ImageFileDirectoryPath = userIputCakeData.ImageFileDirectoryPath;
+            originalCake.NutritionInfo.Fats = userIputCakeData.NutritionInfo.Fats;
+            originalCake.NutritionInfo.Carbs = userIputCakeData.NutritionInfo.Carbs;
+            originalCake.NutritionInfo.Sugar = userIputCakeData.NutritionInfo.Sugar;
+            originalCake.NutritionInfo.Protein = userIputCakeData.NutritionInfo.Protein;
+            originalCake.NutritionInfo.Salt = userIputCakeData.NutritionInfo.Salt;
+
+            this.UpdatePriceInfo(originalCake, userIputCakeData);
 
             await this.dessertRepo.SaveChangesAsync();
+        }
+
+        private void UpdatePriceInfo(Dessert originalCake, Dessert userIputCakeData)
+        {
+            List<PriceInfo> originalCakePriceInfo = originalCake.PriceInfo.ToList();
+
+            List<PriceInfo> userInputCakePriceInfo = userIputCakeData.PriceInfo.ToList();
+            int priceInfoCount = originalCakePriceInfo.Count;
+
+            if (userInputCakePriceInfo.Count > originalCakePriceInfo.Count)
+            {
+                priceInfoCount = userInputCakePriceInfo.Count;
+            }
+
+            for (int priceInfIndex = 0; priceInfIndex < priceInfoCount; priceInfIndex++)
+            {
+                if (userInputCakePriceInfo.Count < priceInfIndex + 1)
+                {
+                    originalCakePriceInfo[priceInfIndex].IsDeleted = true;
+                    originalCakePriceInfo[priceInfIndex].DeletedOn = DateTime.Now;
+                }
+                else
+                {
+                    if (originalCakePriceInfo.Count < priceInfIndex + 1)
+                    {
+                        PriceInfo priceInfo = new PriceInfo()
+                        {
+                            Id = userInputCakePriceInfo[priceInfIndex].Id,
+                            DessertId = originalCake.Id,
+                            Price = userInputCakePriceInfo[priceInfIndex].Price,
+                            Pieces = userInputCakePriceInfo[priceInfIndex].Pieces,
+                        };
+
+                        originalCakePriceInfo.Add(priceInfo);
+                    }
+                    else
+                    {
+                        originalCakePriceInfo[priceInfIndex].Price = userInputCakePriceInfo[priceInfIndex].Price;
+                        originalCakePriceInfo[priceInfIndex].Pieces = userInputCakePriceInfo[priceInfIndex].Pieces;
+                    }
+                }
+            }
+
+            originalCake.PriceInfo = originalCakePriceInfo;
         }
     }
 }

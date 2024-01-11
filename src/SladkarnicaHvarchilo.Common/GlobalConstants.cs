@@ -79,6 +79,8 @@
 
             public const string CakeDoesNotExist = "Не е намерена торта с въведенте данни";
 
+            public const string NoChangesHaveBeenMade = "Не са направени никакво промени. Моля редактирайтел";
+
             public const string SuccessfullyDeletedCake = "Успешно премахнахте тортата ";
         }
     }

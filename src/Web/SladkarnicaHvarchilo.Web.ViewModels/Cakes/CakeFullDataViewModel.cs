@@ -3,10 +3,8 @@
     using System;
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
-    using System.ComponentModel.DataAnnotations.Schema;
 
     using AutoMapper;
-    using Microsoft.AspNetCore.Http;
 
     using SladkarnicaHvarchilo.Common;
     using SladkarnicaHvarchilo.Data.Models;
@@ -41,10 +39,6 @@
         [MinLength(GlobalConstants.PastryValidationConstants.AllergensMinLength)]
         [MaxLength(GlobalConstants.PastryValidationConstants.AllergensMaxLength)]
         public string Allergens { get; set; }
-
-        [Required]
-        [NotMapped]
-        public IFormFile ImageFile { get; set; }
 
         [MinLength(GlobalConstants.PastryValidationConstants.ImageFileDirectoryPathMinLength)]
         [MaxLength(GlobalConstants.PastryValidationConstants.ImageFileDirectoryPathMaxLength)]

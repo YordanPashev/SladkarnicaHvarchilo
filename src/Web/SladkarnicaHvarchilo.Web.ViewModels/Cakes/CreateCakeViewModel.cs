@@ -2,6 +2,10 @@
 {
     using System;
     using System.Collections.Generic;
+    using System.ComponentModel.DataAnnotations;
+    using System.ComponentModel.DataAnnotations.Schema;
+
+    using Microsoft.AspNetCore.Http;
 
     using SladkarnicaHvarchilo.Data.Models;
     using SladkarnicaHvarchilo.Data.Models.Enums;
@@ -23,5 +27,9 @@
                 new PriceInfoViewModel(),
             };
         }
+
+        [Required]
+        [NotMapped]
+        public IFormFile ImageFile { get; set; }
     }
 }

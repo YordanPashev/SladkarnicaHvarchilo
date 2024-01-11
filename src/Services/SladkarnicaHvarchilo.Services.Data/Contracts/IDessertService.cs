@@ -11,8 +11,6 @@
 
         Task<bool> CheckIfCakeAlreadyExists(string cakeName);
 
-        bool CheckIfCakeHasBeenEdited(Dessert cakeBeforeEdit, Dessert userIputCakeData);
-
         Task DeteleCake(Dessert cake);
 
         IQueryable<Dessert> GetAllCakesInSale();
@@ -27,6 +25,6 @@
 
         IQueryable<Dessert> GetSearchedCakes(string searchQuery);
 
-        Task UpdateCakeDataAsync(Dessert cakeBeforeEdit, Dessert userIputCakeData);
+        Task UpdateCakeDataAsync(Dessert originalCake, Dessert userIputCakeData);
     }
 }

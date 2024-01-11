@@ -1,7 +1,9 @@
 ﻿namespace SladkarnicaHvarchilo.Web.Areas.Administration.Controllers
 {
+    using System;
     using System.Collections.Generic;
     using System.Linq;
+    using System.Security.Cryptography.X509Certificates;
     using System.Threading.Tasks;
 
     using Microsoft.AspNetCore.Http;
@@ -72,23 +74,25 @@
         [HttpPost]
         public async Task<IActionResult> EditCake(EditCakeViewModel userIputModel)
         {
-            Dessert cakeBeforeEdit = await this.cakesService.GetCakeByIdForEditAsync(userIputModel.Id);
+            userIputModel.PriceInfo = userIputModel.PriceInfo.Where(pi => pi.Price != null && pi.Pieces != null).ToList();
+            Dessert originalCake = await this.cakesService.GetCakeByIdForEditAsync(userIputModel.Id);
 
-            if (cakeBeforeEdit == null || !this.ModelState.IsValid)
+            if (originalCake == null || !this.ModelState.IsValid)
             {
-                return this.RedirectToAction(nameof(this.AddNewCake), new { userMessage = GlobalConstants.UserMessage.InvalidInputData });
+                return this.RedirectToAction(nameof(this.EditCake), new { userMessage = GlobalConstants.UserMessage.InvalidInputData });
             }
 
             Dessert userIputCakeData = AutoMapperConfig.MapperInstance.Map<Dessert>(userIputModel);
+            bool isCakeImageUpdated = await this.UpdateDessertImage(originalCake.ImageFileDirectoryPath, userIputCakeData, userIputModel.ImageFile);
 
-            if (!this.cakesService.CheckIfCakeHasBeenEdited(cakeBeforeEdit, userIputCakeData))
+            if (!this.CheckIfCakeHasBeenEdited(originalCake, userIputCakeData, isCakeImageUpdated))
             {
-                return this.RedirectToAction(nameof(this.AddNewCake), new { userMessage = GlobalConstants.UserMessage.CakeAlreadyExist });
+                return this.RedirectToAction(nameof(this.EditCake), new { userMessage = GlobalConstants.UserMessage.NoChangesHaveBeenMade });
             }
 
-            await this.UpdateCake(cakeBeforeEdit, userIputCakeData, userIputModel.ImageFile);
+            await this.cakesService.UpdateCakeDataAsync(originalCake, userIputCakeData);
 
-            return this.RedirectToAction("Details", "Cakes", new { userMessage = GlobalConstants.UserMessage.SuccessfullyEditedCake });
+            return this.RedirectToAction("CakeDetails", "Cakes", new { userMessage = GlobalConstants.UserMessage.SuccessfullyEditedCake });
         }
 
         [HttpGet]
@@ -119,15 +123,56 @@
             await this.cakesService.AddNewCake(cake);
         }
 
-        private async Task UpdateCake(Dessert cakeBeforeEdit, Dessert userIputCakeData, IFormFile iamgeFile)
+        private bool CheckIfCakeHasBeenEdited(Dessert originalCake, Dessert userIputCakeData, bool isCakeImageUpdated)
         {
-            if (cakeBeforeEdit.ImageFileDirectoryPath != userIputCakeData.ImageFileDirectoryPath)
+            bool isPriceInfoChanged = this.CheckPriceInfo(originalCake.PriceInfo.ToArray(), userIputCakeData.PriceInfo.ToArray());
+
+            if (originalCake.Name == userIputCakeData.Name && originalCake.Description == userIputCakeData.Description &&
+                originalCake.Ingredients == userIputCakeData.Ingredients && originalCake.Allergens == userIputCakeData.Allergens &&
+                !isCakeImageUpdated && originalCake.NutritionInfo.Fats == userIputCakeData.NutritionInfo.Fats &&
+                originalCake.NutritionInfo.Carbs == userIputCakeData.NutritionInfo.Carbs &&
+                originalCake.NutritionInfo.Sugar == userIputCakeData.NutritionInfo.Sugar &&
+                originalCake.NutritionInfo.Protein == userIputCakeData.NutritionInfo.Protein &&
+                originalCake.NutritionInfo.Salt == userIputCakeData.NutritionInfo.Salt && !isPriceInfoChanged)
+            {
+                return false;
+            }
+
+            return true;
+        }
+
+        private bool CheckPriceInfo(PriceInfo[] originalPriceInfo, PriceInfo[] userInputPriceInfo)
+        {
+            if (originalPriceInfo.Length == userInputPriceInfo.Length)
+            {
+                for (int infoIndex = 0; infoIndex < originalPriceInfo.Length; infoIndex++)
+                {
+                    if (originalPriceInfo[infoIndex].Price != userInputPriceInfo[infoIndex].Price ||
+                        originalPriceInfo[infoIndex].Pieces != userInputPriceInfo[infoIndex].Pieces)
+                    {
+                        return true;
+                    }
+                }
+
+                return false;
+            }
+
+            return true;
+        }
+
+        private async Task<bool> UpdateDessertImage(string originalFileImageName, Dessert userIputCakeData, IFormFile iamgeFile)
+        {
+            if (iamgeFile != null)
             {
                 await this.imageManager.SaveImageToFileAsync(iamgeFile);
                 userIputCakeData.ImageFileDirectoryPath = iamgeFile.FileName;
+
+                return true;
             }
 
-            await this.cakesService.UpdateCakeDataAsync(cakeBeforeEdit, userIputCakeData);
+            userIputCakeData.ImageFileDirectoryPath = originalFileImageName;
+
+            return false;
         }
     }
 }
