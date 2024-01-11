@@ -5,14 +5,17 @@
     using System.ComponentModel.DataAnnotations;
     using System.ComponentModel.DataAnnotations.Schema;
 
+    using AutoMapper;
     using Microsoft.AspNetCore.Http;
 
     using SladkarnicaHvarchilo.Common;
+    using SladkarnicaHvarchilo.Data.Models;
     using SladkarnicaHvarchilo.Data.Models.Enums;
+    using SladkarnicaHvarchilo.Services.Mapping;
     using SladkarnicaHvarchilo.Web.ViewModels.CakePiecesInfo;
     using SladkarnicaHvarchilo.Web.ViewModels.NutritionInfo;
 
-    public class CakeDataViewModel
+    public class CakeFullDataViewModel : IMapFrom<Dessert>, IHaveCustomMappings
     {
         [Required]
         public string Id { get; set; }
@@ -55,5 +58,15 @@
 
         [Required]
         public NutritionInfoDataViewModel NutritionInfo { get; set; }
+
+        public DateTime CreatedOn { get; set; }
+
+        public DateTime? ModifiedOn { get; set; }
+
+        public void CreateMappings(IProfileExpression configuration)
+        {
+            configuration.CreateMap<PriceInfo, PriceInfoViewModel>();
+            configuration.CreateMap<NutritionInfo, NutritionInfoDataViewModel>();
+        }
     }
 }

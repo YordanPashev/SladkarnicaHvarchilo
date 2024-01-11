@@ -2,7 +2,7 @@
 @using SladkarnicaHvarchilo.Common;
 @using SladkarnicaHvarchilo.Web.ViewModels.Cakes;
 
-@model CakeDetailsViewModel
+@model CakeFullDataViewModel
 
 @{
     this.ViewData["Title"] = $"{this.Model.Name}";
@@ -23,12 +23,12 @@
         <div class="about-product text-center mt-2 mb-2"><img alt="No image" src="~/img/Cakes/@this.Model.ImageFileDirectoryPath" width="70%"></div>
         <div class="mb-4" style="font-size: 20px; color: white; white-space: pre-line"><strong>Описание:</strong> @Environment.NewLine @this.Model.Description</div>
         <div style="font-size: 20px; color: white"><strong>Съставки:</strong> @this.Model.Ingredients</div>
-        <div style="font-size: 20px; color: white"><strong>Брой Парчета:</strong> @this.Model.Pieces</div>
+        <div style="font-size: 20px; color: white"><strong>Брой Парчета:</strong> @this.Model.PriceInfo[0].Pieces</div>
         @if (!string.IsNullOrEmpty(this.Model.Allergens))
         {
             <div style="font-size: 20px"><strong>Алергени:</strong> @this.Model.Allergens</div>
         }
-        <div class="mt-2" style="font-size: 20px"><strong>Цена: <text style="color: red">@Math.Round(this.Model.Price, 2) лв.</text></strong></div>
+        <div class="mt-2" style="font-size: 20px"><strong>Цена: <text style="color: red">@this.Model.PriceInfo[0].Price лв.</text></strong></div>
 
         @if (this.User.IsInRole(GlobalConstants.AdministratorRoleName))
         {

@@ -1,7 +1,7 @@
 ﻿namespace SladkarnicaHvarchilo.Web.ViewModels.Cakes
 {
-    using System;
     using System.Collections.Generic;
+
     using SladkarnicaHvarchilo.Data.Models;
     using SladkarnicaHvarchilo.Services.Mapping;
     using SladkarnicaHvarchilo.Web.ViewModels.CakePiecesInfo;

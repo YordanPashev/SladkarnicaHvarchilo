@@ -147,16 +147,20 @@ body {
     font-size: 1.2em;
 }
 
+.addSectionPriceBtn {
+    padding-top: 2.1em;
+}
+
 /* Sections */
 .inputSection {
+    background-color: rgba(240,150, 65, 0.7) !important;
+    color: white !important;
     width: 50em !important;
-    background-color: antiquewhite;
     opacity: 0.97;
     border: 0.2em solid;
     border-color: white;
     border-radius: 1em;
     margin-top: 6em;
-    color: coral !important;
     font-family: Nunito;
 }
 
@@ -180,8 +184,23 @@ body {
     font-weight: bold !important;
 }
 
+.preLineText {
+    white-space: pre-line
+}
+
+.secondPieceSectionEmptyCol {
+    width: 2.4em;
+}
+
 /* User Messages styles */
 .userErrorMessage {
-    text-align: center;
-    color: red
+    background-color: yellow;
+    padding: 1em;
+    border-radius: 1em;
+}
+
+.userErrorMessage > h4 {
+    font-weight: bold;
+    font-style: italic;
+    color: red;
 }

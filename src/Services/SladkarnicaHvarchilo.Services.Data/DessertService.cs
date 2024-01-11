@@ -1,5 +1,6 @@
 ﻿namespace SladkarnicaHvarchilo.Services.Data
 {
+    using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
 
@@ -50,10 +51,13 @@
         public IQueryable<Dessert> GetAllCakesInSale()
             => this.dessertRepo.AllAsNoTracking()
                             .Include(c => c.PriceInfo)
+                            .Include(c => c.NutritionInfo)
                             .OrderBy(c => c.Name);
 
         public async Task<Dessert> GetCakeByIdAsync(string id)
             => await this.dessertRepo.AllAsNoTracking()
+                            .Include(c => c.PriceInfo)
+                            .Include(c => c.NutritionInfo)
                             .FirstOrDefaultAsync(c => c.Id == id);
 
         public async Task<Dessert> GetCakeByIdForEditAsync(string id)
@@ -62,6 +66,8 @@
 
         public IQueryable<Dessert> GetCakesAccoringToFilters(string selectedOrderCriteria, string searchQuery)
             => this.GetCakesByOrderCriteria(selectedOrderCriteria)
+                        .Include(c => c.PriceInfo)
+                        .Include(c => c.NutritionInfo)
                         .Where(c => c.Name.ToUpper().Contains(searchQuery));
 
         public IQueryable<Dessert> GetCakesByOrderCriteria(string selectedOrderCriteria)

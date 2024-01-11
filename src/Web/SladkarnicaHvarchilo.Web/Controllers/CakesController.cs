@@ -45,7 +45,7 @@
         }
 
         [HttpGet]
-        public async Task<IActionResult> CakeDetails(string id)
+        public async Task<IActionResult> CakeDetails(string id, string userMessage = null)
         {
             Dessert cake = await this.cakesService.GetCakeByIdAsync(id);
 
@@ -54,7 +54,7 @@
                 return this.View(nameof(this.AllCakes), new { UserMessage.CakeDoesNotExist });
             }
 
-            CakeDetailsViewModel model = AutoMapperConfig.MapperInstance.Map<CakeDetailsViewModel>(cake);
+            CakeFullDataViewModel model = AutoMapperConfig.MapperInstance.Map<CakeFullDataViewModel>(cake);
 
             return this.View(model);
         }

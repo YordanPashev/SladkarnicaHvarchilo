@@ -1,55 +1,112 @@
 ﻿@using SladkarnicaHvarchilo.Common
-@using SladkarnicaHvarchilo.Web.ViewModels.Cakes;
-
-@model EditCakeViewModel
 
 @{
-    this.ViewData["Title"] = "Редактирай торта";
-    string currentDate = @DateTime.Now.ToString("yyyy-MM-dd");
-}
+    this.ViewData["Title"] = "Добави нова торта";
 
-@if (!string.IsNullOrEmpty(this.ViewBag.UserMessage))
-{
-    <h1 class="userErrorMessage">@this.ViewBag.UserMessage</h1>
+    string displaySeconPriceSection = "none";
+    int? secondPiecesCount = null;
+    decimal? secondPriceValue = null;
+
+    if (this.Model.PriceInfo.Count > 1)
+    {
+        displaySeconPriceSection = "flex";
+        secondPiecesCount = this.Model.PriceInfo[1].Pieces;
+        secondPriceValue = this.Model.PriceInfo[1].Price;
+    }
 }
 
 <div class="container text-center inputSection">
-    <h1 class="text-center text-danger"><strong>@this.ViewData["Title"]</strong></h1>
     <div class="col-md-10 mx-auto">
+        <h1 class="text-center mt-2"><strong>@this.ViewData["Title"]</strong></h1>
+        @if (!string.IsNullOrEmpty(this.ViewBag.UserMessage))
+        {
+            <div class="userErrorMessage">
+                <h4>@this.ViewBag.UserMessage</h4>
+            </div>
+        }
         <form method="post" asp-area="Administration" asp-controller="CakeManager" asp-action="AddNewCake" autocomplete="off" enctype="multipart/form-data">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group mt-3 mb-3">
-                <label for="Name" class="control-label">Име на торта</label>
-                <input name="Name" placeholder="Име..." value="@this.Model.Name" class="form-control" type="text" minlength="@GlobalConstants.PastryValidationConstants.NameMinLength" maxlength="@GlobalConstants.PastryValidationConstants.NameMaxLength" required />
+                <label for="Name" class="control-label">Име</label>
+                <input name="Name" value="@this.Model.Name" placeholder="Име..." class="form-control" type="text" minlength="@GlobalConstants.PastryValidationConstants.NameMinLength" maxlength="@GlobalConstants.PastryValidationConstants.NameMaxLength" required />
             </div>
             <div class="form-group mt-3 mb-3">
                 <label for="Description" class="control-label">Описание</label>
-                <textarea name="Description" placeholder="Описание..." class="form-control" type="text" rows="3" cols="6" style="white-space: pre-line" minlength="@GlobalConstants.PastryValidationConstants.DescriptionMinLength" maxlength="@GlobalConstants.PastryValidationConstants.DescriptionMaxLength" required>@Model.Description</textarea>
+                <textarea name="Description" placeholder="Описание..." class="form-control preLineText" type="text" rows="3" cols="6" minlength="@GlobalConstants.PastryValidationConstants.DescriptionMinLength" maxlength="@GlobalConstants.PastryValidationConstants.DescriptionMaxLength" required>@this.Model.Description</textarea>
             </div>
             <div class="form-group mt-3 mb-3">
                 <label for="Ingredients" class="control-label">Съставки</label>
-                <input name="Ingredients" placeholder="Съставки..." value="@this.Model.Ingredients" class="form-control" type="text" minlength="@GlobalConstants.PastryValidationConstants.IngredientsMinLength" maxlength="@GlobalConstants.PastryValidationConstants.IngredientsMaxLength" required />
+                <input name="Ingredients" value="@this.Model.Ingredients" placeholder="Съставки..." class="form-control" type="text" minlength="@GlobalConstants.PastryValidationConstants.IngredientsMinLength" maxlength="@GlobalConstants.PastryValidationConstants.IngredientsMaxLength" required />
             </div>
             <div class="form-group mt-3 mb-3">
                 <label for="Allergens" class="control-label">Алергени (полето не е задължинелно)</label>
-                <input name="Allergens" placeholder="Алергени..." value="@this.Model.Allergens" class="form-control" type="text" minlength="@GlobalConstants.PastryValidationConstants.AllergensMinLength" maxlength="@GlobalConstants.PastryValidationConstants.AllergensMaxLength" />
-            </div>
-            <div class="form-group mt-3 mb-3">
-                <label for="Pieces" class="control-label">Брой парчета</label>
-                <input name="Pieces" placeholder="0" value="@this.Model.PriceInfo[0].Pieces" class="form-control" type="number" step="1" required />
+                <input name="Allergens" value="@this.Model.Allergens" placeholder="Алергени..." class="form-control" type="text" minlength="@GlobalConstants.PastryValidationConstants.AllergensMinLength" maxlength="@GlobalConstants.PastryValidationConstants.AllergensMaxLength" />
             </div>
             <div class="form-group mb-3">
-                <label for="Price" class="control-label">Цена (лв.)</label>
-                <input name="Price" placeholder="0.00" value="@this.Model.PriceInfo[0].Price" class="form-control" type="number" step=".01" min="@GlobalConstants.PastryValidationConstants.PriceMinValue" max="@GlobalConstants.PastryValidationConstants.PriceMaxValue" required />
+                <label class="form-label" for="ImageFile">Сминка</label>
+                <input type="file" class="form-control" name="ImageFile" required />
             </div>
-            <div class="form-group mb-3">
-                <label class="form-label" for="ImageFile">Симнка</label>
-                <input type="file" class="form-control" name="ImageFile" value="@this.Model.Name" required />
+            <div class="form-group mt-4 mb-3">
+                <div class="nutritionInfo">
+                    <div>
+                        <label for="PriceInfo[0].Pieces" class="control-label">Брой парчета</label>
+                        <input name="PriceInfo[0].Pieces" value="@this.Model.PriceInfo[0].Pieces" placeholder="0" class="form-control" type="number" step="1" min="@GlobalConstants.PastryValidationConstants.PiecesMinValue" max="@GlobalConstants.PastryValidationConstants.PiecesMaxValue" required />
+                    </div>
+                    <div>
+                        <label for="PriceInfo[0].Price" class="control-label">Цена (лв.)</label>
+                        <input name="PriceInfo[0].Price" value="@this.Model.PriceInfo[0].Price" placeholder="0.00" class="form-control" type="number" step=".01" min="@GlobalConstants.PastryValidationConstants.PriceMinValue" max="@GlobalConstants.PastryValidationConstants.PriceMaxValue" required />
+                    </div>
+                    <div id="addSecondPiecesOptionBtn">
+                        <nav class="input-group-btn addSectionPriceBtn">
+                            <button type="button" class="btn btn-success" title="Добави втора опция за брой парчета" onclick="addSecondPiecesOption()"><i class="fa-regular fa-square-plus"></i></button>
+                        </nav>
+                    </div>
+                    <div id="removeSecondPiecesOptionBtn" style="display: none;">
+                        <nav class="input-group-btn addSectionPriceBtn">
+                            <button type="button" class="btn btn-danger" title="Премахни втора опция за брой парчета" onclick="removeSecondPiecesOption()"><i class="fa-solid fa-xmark"></i></button>
+                        </nav>
+                    </div>
+                </div>
+                <div id="addSecondPiecesOptionSection" class="nutritionInfo" style="display: @displaySeconPriceSection;">
+                    <div>
+                        <label for="PriceInfo[1].Pieces" class="control-label">Брой парчета</label>
+                        <input id="secondOptionPeices" name="PriceInfo[1].Pieces" value="@secondPiecesCount" placeholder="0" class="form-control" type="number" step="1" value="null" min="@GlobalConstants.PastryValidationConstants.PiecesMinValue" max="@GlobalConstants.PastryValidationConstants.PiecesMaxValue" />
+                    </div>
+                    <div>
+                        <label for="PriceInfo[1].Price" class="control-label">Цена (лв.)</label>
+                        <input id="secondOptionPrice" name="PriceInfo[1].Price" value="@secondPriceValue" placeholder="0.00" class="form-control" type="number" step=".01" value="null" min="@GlobalConstants.PastryValidationConstants.PriceMinValue" max="@GlobalConstants.PastryValidationConstants.PriceMaxValue" />
+                    </div>
+                    <div class="secondPieceSectionEmptyCol"></div>
+                </div>
             </div>
-            <br />
+            <div class="form-group mt-5 mb-4">
+                <label class="form-label mb-0" for="NutritionInfo">Хратинелна стойност за 100 гр. (гр.)</label>
+                <div class="nutritionInfo">
+                    <div>
+                        <label for="NutritionInfo.Fats" class="control-label">Мазнини</label>
+                        <input name="NutritionInfo.Fats" value="@this.Model.NutritionInfo.Fats" placeholder="0.00" class="form-control" type="number" step=".01" min="@GlobalConstants.NutritionInfoConstants.MacrosMinValue" max="@GlobalConstants.NutritionInfoConstants.MacrosMaxValue" required />
+                    </div>
+                    <div>
+                        <label for="NutritionInfo.Carbs" class="control-label">Въглех.</label>
+                        <input name="NutritionInfo.Carbs" value="@this.Model.NutritionInfo.Carbs" placeholder="0.00" class="form-control" type="number" step=".01" min="@GlobalConstants.NutritionInfoConstants.MacrosMinValue" max="@GlobalConstants.NutritionInfoConstants.MacrosMaxValue" required />
+                    </div>
+                    <div>
+                        <label for="NutritionInfo.Sugar" class="control-label">Захар</label>
+                        <input name="NutritionInfo.Sugar" value="@this.Model.NutritionInfo.Sugar" placeholder="0.00" class="form-control" type="number" step=".01" min="@GlobalConstants.NutritionInfoConstants.MacrosMinValue" max="@GlobalConstants.NutritionInfoConstants.MacrosMaxValue" required />
+                    </div>
+                    <div>
+                        <label for="NutritionInfo.Protein" class="control-label">Протеин</label>
+                        <input name="NutritionInfo.Protein" value="@this.Model.NutritionInfo.Protein" placeholder="0.00" class="form-control" type="number" step=".01" min="@GlobalConstants.NutritionInfoConstants.MacrosMinValue" max="@GlobalConstants.NutritionInfoConstants.MacrosMaxValue" required />
+                    </div>
+                    <div>
+                        <label for="NutritionInfo.Salt" class="control-label">Сол</label>
+                        <input name="NutritionInfo.Salt" value="@this.Model.NutritionInfo.Salt" placeholder="0.00" class="form-control" type="number" step=".01" min="@GlobalConstants.NutritionInfoConstants.MacrosMinValue" max="@GlobalConstants.NutritionInfoConstants.MacrosMaxValue" required />
+                    </div>
+                </div>
+            </div>
             <div class="inputNavButtonsSection">
                 <div>
-                    <input class="btn btn-success" value="Редактирай" type="submit" />
+                    <input class="btn btn-success" value="Добави" type="submit" />
                 </div>
                 <div>
                     <input class="btn btn-dark" value="Назад" onclick="history.back()">
@@ -58,6 +115,32 @@
         </form>
     </div>
 </div>
+
+<script>
+
+    window.onload = function () {
+        if (document.getElementById('addSecondPiecesOptionSection').style.display == "flex") {
+            addSecondPiecesOption();
+        }
+    };
+
+    function addSecondPiecesOption() {
+        document.getElementById('addSecondPiecesOptionBtn').style.display = "none";
+        document.getElementById('addSecondPiecesOptionSection').style.display = "flex";
+        document.getElementById('removeSecondPiecesOptionBtn').style.display = "block";
+    }
+
+    function removeSecondPiecesOption() {
+        document.getElementById('addSecondPiecesOptionBtn').style.display = "block";
+        document.getElementById('addSecondPiecesOptionSection').style.display = "none";
+        document.getElementById('removeSecondPiecesOptionBtn').style.display = "none";
+
+        $('#secondOptionPeices').val(null);
+        $('#secondOptionPrice').val(null);
+    }
+
+</script>
+
 
 @section Scripts {
     @{

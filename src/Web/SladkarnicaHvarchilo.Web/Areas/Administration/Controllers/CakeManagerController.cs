@@ -1,6 +1,7 @@
 ﻿namespace SladkarnicaHvarchilo.Web.Areas.Administration.Controllers
 {
     using System.Collections.Generic;
+    using System.Linq;
     using System.Threading.Tasks;
 
     using Microsoft.AspNetCore.Http;
@@ -11,26 +12,20 @@
     using SladkarnicaHvarchilo.Services.Data.Contracts;
     using SladkarnicaHvarchilo.Services.Mapping;
     using SladkarnicaHvarchilo.Web.Helpers;
-    using SladkarnicaHvarchilo.Web.ViewModels.CakePiecesInfo;
     using SladkarnicaHvarchilo.Web.ViewModels.Cakes;
 
     public class CakeManagerController : AdministrationController
     {
         private readonly IDessertService cakesService;
-        private readonly IDessertPiecesInfoService cakePiecesInfoService;
-
         private ImageManager imageManager = new ImageManager();
 
-        public CakeManagerController(IDessertService cakesService, IDessertPiecesInfoService cakePiecesInfoService)
-        {
-            this.cakesService = cakesService;
-            this.cakePiecesInfoService = cakePiecesInfoService;
-        }
+        public CakeManagerController(IDessertService cakesService)
+            => this.cakesService = cakesService;
 
         [HttpGet]
-        public IActionResult AddNewCake()
+        public IActionResult AddNewCake(string userMessage = null)
         {
-            CreateCakeViewModel model = new CreateCakeViewModel();
+            this.ViewBag.UserMessage = userMessage;
 
             return this.View();
         }
@@ -38,11 +33,6 @@
         [HttpPost]
         public async Task<IActionResult> AddNewCake(CreateCakeViewModel userIputModel)
         {
-            for (int infoIndex = 0; infoIndex < userIputModel.PriceInfo.Count; infoIndex++)
-            {
-                userIputModel.PriceInfo[infoIndex].DessertId = userIputModel.Id;
-            }
-
             if (!this.ModelState.IsValid)
             {
                 return this.RedirectToAction(nameof(this.AddNewCake), new { userMessage = GlobalConstants.UserMessage.InvalidInputData });
@@ -60,7 +50,7 @@
 
             await this.CreateAndAddNewCakeToDbAsync(userIputModel);
 
-            return this.RedirectToAction("Details", "Cakes", new { userMessage = GlobalConstants.UserMessage.SuccessfullyAddedNewCake });
+            return this.RedirectToAction("CakeDetails", "Cakes", new { area = string.Empty, id = userIputModel.Id, userMessage = GlobalConstants.UserMessage.SuccessfullyAddedNewCake });
         }
 
         [HttpGet]
@@ -122,10 +112,11 @@
 
             Dessert cake = AutoMapperConfig.MapperInstance.Map<Dessert>(model);
             cake.ImageFileDirectoryPath = model.ImageFile.FileName;
-            List<PriceInfo> cakePiecesInfo = AutoMapperConfig.MapperInstance.Map<List<PriceInfo>>(model.PriceInfo);
+            cake.PriceInfo = cake.PriceInfo
+                                .Where(c => c.Price > 0.00m & c.Pieces > 0)
+                                .ToList();
 
             await this.cakesService.AddNewCake(cake);
-            await this.cakePiecesInfoService.AddDesserrtPiecesInfo(cakePiecesInfo, cake.Id);
         }
 
         private async Task UpdateCake(Dessert cakeBeforeEdit, Dessert userIputCakeData, IFormFile iamgeFile)

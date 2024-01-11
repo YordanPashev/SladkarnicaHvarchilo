@@ -67,7 +67,6 @@ namespace SladkarnicaHvarchilo.Web
             services.AddTransient<IEmailSender, NullMessageSender>();
             services.AddTransient<ISettingsService, SettingsService>();
             services.AddTransient<IDessertService, DessertService>();
-            services.AddTransient<IDessertPiecesInfoService, CakePiecesInfoService>();
         }
 
         private static void Configure(WebApplication app)

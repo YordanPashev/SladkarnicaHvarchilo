@@ -9,7 +9,7 @@
     using SladkarnicaHvarchilo.Web.ViewModels.CakePiecesInfo;
     using SladkarnicaHvarchilo.Web.ViewModels.NutritionInfo;
 
-    public class CreateCakeViewModel : CakeDataViewModel, IMapTo<Dessert>
+    public class CreateCakeViewModel : CakeFullDataViewModel, IMapTo<Dessert>
     {
         public CreateCakeViewModel()
         {

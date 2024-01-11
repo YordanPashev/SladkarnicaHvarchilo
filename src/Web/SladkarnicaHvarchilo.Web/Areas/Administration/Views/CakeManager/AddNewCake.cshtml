@@ -4,14 +4,15 @@
     this.ViewData["Title"] = "Добави нова торта";
 }
 
-@if (!string.IsNullOrEmpty(this.ViewBag.UserMessage))
-{
-    <h1 class="userErrorMessage">@this.ViewBag.UserMessage</h1>
-}
-
 <div class="container text-center inputSection">
-    <h1 class="text-center mt-2"><strong>@this.ViewData["Title"]</strong></h1>
     <div class="col-md-10 mx-auto">
+        <h1 class="text-center mt-2"><strong>@this.ViewData["Title"]</strong></h1>
+        @if (!string.IsNullOrEmpty(this.ViewBag.UserMessage))
+        {
+            <div class="userErrorMessage">
+                <h4>@this.ViewBag.UserMessage</h4>
+            </div>
+        }
         <form method="post" asp-area="Administration" asp-controller="CakeManager" asp-action="AddNewCake" autocomplete="off" enctype="multipart/form-data">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group mt-3 mb-3">
@@ -20,7 +21,7 @@
             </div>
             <div class="form-group mt-3 mb-3">
                 <label for="Description" class="control-label">Описание</label>
-                <textarea name="Description" placeholder="Описание..." class="form-control" type="text" rows="3" cols="6" style="white-space: pre-line" minlength="@GlobalConstants.PastryValidationConstants.DescriptionMinLength" maxlength="@GlobalConstants.PastryValidationConstants.DescriptionMaxLength" required></textarea>
+                <textarea name="Description" placeholder="Описание..." class="form-control preLineText" type="text" rows="3" cols="6" minlength="@GlobalConstants.PastryValidationConstants.DescriptionMinLength" maxlength="@GlobalConstants.PastryValidationConstants.DescriptionMaxLength" required></textarea>
             </div>
             <div class="form-group mt-3 mb-3">
                 <label for="Ingredients" class="control-label">Съставки</label>
@@ -45,12 +46,12 @@
                         <input name="PriceInfo[0].Price" placeholder="0.00" class="form-control" type="number" step=".01" min="@GlobalConstants.PastryValidationConstants.PriceMinValue" max="@GlobalConstants.PastryValidationConstants.PriceMaxValue" required />
                     </div>
                     <div id="addSecondPiecesOptionBtn">
-                        <nav class="input-group-btn" style="padding-top: 2.1em;">
+                        <nav class="input-group-btn addSectionPriceBtn">
                             <button type="button" class="btn btn-success" title="Добави втора опция за брой парчета" onclick="addSecondPiecesOption()" ><i class="fa-regular fa-square-plus"></i></button>
                         </nav>
                     </div>
                     <div id="removeSecondPiecesOptionBtn" style="display: none;">
-                        <nav class="input-group-btn" style="padding-top: 2.1em;">
+                        <nav class="input-group-btn addSectionPriceBtn">
                             <button type="button" class="btn btn-danger" title="Премахни втора опция за брой парчета" onclick="removeSecondPiecesOption()"><i class="fa-solid fa-xmark"></i></button>
                         </nav>
                     </div>
@@ -64,7 +65,7 @@
                         <label for="PriceInfo[1].Price" class="control-label">Цена (лв.)</label>
                         <input name="PriceInfo[1].Price" placeholder="0.00" class="form-control" type="number" step=".01" value="null" min="@GlobalConstants.PastryValidationConstants.PriceMinValue" max="@GlobalConstants.PastryValidationConstants.PriceMaxValue" />
                     </div>
-                    <div style="width: 2.4em;"></div>
+                    <div class="secondPieceSectionEmptyCol"></div>
                 </div>
             </div>
             <div class="form-group mt-4 mb-4">
@@ -72,11 +73,11 @@
                 <hr />
                 <div class="nutritionInfo">
                     <div>
-                        <label for="NutritionInfo.Fats" class="control-label" style="">Мазнини</label>
-                        <input name="NutritionInfo.Fats" style="" placeholder="0.00" class="form-control" type="number" step=".01" min="@GlobalConstants.NutritionInfoConstants.MacrosMinValue" max="@GlobalConstants.NutritionInfoConstants.MacrosMaxValue" required />
+                        <label for="NutritionInfo.Fats" class="control-label">Мазнини</label>
+                        <input name="NutritionInfo.Fats" placeholder="0.00" class="form-control" type="number" step=".01" min="@GlobalConstants.NutritionInfoConstants.MacrosMinValue" max="@GlobalConstants.NutritionInfoConstants.MacrosMaxValue" required />
                     </div>
                     <div>
-                        <label for="NutritionInfo.Carbs" class="control-label">Въглехидрати</label>
+                        <label for="NutritionInfo.Carbs" class="control-label">Въглех.</label>
                         <input name="NutritionInfo.Carbs" placeholder="0.00" class="form-control" type="number" step=".01" min="@GlobalConstants.NutritionInfoConstants.MacrosMinValue" max="@GlobalConstants.NutritionInfoConstants.MacrosMaxValue" required />
                     </div>
                     <div>
@@ -112,7 +113,6 @@
         document.getElementById('addSecondPiecesOptionBtn').style.display = "none";
         document.getElementById('addSecondPiecesOptionSection').style.display = "flex";
         document.getElementById('removeSecondPiecesOptionBtn').style.display = "block";
-
     }
 
     function removeSecondPiecesOption() {
@@ -120,6 +120,8 @@
         document.getElementById('addSecondPiecesOptionSection').style.display = "none";
         document.getElementById('removeSecondPiecesOptionBtn').style.display = "none";
 
+        $('#secondOptionPeices').val(null);
+        $('#secondOptionPrice').val(null);
     }
 
 </script>
