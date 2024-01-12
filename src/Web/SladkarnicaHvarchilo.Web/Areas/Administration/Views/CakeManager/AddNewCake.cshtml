@@ -33,7 +33,10 @@
             </div>
             <div class="form-group mb-3">
                 <label class="form-label" for="ImageFile">Сминка</label>
-                <input type="file" class="form-control" name="ImageFile" required />
+                <input type="file" class="form-control" onchange="loadFile(event)" name="ImageFile" />
+                <div style="padding-top: 1em;">
+                    <img id="imageFile" src="#" alt="ДОБАВИ СНИМКА." style="border: 0.25em solid white; border-radius: 1em;" width="300" />
+                </div>
             </div>
             <div class="form-group mt-3 mb-3">
                 <div class="nutritionInfo">
@@ -108,6 +111,14 @@
 </div>
 
 <script>
+
+    var loadFile = function (event) {
+        var output = document.getElementById('imageFile');
+        output.src = URL.createObjectURL(event.target.files[0]);
+        output.onload = function () {
+            URL.revokeObjectURL(output.src)
+        }
+    };
 
     function addSecondPiecesOption() {
         document.getElementById('addSecondPiecesOptionBtn').style.display = "none";

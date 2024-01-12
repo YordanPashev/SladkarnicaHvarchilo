@@ -164,6 +164,12 @@ body {
     font-family: Nunito;
 }
 
+.contentSection {
+    width: 50em !important;
+    margin-top: 6em;
+    font-family: Nunito;
+}
+
 .nutritionInfo {
     display: flex;
     gap: 1em;

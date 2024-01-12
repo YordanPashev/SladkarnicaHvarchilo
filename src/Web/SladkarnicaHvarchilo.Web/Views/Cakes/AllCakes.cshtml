@@ -16,87 +16,90 @@
 
 <h1 class="text-center"><strong>@this.ViewData["Title"]</strong></h1>
 
-@if (this.Model.Cakes.Length > 0)
-{
-    <form method="get" asp-controller="Cakes" asp-action="AllCakes" autocomplete="off">
-        <div class="container mt-2">
-            <div class="row align-items-start">
-                <div class="col-md-4 justify-content-start">
-                </div>
-                <div class="col-md-4 justify-content-start">
-                    <div class="input-group">
-                        @if (this.Model.SearchQuery == null)
-                        {
-                            <input style="font-size: 15pt" type="text" id="SearchQuery" name="SearchQuery" class="form-control" placeholder="Въведи име на торта" />
-                        }
-                        else
-                        {
-                            <input style="font-size: 15pt" type="text" id="SearchQuery" name="SearchQuery" class="form-control" value="@this.Model.SearchQuery" />
-                        }
-                        <input type="hidden" name="SearchQuery" value="@this.Model.SearchQuery">
-                        <div class="input-group-btn">
-                            <button class="btn btn-success m-auto" style="font-size: 15pt" onclick="this.form.submit()" name="SearchQuery" value="@this.Model.SearchQuery">Търси</button>
+<div class="contentSection">
+
+    @if (this.Model.Cakes.Length > 0)
+    {
+        <form method="get" asp-controller="Cakes" asp-action="AllCakes" autocomplete="off">
+            <div class="container mt-2">
+                <div class="row align-items-start">
+                    <div class="col-md-4 justify-content-start">
+                    </div>
+                    <div class="col-md-4 justify-content-start">
+                        <div class="input-group">
+                            @if (this.Model.SearchQuery == null)
+                            {
+                                <input style="font-size: 15pt" type="text" id="SearchQuery" name="SearchQuery" class="form-control" placeholder="Въведи име на торта" />
+                            }
+                            else
+                            {
+                                <input style="font-size: 15pt" type="text" id="SearchQuery" name="SearchQuery" class="form-control" value="@this.Model.SearchQuery" />
+                            }
+                            <input type="hidden" name="SearchQuery" value="@this.Model.SearchQuery">
+                            <div class="input-group-btn">
+                                <button class="btn btn-success m-auto" style="font-size: 15pt" onclick="this.form.submit()" name="SearchQuery" value="@this.Model.SearchQuery">Търси</button>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
-        <div class="row align-items-start">
-            <div class="col-md-5 justify-content-start">
-                <div class="navbar">
-                    <div class="dropdown">
-                        <button class="btn dropdown-toggle" style="color: white; font-size: 16pt; font-weight: bold; background: rgba(71, 90, 54, 0.7); backdrop-filter: blur(15px); border-color: transparent;" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
-                            Подреди по
-                        </button>
-                        <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1" style="font-size: 16pt; background: rgba(71, 90, 54, 0.7); backdrop-filter: blur(15px); width: 200px; font-size: 14pt;">
-                            @foreach (string orderCriteria in this.Model.OrderCriteria)
-                            {
-                                <li>
-                                    <button class="btn m-auto" style="color: white; background-color: transparent" onclick="this.form.submit()" name="selectedOrderCriteria" value="@orderCriteria">@orderCriteria</button>
-                                </li>
-                            }
-                        </ul>
-                        <input type="hidden" name="selectedOrderCriteria" value="@Model.SelectedOrderCriteria">
+            <div class="row align-items-start">
+                <div class="col-md-5 justify-content-start">
+                    <div class="navbar">
+                        <div class="dropdown">
+                            <button class="btn dropdown-toggle" style="color: white; font-size: 16pt; font-weight: bold; background: rgba(71, 90, 54, 0.7); backdrop-filter: blur(15px); border-color: transparent;" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                                Подреди по
+                            </button>
+                            <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1" style="font-size: 16pt; background: rgba(71, 90, 54, 0.7); backdrop-filter: blur(15px); width: 200px; font-size: 14pt;">
+                                @foreach (string orderCriteria in this.Model.OrderCriteria)
+                                {
+                                    <li>
+                                        <button class="btn m-auto" style="color: white; background-color: transparent" onclick="this.form.submit()" name="selectedOrderCriteria" value="@orderCriteria">@orderCriteria</button>
+                                    </li>
+                                }
+                            </ul>
+                            <input type="hidden" name="selectedOrderCriteria" value="@Model.SelectedOrderCriteria">
+                        </div>
                     </div>
                 </div>
-            </div>
-            <div class="col-md-4 mt-3 justify-content-start">
-                @if (this.Model.SearchQuery != null)
-                {
-                    string searchedTypeNoun = this.Model.Cakes.Length == 1 ? "торта" : "торти";
-                    <h3 style="width: 75%; font-style: italic; font-weight: bold; background-color: antiquewhite;">Намерени са @this.Model.Cakes.Length @searchedTypeNoun</h3>
-                }
-            </div>
-        </div>
-    </form>
-    <div class="text-center row" style="text-align: center">
-        @foreach (var cake in this.Model.Cakes)
-        {
-            <button class="card col-4 mb-2 mt-2" style="margin-left: 1rem; width: 26rem; background: rgba(71, 90, 54, 0.7); backdrop-filter: blur(10px); border: 2px solid; border-radius: 15px; border-color: antiquewhite;" onclick="location.href='@Url.Action("CakeDetails", "Cakes", new { cake.Id })'">
-                <img class="card mt-2" style="width: 24.3rem; height: 15rem;" src="~/img/Cakes/@cake.ImageFileDirectoryPath" alt="No Image">
-                <div class="container text-center">
-                <h2 class="card-title" style="color: white; font-weight: bold">@cake.Name</h2>
-                <h5 class="mb-2" style="color: white; font-weight: bold">@cake.Pieces парчета</h5>
-                <h4 class="mb-2" style="color: #EA8F36; font-weight: bold"><i>Цена: @cake.Price лв.</i></h4>
+                <div class="col-md-4 mt-3 justify-content-start">
+                    @if (this.Model.SearchQuery != null)
+                    {
+                        string searchedTypeNoun = this.Model.Cakes.Length == 1 ? "торта" : "торти";
+                        <h3 style="width: 75%; font-style: italic; font-weight: bold; background-color: antiquewhite;">Намерени са @this.Model.Cakes.Length @searchedTypeNoun</h3>
+                    }
                 </div>
-            </button>
-        }
-    </div>
-}
-else
-{
-    <h1 style="text-align: center">Не са открити торти</h1>
-    <br />
-}
+            </div>
+        </form>
+        <div class="text-center row" style="text-align: center">
+            @foreach (var cake in this.Model.Cakes)
+            {
+                <button class="card col-4 mb-2 mt-2" style="margin-left: 1rem; width: 26rem; background: rgba(71, 90, 54, 0.7); backdrop-filter: blur(10px); border: 2px solid; border-radius: 15px; border-color: antiquewhite;" onclick="location.href='@Url.Action("CakeDetails", "Cakes", new { cake.Id })'">
+                    <img class="card mt-2" style="width: 24.3rem; height: 15rem;" src="~/img/Cakes/@cake.ImageFileDirectoryPath" alt="No Image">
+                    <div class="container text-center">
+                        <h2 class="card-title" style="color: white; font-weight: bold">@cake.Name</h2>
+                        <h5 class="mb-2" style="color: white; font-weight: bold">@cake.Pieces парчета</h5>
+                        <h4 class="mb-2" style="color: #EA8F36; font-weight: bold"><i>Цена: @cake.Price лв.</i></h4>
+                    </div>
+                </button>
+            }
+        </div>
+    }
+    else
+    {
+        <h1 style="text-align: center">Не са открити торти</h1>
+        <br />
+    }
 
-@if (this.User.IsInRole(GlobalConstants.AdministratorRoleName))
-{
+    @if (this.User.IsInRole(GlobalConstants.AdministratorRoleName))
+    {
+        <div class="bottomPageButtons text-center">
+            <a class="btn btn-success mb-2" style="font-size: 16pt;  width: 20%;" asp-area="Administration" asp-controller="Cakemanager" asp-action="AddNewCake">Добави торта</a>
+        </div>
+    }
     <div class="bottomPageButtons text-center">
-        <a class="btn btn-success mb-2" style="font-size: 16pt;  width: 20%;" asp-area="Administration" asp-controller="Cakemanager" asp-action="AddNewCake">Добави торта</a>
+        <input class="btn btn-dark" style="font-size: 16pt; width: 20%;" value="Назад" onclick="history.back()">
     </div>
-}
-
-<div class="bottomPageButtons text-center">
-    <input class="btn btn-dark" style="font-size: 16pt; width: 20%;" value="Назад" onclick="history.back()">
 </div>
+
 
