@@ -1,7 +1,84 @@
 ﻿/* Please see documentation at https://docs.microsoft.com/aspnet/core/client-side/bundling-and-minification
 for details on configuring this project to bundle and minify static web assets. */
 
-@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@200&display=swap');
+/* Media queries */
+@media (min-width: 888px) {
+    html {
+        position: relative;
+        min-height: 100%;
+        font-size: 16pt;
+    }
+}
+
+@media (min-width: 400px) and (max-width: 888px) {
+    html {
+        position: relative;
+        min-height: 100%;
+        font-size: 8pt;
+    }
+}
+
+@media (max-width: 400px) {
+    html {
+        position: relative;
+        min-height: 100%;
+        font-size: 6pt;
+    }
+}
+
+@media (max-width: 300px) {
+    html {
+        position: relative;
+        min-height: 100%;
+        font-size: 4pt;
+    }
+
+    .siteNavBar {
+        display: none !important;
+    }
+
+    .siteBarLoginSection {
+        display: none !important;
+    }
+
+    .contentBox {
+        width: 100% !important;
+    }
+}
+
+@media (max-width: 150px) {
+    html {
+        position: relative;
+        min-height: 100%;
+        font-size: 2pt;
+    }
+
+    .siteNavBar {
+        display: none !important;
+    }
+
+    .contentBox {
+        width: 100% !important;
+    }
+}
+/*------------------------------------------------------*/
+
+
+
+/* Fonts */
+@font-face {
+    font-family: Nunito Regular;
+    src: url(fonts/Nunito/Nunito-Regular.ttf);
+}
+
+@font-face {
+    font-family: Nunito ExtraLight;
+    src: url(fonts/Nunito/Nunito-ExtraLight.ttf);
+}
+/*------------------------------------------------------*/
+
+
+
 
 a.navbar-brand {
     white-space: normal;
@@ -29,7 +106,7 @@ a {
 /* Sticky footer styles
 -------------------------------------------------- */
 html {
-    font-size: 14px;
+    font-size: 16pt;
 }
 
 @media (min-width: 768px) {
@@ -102,7 +179,7 @@ body {
     gap: 0.5em;
 }
 
-.navBarItems  > ul {
+.navBarItems > ul {
     display: flex;
     flex-direction: row !important;
     gap: 1em;
@@ -125,7 +202,6 @@ body {
     text-decoration: none;
     color: white;
     font-size: 1.2em !important;
-
 }
 
 /* Buttons */
@@ -161,28 +237,34 @@ body {
     border-color: white;
     border-radius: 1em;
     margin-top: 6em;
-    font-family: Nunito;
+    font-family: Nunito Regular;
 }
 
 .contentSection {
-    width: 50em !important;
+    width: 80em !important;
     margin-top: 6em;
-    font-family: Nunito;
+    font-family: Nunito Regular;
 }
 
 .nutritionInfo {
     display: flex;
     gap: 1em;
-    justify-content: space-evenly
+    justify-content: space-evenly;
 }
 
 .nutritionInfo > div > label {
-    padding-top: 0.25em; 
+    padding-top: 0.25em;
     font-size: 1.2em;
 }
 
 .nutritionInfo > div > input {
     width: 6em;
+}
+
+.nutrionInfoSecondRow {
+    justify-content: start !important;
+    gap: 2em;
+    padding-left: 9em !important;
 }
 
 .inputSection > div > form > div > label {

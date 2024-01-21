@@ -76,6 +76,10 @@
                 <hr />
                 <div class="nutritionInfo">
                     <div>
+                        <label for="NutritionInfo.Energy" class="control-label">Eнергия</label>
+                        <input name="NutritionInfo.Energy" placeholder="0kcal/0kJ" class="form-control" type="text" minlength="@GlobalConstants.PastryValidationConstants.AllergensMinLength" maxlength="@GlobalConstants.PastryValidationConstants.AllergensMaxLength" required/>
+                    </div>
+                    <div>
                         <label for="NutritionInfo.Fats" class="control-label">Мазнини</label>
                         <input name="NutritionInfo.Fats" placeholder="0.00" class="form-control" type="number" step=".01" min="@GlobalConstants.NutritionInfoConstants.MacrosMinValue" max="@GlobalConstants.NutritionInfoConstants.MacrosMaxValue" required />
                     </div>
@@ -84,16 +88,22 @@
                         <input name="NutritionInfo.Carbs" placeholder="0.00" class="form-control" type="number" step=".01" min="@GlobalConstants.NutritionInfoConstants.MacrosMinValue" max="@GlobalConstants.NutritionInfoConstants.MacrosMaxValue" required />
                     </div>
                     <div>
-                        <label for="NutritionInfo.Sugar" class="control-label">Захар</label>
-                        <input name="NutritionInfo.Sugar" placeholder="0.00" class="form-control" type="number" step=".01" min="@GlobalConstants.NutritionInfoConstants.MacrosMinValue" max="@GlobalConstants.NutritionInfoConstants.MacrosMaxValue" required />
-                    </div>
-                    <div>
                         <label for="NutritionInfo.Protein" class="control-label">Протеин</label>
                         <input name="NutritionInfo.Protein" placeholder="0.00" class="form-control" type="number" step=".01" min="@GlobalConstants.NutritionInfoConstants.MacrosMinValue" max="@GlobalConstants.NutritionInfoConstants.MacrosMaxValue" required />
                     </div>
                     <div>
                         <label for="NutritionInfo.Salt" class="control-label">Сол</label>
                         <input name="NutritionInfo.Salt" placeholder="0.00" class="form-control" type="number" step=".01" min="@GlobalConstants.NutritionInfoConstants.MacrosMinValue" max="@GlobalConstants.NutritionInfoConstants.MacrosMaxValue" required />
+                    </div>
+                </div>
+                <div class="nutritionInfo nutrionInfoSecondRow">
+                    <div>
+                        <label for="NutritionInfo.SaturatedFats" class="control-label">Наситени</label>
+                        <input name="NutritionInfo.SaturatedFats" placeholder="0.00" class="form-control" type="number" step=".01" min="@GlobalConstants.NutritionInfoConstants.MacrosMinValue" max="@GlobalConstants.NutritionInfoConstants.MacrosMaxValue" required />
+                    </div>
+                    <div>
+                        <label for="NutritionInfo.Sugar" class="control-label">Захар</label>
+                        <input name="NutritionInfo.Sugar" placeholder="0.00" class="form-control" type="number" step=".01" min="@GlobalConstants.NutritionInfoConstants.MacrosMinValue" max="@GlobalConstants.NutritionInfoConstants.MacrosMaxValue" required />
                     </div>
                 </div>
                 <hr />

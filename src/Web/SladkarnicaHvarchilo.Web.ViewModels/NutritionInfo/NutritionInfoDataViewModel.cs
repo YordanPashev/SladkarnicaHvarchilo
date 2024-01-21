@@ -14,8 +14,15 @@
         public string Id { get; set; }
 
         [Required]
+        public string Energy { get; set; }
+
+        [Required]
         [Range(NutritionInfoConstants.MacrosMinValue, NutritionInfoConstants.MacrosMaxValue, ErrorMessage = "The field {0} must be greater than {1}.")]
-        public double Fats { get; set; }
+        public double Fat { get; set; }
+
+        [Required]
+        [Range(NutritionInfoConstants.MacrosMinValue, NutritionInfoConstants.MacrosMaxValue, ErrorMessage = "The field {0} must be greater than {1}.")]
+        public double SaturatedFat { get; set; }
 
         [Required]
         [Range(NutritionInfoConstants.MacrosMinValue, NutritionInfoConstants.MacrosMaxValue, ErrorMessage = "The field {0} must be greater than {1}.")]

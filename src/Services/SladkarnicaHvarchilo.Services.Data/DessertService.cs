@@ -41,7 +41,6 @@
         public IQueryable<Dessert> GetAllCakesInSale()
             => this.dessertRepo.AllAsNoTracking()
                             .Include(c => c.PriceInfo)
-                            .Include(c => c.NutritionInfo)
                             .OrderBy(c => c.Name);
 
         public async Task<Dessert> GetCakeByIdAsync(string id)
@@ -104,7 +103,7 @@
             originalCake.Ingredients = userIputCakeData.Ingredients;
             originalCake.Allergens = userIputCakeData.Allergens;
             originalCake.ImageFileDirectoryPath = userIputCakeData.ImageFileDirectoryPath;
-            originalCake.NutritionInfo.Fats = userIputCakeData.NutritionInfo.Fats;
+            originalCake.NutritionInfo.Fat = userIputCakeData.NutritionInfo.Fat;
             originalCake.NutritionInfo.Carbs = userIputCakeData.NutritionInfo.Carbs;
             originalCake.NutritionInfo.Sugar = userIputCakeData.NutritionInfo.Sugar;
             originalCake.NutritionInfo.Protein = userIputCakeData.NutritionInfo.Protein;

@@ -1,6 +1,5 @@
 ﻿namespace SladkarnicaHvarchilo.Web.Controllers
 {
-    using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
 
@@ -24,7 +23,7 @@
         public async Task<IActionResult> AllCakes(string selectedOrderCriteria = null, string searchQuery = null, string userMessage = null)
         {
             AllCakesViewModel model = new AllCakesViewModel(selectedOrderCriteria);
-            List<Dessert> cake2 = await this.cakesService.GetAllCakesInSale().ToListAsync();
+
             if (string.IsNullOrEmpty(selectedOrderCriteria) && string.IsNullOrEmpty(searchQuery))
             {
                 model.Cakes = await this.cakesService

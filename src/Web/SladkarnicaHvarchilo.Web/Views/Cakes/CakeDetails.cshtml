@@ -1,5 +1,6 @@
 ﻿@using System.Text
 @using SladkarnicaHvarchilo.Common;
+@using SladkarnicaHvarchilo.Web.ViewModels.CakePiecesInfo;
 @using SladkarnicaHvarchilo.Web.ViewModels.Cakes;
 
 @model CakeFullDataViewModel
@@ -16,40 +17,98 @@
     <br />
 }
 
-<div class="d-flex justify-content-center container mt-3">
-    <div class="container text-center" style="background: rgba(71, 90, 54, 0.7); border: 2px solid; border-color: #475A36 ; border-radius: 15px; backdrop-filter: blur(12px);">
-        <i class="fa fa-apple"></i>
-        <h1 style="color: white; text-align:center"><strong>@this.ViewData["Title"]</strong></h1>
-        <div class="about-product text-center mt-2 mb-2"><img alt="No image" src="~/img/Cakes/@this.Model.ImageFileDirectoryPath" width="70%"></div>
-        <div class="mb-4" style="font-size: 20px; color: white; white-space: pre-line"><strong>Описание:</strong> @Environment.NewLine @this.Model.Description</div>
-        <div style="font-size: 20px; color: white"><strong>Съставки:</strong> @this.Model.Ingredients</div>
-        <div style="font-size: 20px; color: white"><strong>Брой Парчета:</strong> @this.Model.PriceInfo[0].Pieces</div>
-        @if (!string.IsNullOrEmpty(this.Model.Allergens))
-        {
-            <div style="font-size: 20px"><strong>Алергени:</strong> @this.Model.Allergens</div>
-        }
-        <div class="mt-2" style="font-size: 20px"><strong>Цена: <text style="color: red">@this.Model.PriceInfo[0].Price лв.</text></strong></div>
-
+<div class="contentSection">
+    <div style="display: flex; gap: 1em; background-color: transparent; justify-content: center;">
+        <div>
+            <img alt="No image" src="~/img/Cakes/@this.Model.ImageFileDirectoryPath" style="width: 500px; height: 300px; object-fit: cover;">
+            <div class="mt-5">
+                <div class="mb-0" style="font-size: 2em;">
+                    <img alt="No image" src="~/img/Common/Price icon.png" style="width: 1.5em; height: 1.5em; background-color: transparent; padding-bottom: 0.2em !important;"><text style="font-weight: bold;"> Цена</text>
+                </div>
+                @foreach (PriceInfoViewModel priceInfo in this.Model.PriceInfo)
+                {
+                    <div style="font-size: 2em; font-family: Nunito Extralight">
+                        <text style="font-weight: bold; padding-left: 1.8em;"><text style="font-family: Nunito Regular;">@priceInfo.FormatedPrice лв.</text> за <text style="font-family: Nunito Regular;">@priceInfo.Pieces</text> парчета</text>
+                    </div>
+                }
+            </div>
+        </div>
+        <div>
+            <p class="mb-0" style="font-size: 5em;"><strong>@this.ViewData["Title"]</strong></p>
+            <div style="font-size: 1.5em; white-space: pre-line; text-align: left; padding-bottom: 2.5em;">@this.Model.Description</div>
+            <div class="mb-0" style="font-size: 1.5em;">
+                <img alt="No image" src="~/img/Common/Ingredients icon.png" style="width: 1.5em; height: 1.5em; background-color: transparent; padding-bottom: 0.2em !important;"><text style="font-weight: bold;"> Съставки</text>
+            </div>
+            <div class="mt-0 mb-4">
+                <text style="font-size: 1.5em; padding-left: 1.8em;">@this.Model.Ingredients</text>
+            </div>
+            @if (!string.IsNullOrEmpty(this.Model.Allergens))
+            {
+                <div class="mb-0" style="font-size: 1.5em;">
+                    <img alt="No image" src="~/img/Common/Allergens icon.png" style="width: 1.5em; height: 1.5em; background-color: transparent; padding-bottom: 0.2em !important;"><text style="font-weight: bold;"> Алергени</text>
+                </div>
+                <div class="mt-0 mb-4">
+                    <text style="font-size: 1.5em; padding-left: 1.8em;">@this.Model.Allergens</text>
+                </div>
+            }
+            <div class="mb-0" style="font-size: 1.5em;">
+                <img alt="No image" src="~/img/Common/Food info icon .png" style="width: 1.5em; height: 1.5em; background-color: transparent; padding-bottom: 0.2em !important;"><text style="font-weight: bold;"> Хранителни стойности за 100 гр.</text>
+            </div>
+            <div style="font-size: 1.5em; padding-left: 1.8em !important;">
+                <table>
+                    <tr>
+                        <td style="width: 11em !important;">Енергия</td>
+                        <td style="text-align: right !important">@this.Model.NutritionInfo.Energy</td>
+                    </tr>
+                    <tr>
+                        <td style="width: 11em !important;">Мазнини</td>
+                        <td style="text-align: right !important">@this.Model.NutritionInfo.Fat гр.</td>
+                    </tr>
+                    <tr>
+                        <td style="width: 11em !important;">- от които наситени</td>
+                        <td style="text-align: right !important">@this.Model.NutritionInfo.SaturatedFat гр.</td>
+                    </tr>
+                    <tr>
+                        <td style="width: 11em !important;">Въглехидрати</td>
+                        <td style="text-align: right !important">@this.Model.NutritionInfo.Carbs гр.</td>
+                    </tr>
+                    <tr>
+                        <td style="width: 11em !important;">- от които захари</td>
+                        <td style="text-align: right !important">@this.Model.NutritionInfo.Sugar гр.</td>
+                    </tr>
+                    <tr>
+                        <td style="width: 11em !important;">Белтъчини</td>
+                        <td style="text-align: right !important">@this.Model.NutritionInfo.Protein гр.</td>
+                    </tr>
+                    <tr>
+                        <td style="width: 11em !important;">Сол</td>
+                        <td style="text-align: right !important">@this.Model.NutritionInfo.Salt гр.</td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </div>
+    <div>
         @if (this.User.IsInRole(GlobalConstants.AdministratorRoleName))
         {
             <p class="d-flex justify-content-center container mt-3">
-                <div class="mb-2" style="font-size: 24px">
+                <div class="mb-2" style="font-size: 1.5em;">
                     <i><strong>Администраторска секция</strong></i>
                 </div>
                 <div class="container text-center" style="width: 40%; backdrop-filter: blur(100px); border: 2px solid; border-color: white; border-radius: 15px">
                     <i class="fa fa-apple"></i>
                     <div>
-                        <p style="font-size: 20px"><strong>Тортата е добавена на:</strong> @this.Model.CreatedOn.ToString(GlobalConstants.AdministrationSettingsDateTimeFormat)</p>
+                        <p style="font-size: 1.5em;"><strong>Тортата е добавена на:</strong> @this.Model.CreatedOn.ToString(GlobalConstants.AdministrationSettingsDateTimeFormat)</p>
                         @if (this.Model.ModifiedOn != null)
                         {
-                            <p style="font-size: 20px"><i><strong>Последни промени са направени на:</strong></i> @this.Model.ModifiedOn.Value.ToString(GlobalConstants.AdministrationSettingsDateTimeFormat)</p>
+                            <p style="font-size: 1.5em;"><i><strong>Последни промени са направени на:</strong></i> @this.Model.ModifiedOn.Value.ToString(GlobalConstants.AdministrationSettingsDateTimeFormat)</p>
                         }
                         <br />
                     </div>
                     <p class="d-grid gap-2 mx-auto">
-                        <a class="btn btn-secondary" style="font-size: 16pt;" asp-area="Administration" asp-controller="CakeManager" asp-action="EditCake" asp-route-id="@this.Model.Id">Редактирай</a>
-                        <a class="btn btn-danger" style="font-size: 16pt;" onclick="return confirm('Сигурни ли сте, че искате да премахнете торта @this.Model.Name ?');" asp-area="Administration" asp-controller="CakeManager" asp-action="DeleteCake" asp-route-id="@this.Model.Id">Премахни</a>
-                        <input class="btn btn-dark" style="font-size: 16pt;" value="Назад" onclick="history.back()">
+                        <a class="btn btn-secondary" style="font-size: 1.5em;" asp-area="Administration" asp-controller="CakeManager" asp-action="EditCake" asp-route-id="@this.Model.Id">Редактирай</a>
+                        <a class="btn btn-danger" style="font-size: 1.5em;" onclick="return confirm('Сигурни ли сте, че искате да премахнете торта @this.Model.Name ?');" asp-area="Administration" asp-controller="CakeManager" asp-action="DeleteCake" asp-route-id="@this.Model.Id">Премахни</a>
+                        <input class="btn btn-dark" style="font-size: 1.5em;" value="Назад" onclick="history.back()">
                     </p>
                 </div>
             </p>

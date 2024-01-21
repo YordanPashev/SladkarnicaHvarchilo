@@ -16,6 +16,8 @@
         {
             public const double MacrosMinValue = 0.0;
             public const double MacrosMaxValue = 100.0;
+
+            public const int EnergyMaxLenght = 20;
         }
 
         public static class PastryValidationConstants

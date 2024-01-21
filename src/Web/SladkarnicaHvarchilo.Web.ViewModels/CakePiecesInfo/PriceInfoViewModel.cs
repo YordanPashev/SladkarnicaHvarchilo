@@ -9,7 +9,7 @@
     using SladkarnicaHvarchilo.Data.Models;
     using SladkarnicaHvarchilo.Services.Mapping;
 
-    public class PriceInfoViewModel : IMapTo<PriceInfo>
+    public class PriceInfoViewModel : IMapTo<PriceInfo>, IMapFrom<PriceInfo>
     {
         public PriceInfoViewModel() => this.Id = Guid.NewGuid().ToString();
 
@@ -23,5 +23,19 @@
         [Column(TypeName = "decimal(18, 2)")]
         [Range(GlobalConstants.PastryValidationConstants.PriceMinValue, GlobalConstants.PastryValidationConstants.PriceMaxValue)]
         public decimal? Price { get; set; }
+
+        public string FormatedPrice => this.FormatPrice();
+
+        private string FormatPrice()
+        {
+            int parsedPrice = 0;
+
+            if (int.TryParse(this.Price.ToString().Trim('0').Trim('.'), out parsedPrice))
+            {
+                return parsedPrice.ToString();
+            }
+
+            return this.Price.ToString().Replace('.', ',');
+        }
     }
 }

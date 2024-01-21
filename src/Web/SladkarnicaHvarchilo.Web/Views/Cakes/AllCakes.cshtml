@@ -1,4 +1,5 @@
 ﻿@using SladkarnicaHvarchilo.Common
+@using SladkarnicaHvarchilo.Web.ViewModels.CakePiecesInfo;
 @using SladkarnicaHvarchilo.Web.ViewModels.Cakes;
 
 @model AllCakesViewModel
@@ -71,17 +72,17 @@
                 </div>
             </div>
         </form>
-        <div class="text-center row" style="text-align: center">
+        <div class="container" style="display: flex; gap: 2em; text-align: center;">
             @foreach (var cake in this.Model.Cakes)
             {
-                <button class="card col-4 mb-2 mt-2" style="margin-left: 1rem; width: 26rem; background: rgba(71, 90, 54, 0.7); backdrop-filter: blur(10px); border: 2px solid; border-radius: 15px; border-color: antiquewhite;" onclick="location.href='@Url.Action("CakeDetails", "Cakes", new { cake.Id })'">
-                    <img class="card mt-2" style="width: 24.3rem; height: 15rem;" src="~/img/Cakes/@cake.ImageFileDirectoryPath" alt="No Image">
-                    <div class="container text-center">
-                        <h2 class="card-title" style="color: white; font-weight: bold">@cake.Name</h2>
-                        <h5 class="mb-2" style="color: white; font-weight: bold">@cake.Pieces парчета</h5>
-                        <h4 class="mb-2" style="color: #EA8F36; font-weight: bold"><i>Цена: @cake.Price лв.</i></h4>
-                    </div>
-                </button>
+                <a style="text-align: left; font-family: Nunito Regular; text-decoration: none; color: black;" asp-action="CakeDetails" asp-controller="Cakes" asp-route-id="@cake.Id">
+                    <img class="card mt-2" style="width: 24.3rem; height: 15rem; border: none; border-radius: 1em; background-color: transparent;" src="~/img/Cakes/@cake.ImageFileDirectoryPath" alt="No Image">
+                    <p class="card-title" style="font-weight: bold; padding: 0.5em 0.2em; font-size: 1.5em;">@cake.Name</p>
+                    @foreach (PriceInfoViewModel priceInfo in cake.PriceInfo)
+                    {
+                        <p class="mb-2" style="font-weight: bold; margin-top: -0.6em; padding: 0em 0.3em; font-family: Nunito ExtraLight; color: #4f4f4f !important;"><text style="font-family: Nunito Regular;">@priceInfo.FormatedPrice лв.</text> за <text style="font-family: Nunito Regular;">@priceInfo.Pieces</text> парчета</p>
+                    }
+                </a>
             }
         </div>
     }
@@ -97,9 +98,6 @@
             <a class="btn btn-success mb-2" style="font-size: 16pt;  width: 20%;" asp-area="Administration" asp-controller="Cakemanager" asp-action="AddNewCake">Добави торта</a>
         </div>
     }
-    <div class="bottomPageButtons text-center">
-        <input class="btn btn-dark" style="font-size: 16pt; width: 20%;" value="Назад" onclick="history.back()">
-    </div>
 </div>
 
 

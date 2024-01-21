@@ -92,7 +92,7 @@
 
             await this.cakesService.UpdateCakeDataAsync(originalCake, userIputCakeData);
 
-            return this.RedirectToAction("CakeDetails", "Cakes", new { userMessage = GlobalConstants.UserMessage.SuccessfullyEditedCake });
+            return this.RedirectToAction("CakeDetails", "Cakes", new { area = string.Empty, id = originalCake.Id, userMessage = GlobalConstants.UserMessage.SuccessfullyEditedCake });
         }
 
         [HttpGet]
@@ -129,7 +129,7 @@
 
             if (originalCake.Name == userIputCakeData.Name && originalCake.Description == userIputCakeData.Description &&
                 originalCake.Ingredients == userIputCakeData.Ingredients && originalCake.Allergens == userIputCakeData.Allergens &&
-                !isCakeImageUpdated && originalCake.NutritionInfo.Fats == userIputCakeData.NutritionInfo.Fats &&
+                !isCakeImageUpdated && originalCake.NutritionInfo.Fat == userIputCakeData.NutritionInfo.Fat &&
                 originalCake.NutritionInfo.Carbs == userIputCakeData.NutritionInfo.Carbs &&
                 originalCake.NutritionInfo.Sugar == userIputCakeData.NutritionInfo.Sugar &&
                 originalCake.NutritionInfo.Protein == userIputCakeData.NutritionInfo.Protein &&

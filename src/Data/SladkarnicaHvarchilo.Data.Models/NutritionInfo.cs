@@ -2,7 +2,7 @@
 {
     using System;
     using System.ComponentModel.DataAnnotations;
-
+    using SladkarnicaHvarchilo.Common;
     using SladkarnicaHvarchilo.Data.Common.Models;
 
     public class NutritionInfo : BaseDeletableModel<int>
@@ -14,7 +14,14 @@
         public string Id { get; set; }
 
         [Required]
-        public double Fats { get; set; }
+        [MaxLength(GlobalConstants.NutritionInfoConstants.EnergyMaxLenght)]
+        public string Energy { get; set; }
+
+        [Required]
+        public double Fat { get; set; }
+
+        [Required]
+        public double SaturatedFat { get; set; }
 
         [Required]
         public double Carbs { get; set; }
