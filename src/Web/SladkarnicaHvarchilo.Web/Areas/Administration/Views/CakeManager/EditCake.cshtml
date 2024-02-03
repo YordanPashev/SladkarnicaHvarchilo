@@ -86,18 +86,19 @@
             </div>
             <div class="form-group mt-5 mb-4">
                 <label class="form-label mb-0" for="NutritionInfo">Хратинелна стойност за 100 гр. (гр.)</label>
+                <hr />
                 <div class="nutritionInfo">
                     <div>
-                        <label for="NutritionInfo.Fats" class="control-label">Мазнини</label>
-                        <input name="NutritionInfo.Fats" value="@this.Model.NutritionInfo.Fats" placeholder="0.00" class="form-control" type="number" step=".01" min="@GlobalConstants.NutritionInfoConstants.MacrosMinValue" max="@GlobalConstants.NutritionInfoConstants.MacrosMaxValue" required />
+                        <label for="NutritionInfo.Energy" class="control-label">Eнергия</label>
+                        <input name="NutritionInfo.Energy" value="@this.Model.NutritionInfo.Energy" placeholder="0kcal/0kJ" class="form-control" type="text" minlength="@GlobalConstants.PastryValidationConstants.AllergensMinLength" maxlength="@GlobalConstants.PastryValidationConstants.AllergensMaxLength" required />
+                    </div>
+                    <div>
+                        <label for="NutritionInfo.Fat" class="control-label">Мазнини</label>
+                        <input name="NutritionInfo.Fat" value="@this.Model.NutritionInfo.Fat" placeholder="0.00" class="form-control" type="number" step=".01" min="@GlobalConstants.NutritionInfoConstants.MacrosMinValue" max="@GlobalConstants.NutritionInfoConstants.MacrosMaxValue" required />
                     </div>
                     <div>
                         <label for="NutritionInfo.Carbs" class="control-label">Въглех.</label>
                         <input name="NutritionInfo.Carbs" value="@this.Model.NutritionInfo.Carbs" placeholder="0.00" class="form-control" type="number" step=".01" min="@GlobalConstants.NutritionInfoConstants.MacrosMinValue" max="@GlobalConstants.NutritionInfoConstants.MacrosMaxValue" required />
-                    </div>
-                    <div>
-                        <label for="NutritionInfo.Sugar" class="control-label">Захар</label>
-                        <input name="NutritionInfo.Sugar" value="@this.Model.NutritionInfo.Sugar" placeholder="0.00" class="form-control" type="number" step=".01" min="@GlobalConstants.NutritionInfoConstants.MacrosMinValue" max="@GlobalConstants.NutritionInfoConstants.MacrosMaxValue" required />
                     </div>
                     <div>
                         <label for="NutritionInfo.Protein" class="control-label">Протеин</label>
@@ -106,6 +107,16 @@
                     <div>
                         <label for="NutritionInfo.Salt" class="control-label">Сол</label>
                         <input name="NutritionInfo.Salt" value="@this.Model.NutritionInfo.Salt" placeholder="0.00" class="form-control" type="number" step=".01" min="@GlobalConstants.NutritionInfoConstants.MacrosMinValue" max="@GlobalConstants.NutritionInfoConstants.MacrosMaxValue" required />
+                    </div>
+                </div>
+                <div class="nutritionInfo nutrionInfoSecondRow">
+                    <div>
+                        <label for="NutritionInfo.SaturatedFats" class="control-label">Наситени</label>
+                        <input name="NutritionInfo.SaturatedFats" value="@this.Model.NutritionInfo.SaturatedFat" placeholder="0.00" class="form-control" type="number" step=".01" min="@GlobalConstants.NutritionInfoConstants.MacrosMinValue" max="@GlobalConstants.NutritionInfoConstants.MacrosMaxValue" required />
+                    </div>
+                    <div>
+                        <label for="NutritionInfo.Sugar" class="control-label">Захар</label>
+                        <input name="NutritionInfo.Sugar" value="@this.Model.NutritionInfo.Sugar" placeholder="0.00" class="form-control" type="number" step=".01" min="@GlobalConstants.NutritionInfoConstants.MacrosMinValue" max="@GlobalConstants.NutritionInfoConstants.MacrosMaxValue" required />
                     </div>
                 </div>
             </div>

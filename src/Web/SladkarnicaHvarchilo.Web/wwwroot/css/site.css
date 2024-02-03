@@ -16,6 +16,10 @@ for details on configuring this project to bundle and minify static web assets. 
         min-height: 100%;
         font-size: 8pt;
     }
+
+    .modal-content {
+        width: 100%;
+    }
 }
 
 @media (max-width: 400px) {
@@ -75,11 +79,12 @@ for details on configuring this project to bundle and minify static web assets. 
     font-family: Nunito ExtraLight;
     src: url(fonts/Nunito/Nunito-ExtraLight.ttf);
 }
+
+.regularFontText {
+    font-family: Nunito Regular;
+}
+
 /*------------------------------------------------------*/
-
-
-
-
 a.navbar-brand {
     white-space: normal;
     text-align: center;
@@ -227,6 +232,11 @@ body {
     padding-top: 2.1em;
 }
 
+.foodInfoBtnMargin {
+    margin-bottom: 1.6em !important;
+    margin-left: 0.3em !important;
+}
+
 /* Sections */
 .inputSection {
     background-color: rgba(240,150, 65, 0.7) !important;
@@ -280,6 +290,40 @@ body {
     width: 2.4em;
 }
 
+.dessertDetailsBox {
+    display: flex;
+    gap: 1em;
+    background-color: transparent;
+    justify-content: center;
+}
+
+.dessertPhotoSize {
+    width: 500px;
+    height: 300px;
+    object-fit: cover;
+}
+
+.dessertDetaislIcon {
+    width: 2em;
+    height: 2em;
+    background-color: transparent;
+    margin-bottom: 1.2em !important;
+}
+
+.dessertPriceText {
+    padding-left: 1.8em;
+    font-family: Nunito Extralight;
+    font-size: 1.5em;
+    font-weight: bold;
+}
+
+.foodInfoTable {
+    display: none;
+    font-size: 1.5em;
+    margin-left: 1.8em !important;
+}
+
+
 /* User Messages styles */
 .userErrorMessage {
     background-color: yellow;
@@ -291,4 +335,199 @@ body {
     font-weight: bold;
     font-style: italic;
     color: red;
+}
+
+/* Text */
+
+.dessertTitleText {
+    font-size: 5em;
+    font-weight: bold;
+}
+
+.dessertDescriptionText {
+    font-size: 1.5em;
+    white-space: pre-line;
+    text-align: left;
+    padding-bottom: 2.5em;
+}
+
+.dessertLabelText {
+    font-size: 2em;
+    font-weight: bold;
+}
+
+.ingredientsText {
+    font-size: 1.5em;
+    padding-left: 1.8em;
+}
+
+.allergernsTexts {
+    font-size: 1.5em;
+    padding-left: 1.8em;
+}
+
+.foondInfoLabel {
+    display: flex;
+    gap: 0.4em;
+}
+
+.foondInfoValue {
+    text-align: right !important;
+}
+
+/* Model dessert image settings */
+/* Style the Image Used to Trigger the Modal */
+#myImg {
+    border-radius: 5px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+    #myImg:hover {
+        opacity: 0.7;
+    }
+
+/* The Modal (background) */
+
+.modal {
+    display: none; /* Hidden by default */
+    position: fixed; /* Stay in place */
+    z-index: 1; /* Sit on top */
+    padding-top: 100px; /* Location of the box */
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: auto; /* Enable scroll if needed */
+    background-color: rgba(200,200,200,0.9);
+    backdrop-filter: blur(20px) !important;
+}
+
+/* Modal Content (Image) */
+.modal-content {
+    margin: auto;
+    display: block;
+    width: 100%;
+    max-width: 70em;
+}
+
+/* Caption of Modal Image (Image Text) - Same Width as the Image */
+#caption {
+    margin: auto;
+    display: block;
+    width: 100%;
+    max-width: 70em;
+    text-align: center;
+    color: #ccc;
+    padding: 10px 0;
+    height: 150px;
+}
+
+/* Add Animation - Zoom in the Modal */
+.modal-content, #caption {
+    animation-name: zoom;
+    animation-duration: 0.6s;
+}
+
+@keyframes zoom {
+    from {
+        transform: scale(0)
+    }
+
+    to {
+        transform: scale(1)
+    }
+}
+
+/* The Close Button */
+.close {
+    position: absolute;
+    top: 15px;
+    right: 35px;
+    color: #f1f1f1;
+    font-size: 40px;
+    font-weight: bold;
+    transition: 0.3s;
+    color: red;
+}
+
+.close:hover,
+.close:focus {
+    color: green;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.modelDessertNameText {
+    font-size: 3em !important;
+    font-weight: bold !important;
+    color: black !important;
+}
+
+/* Content animations */
+.zoomAnimationNoDelay {
+    animation-name: zoom;
+    animation-duration: 1s;
+}
+
+.zoomAnimationSmallDelay {
+    animation-fill-mode: both;
+    animation-delay: 0.7s;
+    animation-name: swipe-left-animation;
+    animation-duration: 0.75s;
+}
+
+.zoomAnimationMediumDelay {
+    animation-fill-mode: both;
+    animation-delay: 1.15s;
+    animation-name: swipe-right-animation;
+    animation-duration: 0.75s;
+}
+
+.fallDownAnimationNoDelay {
+    animation-name: fall-down-animation;
+    animation-duration: 1s;
+}
+
+.fallDownAnimationSmallDelay {
+    animation-fill-mode: both;
+    animation-delay: 1s;
+    animation-name: fall-down-animation;
+    animation-duration: 1.2s;
+}
+
+@keyframes swipe-right-animation {
+    from {
+        opacity: 0;
+        transform: translateX(-20em);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes swipe-left-animation {
+    from {
+        opacity: 0;
+        transform: translateX(50em);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes fall-down-animation {
+    from {
+        opacity: 0;
+        transform: translateY(-50em);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }

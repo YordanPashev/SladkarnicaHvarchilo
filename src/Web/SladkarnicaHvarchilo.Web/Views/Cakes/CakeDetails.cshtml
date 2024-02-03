@@ -17,72 +17,79 @@
     <br />
 }
 
-<div class="contentSection">
-    <div style="display: flex; gap: 1em; background-color: transparent; justify-content: center;">
+<div class="contentSection fallDownAnimationNoDelay">
+    <div class="dessertDetailsBox">
         <div>
-            <img alt="No image" src="~/img/Cakes/@this.Model.ImageFileDirectoryPath" style="width: 500px; height: 300px; object-fit: cover;">
+            <img class="dessertPhotoSize" id="myImg" alt="@this.Model.Name" src="~/img/Cakes/@this.Model.ImageFileDirectoryPath">
+            <div id="myModal" class="modal">
+                <span class="close"><i class="fa-regular fa-circle-xmark"></i></span>
+                <p class="modelDessertNameText" id="caption">@this.Model.Name</p>
+                <img class="modal-content" id="dessertPhoto">
+            </div>
             <div class="mt-5">
-                <div class="mb-0" style="font-size: 2em;">
-                    <img alt="No image" src="~/img/Common/Price icon.png" style="width: 1.5em; height: 1.5em; background-color: transparent; padding-bottom: 0.2em !important;"><text style="font-weight: bold;"> Цена</text>
+                <div class="mb-0">
+                    <img alt="Няма икона" src="~/img/Common/Price icon.png" class="dessertDetaislIcon"><text class="dessertLabelText"> Цена</text>
                 </div>
                 @foreach (PriceInfoViewModel priceInfo in this.Model.PriceInfo)
                 {
-                    <div style="font-size: 2em; font-family: Nunito Extralight">
-                        <text style="font-weight: bold; padding-left: 1.8em;"><text style="font-family: Nunito Regular;">@priceInfo.FormatedPrice лв.</text> за <text style="font-family: Nunito Regular;">@priceInfo.Pieces</text> парчета</text>
+                    <div>
+                        <text class="dessertPriceText"><text class="regularFontText">@priceInfo.FormatedPrice лв.</text> за <text class="regularFontText">@priceInfo.Pieces</text> парчета</text>
                     </div>
                 }
             </div>
         </div>
         <div>
-            <p class="mb-0" style="font-size: 5em;"><strong>@this.ViewData["Title"]</strong></p>
-            <div style="font-size: 1.5em; white-space: pre-line; text-align: left; padding-bottom: 2.5em;">@this.Model.Description</div>
-            <div class="mb-0" style="font-size: 1.5em;">
-                <img alt="No image" src="~/img/Common/Ingredients icon.png" style="width: 1.5em; height: 1.5em; background-color: transparent; padding-bottom: 0.2em !important;"><text style="font-weight: bold;"> Съставки</text>
+            <div class="dessertTitleText mb-0">@this.ViewData["Title"]</div>
+            <div class="dessertDescriptionText">@this.Model.Description</div>
+            <div class="mb-0">
+                <img alt="Няма икона" src="~/img/Common/Ingredients icon.png" class="dessertDetaislIcon"><text class="dessertLabelText"> Съставки</text>
             </div>
-            <div class="mt-0 mb-4">
-                <text style="font-size: 1.5em; padding-left: 1.8em;">@this.Model.Ingredients</text>
+            <div class="ingredientsText mt-0 mb-4">
+                <text>@this.Model.Ingredients</text>
             </div>
             @if (!string.IsNullOrEmpty(this.Model.Allergens))
             {
-                <div class="mb-0" style="font-size: 1.5em;">
-                    <img alt="No image" src="~/img/Common/Allergens icon.png" style="width: 1.5em; height: 1.5em; background-color: transparent; padding-bottom: 0.2em !important;"><text style="font-weight: bold;"> Алергени</text>
+                <div class="mb-0">
+                    <img alt="No image" src="~/img/Common/Allergens icon.png" class="dessertDetaislIcon"><text class="dessertLabelText"> Алергени</text>
                 </div>
                 <div class="mt-0 mb-4">
-                    <text style="font-size: 1.5em; padding-left: 1.8em;">@this.Model.Allergens</text>
+                    <text class="allergernsTexts">@this.Model.Allergens</text>
                 </div>
             }
-            <div class="mb-0" style="font-size: 1.5em;">
-                <img alt="No image" src="~/img/Common/Food info icon .png" style="width: 1.5em; height: 1.5em; background-color: transparent; padding-bottom: 0.2em !important;"><text style="font-weight: bold;"> Хранителни стойности за 100 гр.</text>
+            <div class="mb-0">
+                <img alt="Няма икона" src="~/img/Common/Food info icon .png" class="dessertDetaislIcon"><text class="dessertLabelText"> Хранителни стойности за 100 гр.</text>
+                <button id="displayFoodInfoBtn" class="btn btn-info foodInfoBtnMargin" onclick="displayFoodInfo()" title="Информациа за хранителните стойности"><i class="fa-solid fa-caret-down"></i></button>
+                <button id="hideFoodInfoBtn" class="btn btn-danger foodInfoBtnMargin" style="display: none;" onclick="hideFoodInfo()" title="Скрий хранителните стойности"><i class="fa-solid fa-caret-up"></i></button>
             </div>
-            <div style="font-size: 1.5em; padding-left: 1.8em !important;">
-                <table>
+            <div>
+                <table id="foodInfoSection" class="foodInfoTable">
                     <tr>
-                        <td style="width: 11em !important;">Енергия</td>
-                        <td style="text-align: right !important">@this.Model.NutritionInfo.Energy</td>
+                        <td class="foondInfoLabel">Енергия</td>
+                        <td class="foondInfoValue">@this.Model.NutritionInfo.Energy</td>
                     </tr>
                     <tr>
-                        <td style="width: 11em !important;">Мазнини</td>
-                        <td style="text-align: right !important">@this.Model.NutritionInfo.Fat гр.</td>
+                        <td class="foondInfoLabel">Мазнини</td>
+                        <td class="foondInfoValue">@this.Model.NutritionInfo.Fat гр.</td>
                     </tr>
                     <tr>
-                        <td style="width: 11em !important;">- от които наситени</td>
-                        <td style="text-align: right !important">@this.Model.NutritionInfo.SaturatedFat гр.</td>
+                        <td class="foondInfoLabel">- от които наситени</td>
+                        <td class="foondInfoValue">@this.Model.NutritionInfo.SaturatedFat гр.</td>
                     </tr>
                     <tr>
-                        <td style="width: 11em !important;">Въглехидрати</td>
-                        <td style="text-align: right !important">@this.Model.NutritionInfo.Carbs гр.</td>
+                        <td class="foondInfoLabel">Въглехидрати</td>
+                        <td class="foondInfoValue">@this.Model.NutritionInfo.Carbs гр.</td>
                     </tr>
                     <tr>
-                        <td style="width: 11em !important;">- от които захари</td>
-                        <td style="text-align: right !important">@this.Model.NutritionInfo.Sugar гр.</td>
+                        <td class="foondInfoLabel">- от които захари</td>
+                        <td class="foondInfoValue">@this.Model.NutritionInfo.Sugar гр.</td>
                     </tr>
                     <tr>
-                        <td style="width: 11em !important;">Белтъчини</td>
-                        <td style="text-align: right !important">@this.Model.NutritionInfo.Protein гр.</td>
+                        <td class="foondInfoLabel">Белтъчини</td>
+                        <td class="foondInfoValue">@this.Model.NutritionInfo.Protein гр.</td>
                     </tr>
                     <tr>
-                        <td style="width: 11em !important;">Сол</td>
-                        <td style="text-align: right !important">@this.Model.NutritionInfo.Salt гр.</td>
+                        <td class="foondInfoLabel">Сол</td>
+                        <td class="foondInfoValue">@this.Model.NutritionInfo.Salt гр.</td>
                     </tr>
                 </table>
             </div>
@@ -115,3 +122,35 @@
         }
     </div>
 </div>
+
+<script>
+
+    function displayFoodInfo() {
+        document.getElementById('displayFoodInfoBtn').style.display = "none";
+        document.getElementById('hideFoodInfoBtn').style.display = "inline";
+        document.getElementById('foodInfoSection').style.display = "inline";
+    };
+
+    function hideFoodInfo() {
+        document.getElementById('displayFoodInfoBtn').style.display = "inline";
+        document.getElementById('hideFoodInfoBtn').style.display = "none";
+        document.getElementById('foodInfoSection').style.display = "none";
+    };
+
+    // Get the modal
+    var modal = document.getElementById("myModal");
+
+    var img = document.getElementById("myImg");
+    var modalImg = document.getElementById("dessertPhoto");
+    img.onclick = function () {
+        modal.style.display = "block";
+        modalImg.src = this.src;
+    }
+
+    var span = document.getElementsByClassName("close")[0];
+
+    span.onclick = function () {
+        modal.style.display = "none";
+    }
+
+</script>
