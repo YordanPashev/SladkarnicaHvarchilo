@@ -6,7 +6,15 @@ for details on configuring this project to bundle and minify static web assets. 
     html {
         position: relative;
         min-height: 100%;
-        font-size: 16pt;
+        font-size: 12pt;
+    }
+
+    .contentSection {
+        max-width: 100em !important;
+    }
+
+    .cakeShortInfoPhoto {
+        width: 20em !important;
     }
 }
 
@@ -17,8 +25,12 @@ for details on configuring this project to bundle and minify static web assets. 
         font-size: 8pt;
     }
 
-    .modal-content {
-        width: 100%;
+    .contentSection {
+        max-width: 100em !important;
+    }
+
+    .cakeShortInfoPhoto {
+        width: 17em !important;
     }
 }
 
@@ -28,6 +40,14 @@ for details on configuring this project to bundle and minify static web assets. 
         min-height: 100%;
         font-size: 6pt;
     }
+
+    .contentSection {
+        max-width: 70em !important;
+    }
+
+    .cakeShortInfoPhoto {
+        width: 17em !important;
+    }
 }
 
 @media (max-width: 300px) {
@@ -35,6 +55,10 @@ for details on configuring this project to bundle and minify static web assets. 
         position: relative;
         min-height: 100%;
         font-size: 4pt;
+    }
+
+    .contentSection {
+        max-width: 70em !important;
     }
 
     .siteNavBar {
@@ -47,6 +71,10 @@ for details on configuring this project to bundle and minify static web assets. 
 
     .contentBox {
         width: 100% !important;
+    }
+
+    .cakeShortInfoPhoto {
+        width: 17em !important;
     }
 }
 
@@ -63,6 +91,14 @@ for details on configuring this project to bundle and minify static web assets. 
 
     .contentBox {
         width: 100% !important;
+    }
+
+    .contentSection {
+        max-width: 70em !important;
+    }
+
+    .cakeShortInfoPhoto {
+        width: 17em !important;
     }
 }
 /*------------------------------------------------------*/
@@ -108,17 +144,9 @@ a {
     border-color: #1861ac;
 }
 
-/* Sticky footer styles
--------------------------------------------------- */
-html {
-    font-size: 16pt;
-}
+/* Global Settings */
 
-@media (min-width: 768px) {
-    html {
-        font-size: 16px;
-    }
-}
+/* Midia Queries */
 
 .border-top {
     border-top: 1px solid #e5e5e5;
@@ -137,8 +165,6 @@ button.accept-policy {
     line-height: inherit;
 }
 
-/* Sticky footer styles
--------------------------------------------------- */
 html {
     position: relative;
     min-height: 100%;
@@ -161,6 +187,15 @@ body {
     white-space: nowrap;
     line-height: 60px; /* Vertically center the text there */
 }
+
+.modal-content {
+    width: 100%;
+}
+/* ------------------------------ */
+
+
+
+
 
 /* Site Bar */
 .navBar {
@@ -208,6 +243,12 @@ body {
     color: white;
     font-size: 1.2em !important;
 }
+/* ------------------------------ */
+
+
+
+
+
 
 /* Buttons */
 .homeButton {
@@ -237,11 +278,26 @@ body {
     margin-left: 0.3em !important;
 }
 
+.addDessertBtnMargin {
+    margin: 6em 0;
+}
+
+.addDessertBtnMargin > a {
+    font-size: 1.2em;
+    width: 20%;
+}
+/* ------------------------------ */
+
+
+
+
+
 /* Sections */
 .inputSection {
     background-color: rgba(240,150, 65, 0.7) !important;
     color: white !important;
-    width: 50em !important;
+    max-width: 20em !important;
+    margin: auto;
     opacity: 0.97;
     border: 0.2em solid;
     border-color: white;
@@ -250,10 +306,63 @@ body {
     font-family: Nunito Regular;
 }
 
+.searchDessertSection {
+    display: flex;
+    justify-content: center !important;
+    font-size: 1.2em;
+}
+
+.searchDessertText {
+    border: gray solid 0.1em;
+    border-radius: 2em 0 0 2em;
+    background-color: white;
+}
+
+.searchDessertText > input {
+    padding: 0.3em 1em 0.3em 1em !important;
+    border-color: transparent;
+    border-radius: 2em 0 0 2em;
+}
+
+.searchDessertText > input:focus,
+.searchDessertText > input:active {
+    border-color: transparent;
+    background-color: floralwhite;
+    outline: none;
+}
+
+.searchDesserBtn {
+    padding: 0.3em 0.3em !important;
+    border: gray solid 0.1em;
+    border-radius: 0 2em 2em 0;
+    background-color: #4BB543;
+}
+
+.searchDesserBtn:hover {
+    background-color: green;
+}
+
+.searchDesserBtn > button:hover {
+    color: greenyellow !important;
+}
+
+.searchDesserBtn > button {
+    border-color: transparent; 
+    background-color: transparent; 
+    color: white !important;
+}
+
 .contentSection {
-    width: 80em !important;
-    margin-top: 6em;
+    margin: auto;
+    margin-top: 6em !important;
     font-family: Nunito Regular;
+}
+
+.allCakesInfoSection {
+    display: flex;
+    gap: 2em;
+    justify-content: space-between !important;
+    flex-wrap: wrap !important;
 }
 
 .nutritionInfo {
@@ -290,6 +399,32 @@ body {
     width: 2.4em;
 }
 
+.cakeShortInfoSection {
+    font-family: Nunito Regular !important;
+    text-decoration: none !important;
+    color: black !important;
+}
+
+.cakeShortInfoPhoto {
+    border: none !important;
+    border-radius: 1em !important;
+    background-color: transparent !important;
+}
+
+.cakeShortInfoNameText {
+    font-weight: bold;
+    padding: 0.5em 0.2em;
+    font-size: 1.5em;
+}
+
+.cakeShortInfoPriceText {
+    font-weight: bold;
+    margin-top: -0.6em;
+    padding: 0em 0.3em;
+    font-family: Nunito ExtraLight;
+    color: #4f4f4f !important;
+}
+
 .dessertDetailsBox {
     display: flex;
     gap: 1em;
@@ -322,6 +457,11 @@ body {
     font-size: 1.5em;
     margin-left: 1.8em !important;
 }
+/* ------------------------------ */
+
+
+
+
 
 
 /* User Messages styles */
@@ -375,17 +515,33 @@ body {
     text-align: right !important;
 }
 
-/* Model dessert image settings */
-/* Style the Image Used to Trigger the Modal */
+.dessertTitle {
+    padding-top: 2em;
+    font-family: Nunito Regular;
+    font-size: 3em;
+}
+
+.searchDessertResultText {
+    font-size: 1.2em; 
+    font-style: italic; 
+    color: #777777
+}
+/* ------------------------------ */
+
+
+
+
+
+/* Modal dessert image settings */
 #myImg {
     border-radius: 5px;
     cursor: pointer;
     transition: 0.3s;
 }
 
-    #myImg:hover {
-        opacity: 0.7;
-    }
+#myImg:hover {
+    opacity: 0.7;
+}
 
 /* The Modal (background) */
 
@@ -453,7 +609,7 @@ body {
 
 .close:hover,
 .close:focus {
-    color: green;
+    color: darkgreen;
     text-decoration: none;
     cursor: pointer;
 }
@@ -463,6 +619,12 @@ body {
     font-weight: bold !important;
     color: black !important;
 }
+/* ------------------------------ */
+
+
+
+
+
 
 /* Content animations */
 .zoomAnimationNoDelay {
@@ -472,28 +634,28 @@ body {
 
 .zoomAnimationSmallDelay {
     animation-fill-mode: both;
-    animation-delay: 0.7s;
+    animation-delay: 0.5s;
     animation-name: swipe-left-animation;
-    animation-duration: 0.75s;
+    animation-duration: 0.5s;
 }
 
 .zoomAnimationMediumDelay {
     animation-fill-mode: both;
-    animation-delay: 1.15s;
+    animation-delay: 1s;
     animation-name: swipe-right-animation;
-    animation-duration: 0.75s;
+    animation-duration: 0.5s;
 }
 
 .fallDownAnimationNoDelay {
     animation-name: fall-down-animation;
-    animation-duration: 1s;
+    animation-duration: 0.8s;
 }
 
 .fallDownAnimationSmallDelay {
     animation-fill-mode: both;
-    animation-delay: 1s;
+    animation-delay: 0.8s;
     animation-name: fall-down-animation;
-    animation-duration: 1.2s;
+    animation-duration: 1s;
 }
 
 @keyframes swipe-right-animation {

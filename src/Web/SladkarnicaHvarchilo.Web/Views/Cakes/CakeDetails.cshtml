@@ -19,24 +19,22 @@
 
 <div class="contentSection fallDownAnimationNoDelay">
     <div class="dessertDetailsBox">
-        <div>
-            <img class="dessertPhotoSize" id="myImg" alt="@this.Model.Name" src="~/img/Cakes/@this.Model.ImageFileDirectoryPath">
-            <div id="myModal" class="modal">
-                <span class="close"><i class="fa-regular fa-circle-xmark"></i></span>
-                <p class="modelDessertNameText" id="caption">@this.Model.Name</p>
-                <img class="modal-content" id="dessertPhoto">
+        <img class="dessertPhotoSize" id="myImg" alt="@this.Model.Name" src="~/img/Cakes/@this.Model.ImageFileDirectoryPath">
+        <div id="myModal" class="modal">
+            <span class="close"><i class="fa-regular fa-circle-xmark"></i></span>
+            <p class="modelDessertNameText" id="caption">@this.Model.Name</p>
+            <img class="modal-content" id="dessertPhoto">
+        </div>
+        <div class="mt-5">
+            <div class="mb-0">
+                <img alt="Няма икона" src="~/img/Common/Price icon.png" class="dessertDetaislIcon"><text class="dessertLabelText"> Цена</text>
             </div>
-            <div class="mt-5">
-                <div class="mb-0">
-                    <img alt="Няма икона" src="~/img/Common/Price icon.png" class="dessertDetaislIcon"><text class="dessertLabelText"> Цена</text>
+            @foreach (PriceInfoViewModel priceInfo in this.Model.PriceInfo)
+            {
+                <div>
+                    <text class="dessertPriceText"><text class="regularFontText">@priceInfo.FormatedPrice лв.</text> за <text class="regularFontText">@priceInfo.Pieces</text> парчета</text>
                 </div>
-                @foreach (PriceInfoViewModel priceInfo in this.Model.PriceInfo)
-                {
-                    <div>
-                        <text class="dessertPriceText"><text class="regularFontText">@priceInfo.FormatedPrice лв.</text> за <text class="regularFontText">@priceInfo.Pieces</text> парчета</text>
-                    </div>
-                }
-            </div>
+            }
         </div>
         <div>
             <div class="dessertTitleText mb-0">@this.ViewData["Title"]</div>
@@ -123,18 +121,31 @@
     </div>
 </div>
 
+<style>
+    .test {
+        display: block;
+        animation-name: fall-down-animation;
+        animation-duration: 0.8s;
+    }
+
+    .test2 {
+        display: none;
+    }
+</style>
+
 <script>
 
     function displayFoodInfo() {
         document.getElementById('displayFoodInfoBtn').style.display = "none";
         document.getElementById('hideFoodInfoBtn').style.display = "inline";
-        document.getElementById('foodInfoSection').style.display = "inline";
+        document.getElementById('foodInfoSection').className = 'test';
     };
 
     function hideFoodInfo() {
         document.getElementById('displayFoodInfoBtn').style.display = "inline";
         document.getElementById('hideFoodInfoBtn').style.display = "none";
-        document.getElementById('foodInfoSection').style.display = "none";
+        document.getElementById('foodInfoSection').className = 'test2';
+
     };
 
     // Get the modal
