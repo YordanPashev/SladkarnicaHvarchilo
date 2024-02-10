@@ -50,9 +50,11 @@
 
             public const string PriceDescending = "Цена низходящо";
 
-            public const string Pieces = "Брой парчета";
+            public const string PiecesAscending = "Брой парчета възходящо";
 
-            public const string Recent = "Последно добавени";
+            public const string PiecesDescending = "Брой парчета низходящо";
+
+            public const string Recent = "Най-нови";
 
             public const string Name = "Име";
 
@@ -60,7 +62,8 @@
                                                                {
                                                                    PriceAscending,
                                                                    PriceDescending,
-                                                                   Pieces,
+                                                                   PiecesAscending,
+                                                                   PiecesDescending,
                                                                    Recent,
                                                                    Name,
                                                                })

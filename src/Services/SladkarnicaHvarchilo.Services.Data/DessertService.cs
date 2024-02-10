@@ -66,24 +66,43 @@
             if (selectedOrderCriteria == OrderCriteria.PriceAscending)
             {
                 return this.dessertRepo.AllAsNoTracking()
-                            //.OrderBy(c => c.Price)
-                            .OrderBy(c => c.Name);
+                            .Include(c => c.PriceInfo)
+                            .OrderBy(c => c.PriceInfo.OrderBy(c => c.Price)
+                                                     .Take(1)
+                                                     .Max(pi => pi.Price))
+                            .ThenBy(c => c.Name);
             }
             else if (selectedOrderCriteria == OrderCriteria.PriceDescending)
             {
                 return this.dessertRepo.AllAsNoTracking()
-                            //.OrderByDescending(c => c.Price)
-                            .OrderBy(c => c.Name);
+                            .Include(c => c.PriceInfo)
+                            .OrderByDescending(c => c.PriceInfo.OrderByDescending(c => c.Price)
+                                                     .Take(1)
+                                                     .Max(pi => pi.Price))
+                            .ThenBy(c => c.Name);
             }
-            else if (selectedOrderCriteria == OrderCriteria.Pieces)
+            else if (selectedOrderCriteria == OrderCriteria.PiecesAscending)
             {
                 return this.dessertRepo.AllAsNoTracking()
-                            //.OrderByDescending(c => c.Pieces)
-                            .OrderBy(c => c.Name);
+                            .Include(c => c.PriceInfo)
+                            .OrderBy(c => c.PriceInfo.OrderBy(c => c.Pieces)
+                                                     .Take(1)
+                                                     .Max(pi => pi.Pieces))
+                            .ThenBy(c => c.Name);
+            }
+            else if (selectedOrderCriteria == OrderCriteria.PiecesDescending)
+            {
+                return this.dessertRepo.AllAsNoTracking()
+                            .Include(c => c.PriceInfo)
+                            .OrderByDescending(c => c.PriceInfo.OrderByDescending(c => c.Pieces)
+                                                     .Take(1)
+                                                     .Max(pi => pi.Pieces))
+                            .ThenBy(c => c.Name);
             }
             else if (selectedOrderCriteria == OrderCriteria.Recent)
             {
                 return this.dessertRepo.AllAsNoTracking()
+                            .Include(c => c.PriceInfo)
                             .OrderByDescending(c => c.CreatedOn)
                             .ThenBy(c => c.Name);
             }
