@@ -14,7 +14,7 @@ for details on configuring this project to bundle and minify static web assets. 
     }
 
     .cakeShortInfoPhoto {
-        width: 20em !important;
+        width: 19em !important;
     }
 }
 
@@ -30,7 +30,7 @@ for details on configuring this project to bundle and minify static web assets. 
     }
 
     .cakeShortInfoPhoto {
-        width: 17em !important;
+        width: 15.5em !important;
     }
 }
 
@@ -46,7 +46,7 @@ for details on configuring this project to bundle and minify static web assets. 
     }
 
     .cakeShortInfoPhoto {
-        width: 17em !important;
+        width: 15.5em !important;
     }
 }
 
@@ -74,7 +74,7 @@ for details on configuring this project to bundle and minify static web assets. 
     }
 
     .cakeShortInfoPhoto {
-        width: 17em !important;
+        width: 15.5em !important;
     }
 }
 
@@ -98,7 +98,7 @@ for details on configuring this project to bundle and minify static web assets. 
     }
 
     .cakeShortInfoPhoto {
-        width: 17em !important;
+        width: 16em !important;
     }
 }
 /*------------------------------------------------------*/
@@ -108,12 +108,12 @@ for details on configuring this project to bundle and minify static web assets. 
 /* Fonts */
 @font-face {
     font-family: Nunito Regular;
-    src: url(fonts/Nunito/Nunito-Regular.ttf);
+    src: url(../fonts/Nunito/Nunito-Regular.ttf);
 }
 
 @font-face {
     font-family: Nunito ExtraLight;
-    src: url(fonts/Nunito/Nunito-ExtraLight.ttf);
+    src: url(../fonts/Nunito/Nunito-ExtraLight.ttf);
 }
 
 .regularFontText {
@@ -210,6 +210,7 @@ body {
     z-index: 1;
     font-weight: bold;
     backdrop-filter: blur(7px);
+    background-image: linear-gradient(rgba(174, 62, 37, 0.85), rgba(239, 145, 54, 0.90));
 }
 
 .navBarItems {
@@ -236,6 +237,11 @@ body {
     gap: 1em;
     font-size: 1.2em !important;
     padding-top: 0.55em !important;
+}
+
+.navBarPhoneNumberText {
+    padding-right: 1em;
+    cursor: default;
 }
 
 .navBarLoginSection > li > a {
@@ -296,7 +302,7 @@ body {
 .inputSection {
     background-color: rgba(240,150, 65, 0.7) !important;
     color: white !important;
-    max-width: 20em !important;
+    max-width: 40em !important;
     margin: auto;
     opacity: 0.97;
     border: 0.2em solid;
@@ -360,9 +366,60 @@ body {
 
 .allCakesInfoSection {
     display: flex;
-    gap: 2em;
+    z-index: -2 !important;
+    gap: 1em;
     justify-content: space-between !important;
     flex-wrap: wrap !important;
+}
+
+.orderBySection {
+    z-index: 2 !important
+}
+
+.orderByDropDownBtn {
+    background-color: transparent !important;
+    border-color: transparent !important;
+    color: black !important;
+    font-size: 1.2em !important;
+    font-weight: bold !important;
+}
+
+.orderByDropDownBtn:hover {
+    background-color: rgba(240, 240, 240, 0.97) !important;
+}
+
+.orderByDropDownBtn:focus {
+    background-color: rgba(220, 220, 220, 0.97) !important;
+}
+
+.orderByDropDownLayout {
+    display: none;
+    z-index: 10 !important;
+    width: 15em !important;
+    background-color: rgba(220, 220, 220, 0.97) !important;
+    border-color: transparent !important;
+    animation: fallDownAnimationNoDelay !important;
+}
+
+.orderByDropDownBtn:focus .orderByDropDownLayout {
+    animation: fallDownAnimationNoDelay !important;
+    display: block !important;
+}
+
+.orderByDropDownText {
+    z-index: 10 !important;
+    color: black;
+    border-color: transparent;
+    outline: none !important;
+}
+
+.orderByDropDownText:hover {
+    background-color: darkgray !important;
+    color: white !important;
+}
+
+.foodInfoSectionPadding {
+    padding-left: 1.95em !important;
 }
 
 .nutritionInfo {
@@ -376,14 +433,9 @@ body {
     font-size: 1.2em;
 }
 
+.nutritionInfo > div > div,
 .nutritionInfo > div > input {
     width: 6em;
-}
-
-.nutrionInfoSecondRow {
-    justify-content: start !important;
-    gap: 2em;
-    padding-left: 9em !important;
 }
 
 .inputSection > div > form > div > label {
@@ -403,21 +455,36 @@ body {
     font-family: Nunito Regular !important;
     text-decoration: none !important;
     color: black !important;
+    padding: 0.5em !important;
+}
+
+.cakeShortInfoSection:hover {
+    float: left !important;
+    text-align: center !important;
+    overflow: hidden !important;
+    transition: 0.7s !important;
+    background-color: rgba(180, 180, 180, 0.2);
+    border-radius: 1em !important;
 }
 
 .cakeShortInfoPhoto {
+    z-index: -2 !important;
     border: none !important;
     border-radius: 1em !important;
     background-color: transparent !important;
 }
 
 .cakeShortInfoNameText {
+    text-align: center;
+    position: relative !important;
+    z-index: -2;
     font-weight: bold;
     padding: 0.5em 0.2em;
     font-size: 1.5em;
 }
 
 .cakeShortInfoPriceText {
+    text-align: center;
     font-weight: bold;
     margin-top: -0.6em;
     padding: 0em 0.3em;
@@ -425,11 +492,16 @@ body {
     color: #4f4f4f !important;
 }
 
+
 .dessertDetailsBox {
-    display: flex;
-    gap: 1em;
-    background-color: transparent;
-    justify-content: center;
+    display: flex !important;
+    gap: 1em !important;
+    background-color: transparent !important;
+}
+
+.dessertDetailsBox > div {
+    flex-grow: 1 !important;
+    flex-basis: 0 !important;
 }
 
 .dessertPhotoSize {
@@ -438,12 +510,6 @@ body {
     object-fit: cover;
 }
 
-.dessertDetaislIcon {
-    width: 2em;
-    height: 2em;
-    background-color: transparent;
-    margin-bottom: 1.2em !important;
-}
 
 .dessertPriceText {
     padding-left: 1.8em;
@@ -452,11 +518,6 @@ body {
     font-weight: bold;
 }
 
-.foodInfoTable {
-    display: none;
-    font-size: 1.5em;
-    margin-left: 1.8em !important;
-}
 /* ------------------------------ */
 
 
@@ -485,25 +546,32 @@ body {
 }
 
 .dessertDescriptionText {
-    font-size: 1.5em;
+    font-size: 2em !important;
+    color: #666666;
     white-space: pre-line;
     text-align: left;
     padding-bottom: 2.5em;
 }
 
+.ingredientsText,
+.foodInfoTable,
+.allergernsText {
+    font-size: 1.25em;
+    color: #666666;
+    padding-left: 1.6em;
+    padding-top: 0em !important;
+}
+
+.dessertDetaislIcon {
+    width: 1.5em;
+    height: 1.5em;
+    background-color: transparent;
+    margin-bottom: 1em !important;
+}
+
 .dessertLabelText {
-    font-size: 2em;
+    font-size: 1.5em;
     font-weight: bold;
-}
-
-.ingredientsText {
-    font-size: 1.5em;
-    padding-left: 1.8em;
-}
-
-.allergernsTexts {
-    font-size: 1.5em;
-    padding-left: 1.8em;
 }
 
 .foondInfoLabel {
@@ -632,14 +700,27 @@ body {
     animation-duration: 1s;
 }
 
-.zoomAnimationSmallDelay {
+.swipeLeftAnimationNoDelay {
+    animation-fill-mode: both;
+    animation-name: swipe-left-animation;
+    animation-duration: 0.5s;
+}
+
+.swipeLeftAnimationSmallDelay {
     animation-fill-mode: both;
     animation-delay: 0.5s;
     animation-name: swipe-left-animation;
     animation-duration: 0.5s;
 }
 
-.zoomAnimationMediumDelay {
+.swipeLeftAnimationMediumDelay {
+    animation-fill-mode: both;
+    animation-delay: 1.5s;
+    animation-name: swipe-left-animation;
+    animation-duration: 1.5s;
+}
+
+.swipeRigthAnimationMediumDelay {
     animation-fill-mode: both;
     animation-delay: 1s;
     animation-name: swipe-right-animation;
@@ -656,6 +737,21 @@ body {
     animation-delay: 0.8s;
     animation-name: fall-down-animation;
     animation-duration: 1s;
+}
+
+
+.fallDownAnimationNoDissapear {
+    animation-name: fall-down-animation-dissapear;
+    animation-duration: 0.7s;
+    animation-fill-mode: forwards;
+    overflow: hidden;
+}
+
+.slideUpAnimationWithDelay {
+    animation-fill-mode: both;
+    animation-delay: 1.5s;
+    animation-name: slide-up-animation;
+    animation-duration: 0.75s;
 }
 
 @keyframes swipe-right-animation {
@@ -685,7 +781,31 @@ body {
 @keyframes fall-down-animation {
     from {
         opacity: 0;
-        transform: translateY(-50em);
+        transform: translateY(-40em);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes fall-down-animation-dissapear {
+    from {
+        opacity: 1;
+        transform: translateY(0);
+    }
+
+    to {
+        opacity: 0;
+        transform: translateY(+20em);
+    }
+}
+
+@keyframes slide-up-animation {
+    from {
+        opacity: 0;
+        transform: translateY(+10em);
     }
 
     to {

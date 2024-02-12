@@ -86,7 +86,6 @@
             </div>
             <div class="form-group mt-5 mb-4">
                 <label class="form-label mb-0" for="NutritionInfo">Хратинелна стойност за 100 гр. (гр.)</label>
-                <hr />
                 <div class="nutritionInfo">
                     <div>
                         <label for="NutritionInfo.Energy" class="control-label">Eнергия</label>
@@ -109,7 +108,10 @@
                         <input name="NutritionInfo.Salt" value="@this.Model.NutritionInfo.Salt" placeholder="0.00" class="form-control" type="number" step=".01" min="@GlobalConstants.NutritionInfoConstants.MacrosMinValue" max="@GlobalConstants.NutritionInfoConstants.MacrosMaxValue" required />
                     </div>
                 </div>
-                <div class="nutritionInfo nutrionInfoSecondRow">
+                <div class="nutritionInfo">
+                    <div>
+                        <div></div>
+                    </div>
                     <div>
                         <label for="NutritionInfo.SaturatedFats" class="control-label">Наситени</label>
                         <input name="NutritionInfo.SaturatedFats" value="@this.Model.NutritionInfo.SaturatedFat" placeholder="0.00" class="form-control" type="number" step=".01" min="@GlobalConstants.NutritionInfoConstants.MacrosMinValue" max="@GlobalConstants.NutritionInfoConstants.MacrosMaxValue" required />
@@ -117,6 +119,12 @@
                     <div>
                         <label for="NutritionInfo.Sugar" class="control-label">Захар</label>
                         <input name="NutritionInfo.Sugar" value="@this.Model.NutritionInfo.Sugar" placeholder="0.00" class="form-control" type="number" step=".01" min="@GlobalConstants.NutritionInfoConstants.MacrosMinValue" max="@GlobalConstants.NutritionInfoConstants.MacrosMaxValue" required />
+                    </div>
+                    <div>
+                        <div></div>
+                    </div>
+                    <div>
+                        <div></div>
                     </div>
                 </div>
             </div>

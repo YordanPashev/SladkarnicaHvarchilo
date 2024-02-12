@@ -6,11 +6,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@this.ViewData["Title"] - @GlobalConstants.SystemName</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" asp-append-version="true" />
-    <link rel="stylesheet" href="~/css/site.min.css?version=91233" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/site.min.css?version=1232" asp-append-version="true" />
 </head>
 <body>
     <header>
-        <nav class="navBar" style="background-image: linear-gradient(rgb(174, 62, 37, 0.85), rgb(239, 145, 54, 0.90));">
+        <nav class="navBar">
             <div class="navBarItems" style="font-family: Nunito ExtraLight, sans-serif;">
                 <a class="navbar-brand homeButton" asp-area="" asp-controller="Home" asp-action="Index">
                     <img src="~/img/Common/Logo.png" width="130em">
@@ -37,7 +37,7 @@
                         <a class="nav-link" href="https://www.facebook.com/tortinakorem" target="_blank" title="Facebook страница"><i class="fa-brands fa-facebook"></i></a>
                     </li>
                     <li>
-                        <text title="Телефон за поръчки" style="padding-right: 1em; cursor: default;"><i class="fa-solid fa-phone"></i> 0877 44 57 45</text>
+                        <text class="navBarPhoneNumberText" title="Телефон за поръчки"><i class="fa-solid fa-phone"></i> 0877 44 57 45</text>
                     </li>
                 </ul>
             </div>

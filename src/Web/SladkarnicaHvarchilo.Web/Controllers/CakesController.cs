@@ -6,6 +6,7 @@
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.EntityFrameworkCore;
     using SladkarnicaHvarchilo.Data.Models;
+    using SladkarnicaHvarchilo.Data.Models.Enums;
     using SladkarnicaHvarchilo.Services.Data.Contracts;
     using SladkarnicaHvarchilo.Services.Mapping;
     using SladkarnicaHvarchilo.Web.ViewModels.Cakes;
@@ -27,7 +28,7 @@
             if (string.IsNullOrEmpty(selectedOrderCriteria) && string.IsNullOrEmpty(searchQuery))
             {
                 model.Cakes = await this.cakesService
-                                      .GetAllCakesInSale()
+                                      .GetAllDesserInSaleByType(DessertType.Cake)
                                       .To<CakesShortInfoViewModel>()
                                       .ToArrayAsync();
             }
@@ -46,7 +47,7 @@
         [HttpGet]
         public async Task<IActionResult> CakeDetails(string id, string userMessage = null)
         {
-            Dessert cake = await this.cakesService.GetCakeByIdAsync(id);
+            Dessert cake = await this.cakesService.GetDessertByIdAsync(id, DessertType.Cake);
 
             if (cake == null)
             {
@@ -64,15 +65,15 @@
 
             if (!string.IsNullOrEmpty(selectedOrderCriteria) && !string.IsNullOrEmpty(searchQuery))
             {
-                result = this.cakesService.GetCakesAccoringToFilters(selectedOrderCriteria, searchQuery);
+                result = this.cakesService.GetDessertsAccoringToFilters(selectedOrderCriteria, searchQuery, DessertType.Cake);
             }
             else if (!string.IsNullOrEmpty(searchQuery))
             {
-                result = this.cakesService.GetSearchedCakes(searchQuery);
+                result = this.cakesService.GetDessertsContainingTheQuery(searchQuery, DessertType.Cake);
             }
             else
             {
-                result = this.cakesService.GetCakesByOrderCriteria(selectedOrderCriteria);
+                result = this.cakesService.GetDessertByOrderCriteria(selectedOrderCriteria, DessertType.Cake);
             }
 
             return await result.To<CakesShortInfoViewModel>().ToArrayAsync();

@@ -2,7 +2,6 @@
 {
     using System;
     using System.Collections.Generic;
-    using System.Diagnostics;
     using System.Linq;
     using System.Threading.Tasks;
 
@@ -10,6 +9,7 @@
     using SladkarnicaHvarchilo.Data.Common.Repositories;
 
     using SladkarnicaHvarchilo.Data.Models;
+    using SladkarnicaHvarchilo.Data.Models.Enums;
     using SladkarnicaHvarchilo.Services.Data.Contracts;
 
     using static SladkarnicaHvarchilo.Common.GlobalConstants;
@@ -18,54 +18,56 @@
     {
         private readonly IDeletableEntityRepository<Dessert> dessertRepo;
 
-        public DessertService(IDeletableEntityRepository<Dessert> cakeRepo)
-            => this.dessertRepo = cakeRepo;
+        public DessertService(IDeletableEntityRepository<Dessert> dessertRepo)
+            => this.dessertRepo = dessertRepo;
 
-        public async Task AddNewCake(Dessert cake)
+        public async Task AddNewDessert(Dessert dessert)
         {
-            await this.dessertRepo.AddAsync(cake);
+            await this.dessertRepo.AddAsync(dessert);
             await this.dessertRepo.SaveChangesAsync();
         }
 
-        public async Task<bool> CheckIfCakeAlreadyExists(string cakeName)
+        public async Task<bool> CheckIfDessertAlreadyExists(string cakeName, DessertType type)
             => await this.dessertRepo.AllAsNoTracking()
+                            .Where(c => c.Type == DessertType.Cake)
                             .AnyAsync(c => c.Name == cakeName);
 
-        public async Task DeteleCake(Dessert cake)
+        public async Task DeleteDessert(Dessert dessert)
         {
-            this.dessertRepo.Delete(cake);
-
+            this.dessertRepo.Delete(dessert);
             await this.dessertRepo.SaveChangesAsync();
         }
 
-        public IQueryable<Dessert> GetAllCakesInSale()
+        public IQueryable<Dessert> GetAllDesserInSaleByType(DessertType type)
             => this.dessertRepo.AllAsNoTracking()
+                            .Where(c => c.Type == type)
                             .Include(c => c.PriceInfo)
                             .OrderBy(c => c.Name);
 
-        public async Task<Dessert> GetCakeByIdAsync(string id)
+        public async Task<Dessert> GetDessertByIdAsync(string id, DessertType type)
             => await this.dessertRepo.AllAsNoTracking()
+                            .Where(c => c.Type == type)
                             .Include(c => c.PriceInfo)
                             .Include(c => c.NutritionInfo)
                             .FirstOrDefaultAsync(c => c.Id == id);
 
-        public async Task<Dessert> GetCakeByIdForEditAsync(string id)
+        public async Task<Dessert> GetDessertByIdForEditAsync(string id, DessertType type)
             => await this.dessertRepo.All()
+                            .Where(c => c.Type == type)
                             .Include(c => c.PriceInfo)
                             .Include(c => c.NutritionInfo)
                             .FirstOrDefaultAsync(c => c.Id == id);
 
-        public IQueryable<Dessert> GetCakesAccoringToFilters(string selectedOrderCriteria, string searchQuery)
-            => this.GetCakesByOrderCriteria(selectedOrderCriteria)
-                        .Include(c => c.PriceInfo)
-                        .Include(c => c.NutritionInfo)
+        public IQueryable<Dessert> GetDessertsAccoringToFilters(string selectedOrderCriteria, string searchQuery, DessertType type)
+            => this.GetDessertByOrderCriteria(selectedOrderCriteria, type)
                         .Where(c => c.Name.ToUpper().Contains(searchQuery));
 
-        public IQueryable<Dessert> GetCakesByOrderCriteria(string selectedOrderCriteria)
+        public IQueryable<Dessert> GetDessertByOrderCriteria(string selectedOrderCriteria, DessertType type)
         {
             if (selectedOrderCriteria == OrderCriteria.PriceAscending)
             {
                 return this.dessertRepo.AllAsNoTracking()
+                            .Where(c => c.Type == type)
                             .Include(c => c.PriceInfo)
                             .OrderBy(c => c.PriceInfo.OrderBy(c => c.Price)
                                                      .Take(1)
@@ -75,6 +77,7 @@
             else if (selectedOrderCriteria == OrderCriteria.PriceDescending)
             {
                 return this.dessertRepo.AllAsNoTracking()
+                            .Where(c => c.Type == type)
                             .Include(c => c.PriceInfo)
                             .OrderByDescending(c => c.PriceInfo.OrderByDescending(c => c.Price)
                                                      .Take(1)
@@ -84,6 +87,7 @@
             else if (selectedOrderCriteria == OrderCriteria.PiecesAscending)
             {
                 return this.dessertRepo.AllAsNoTracking()
+                            .Where(c => c.Type == type)
                             .Include(c => c.PriceInfo)
                             .OrderBy(c => c.PriceInfo.OrderBy(c => c.Pieces)
                                                      .Take(1)
@@ -93,6 +97,7 @@
             else if (selectedOrderCriteria == OrderCriteria.PiecesDescending)
             {
                 return this.dessertRepo.AllAsNoTracking()
+                            .Where(c => c.Type == type)
                             .Include(c => c.PriceInfo)
                             .OrderByDescending(c => c.PriceInfo.OrderByDescending(c => c.Pieces)
                                                      .Take(1)
@@ -102,6 +107,7 @@
             else if (selectedOrderCriteria == OrderCriteria.Recent)
             {
                 return this.dessertRepo.AllAsNoTracking()
+                            .Where(c => c.Type == type)
                             .Include(c => c.PriceInfo)
                             .OrderByDescending(c => c.CreatedOn)
                             .ThenBy(c => c.Name);
@@ -110,12 +116,12 @@
             return this.dessertRepo.AllAsNoTracking().OrderBy(c => c.Name);
         }
 
-        public IQueryable<Dessert> GetSearchedCakes(string searchQuery)
+        public IQueryable<Dessert> GetDessertsContainingTheQuery(string searchQuery, DessertType type)
             => this.dessertRepo.AllAsNoTracking()
                             .Where(c => c.Name.ToUpper().Contains(searchQuery))
                             .OrderBy(c => c.Name);
 
-        public async Task UpdateCakeDataAsync(Dessert originalCake, Dessert userIputCakeData)
+        public async Task UpdateDessertDataAsync(Dessert originalCake, Dessert userIputCakeData)
         {
             originalCake.Name = userIputCakeData.Name;
             originalCake.Description = userIputCakeData.Description;

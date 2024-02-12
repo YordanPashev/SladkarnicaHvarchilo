@@ -1,9 +1,6 @@
 ﻿namespace SladkarnicaHvarchilo.Web.Areas.Administration.Controllers
 {
-    using System;
-    using System.Collections.Generic;
     using System.Linq;
-    using System.Security.Cryptography.X509Certificates;
     using System.Threading.Tasks;
 
     using Microsoft.AspNetCore.Http;
@@ -11,6 +8,7 @@
 
     using SladkarnicaHvarchilo.Common;
     using SladkarnicaHvarchilo.Data.Models;
+    using SladkarnicaHvarchilo.Data.Models.Enums;
     using SladkarnicaHvarchilo.Services.Data.Contracts;
     using SladkarnicaHvarchilo.Services.Mapping;
     using SladkarnicaHvarchilo.Web.Helpers;
@@ -40,7 +38,7 @@
                 return this.RedirectToAction(nameof(this.AddNewCake), new { userMessage = GlobalConstants.UserMessage.InvalidInputData });
             }
 
-            if (await this.cakesService.CheckIfCakeAlreadyExists(userIputModel.Name))
+            if (await this.cakesService.CheckIfDessertAlreadyExists(userIputModel.Name, DessertType.Cake))
             {
                 return this.RedirectToAction(nameof(this.AddNewCake), new { userMessage = GlobalConstants.UserMessage.CakeAlreadyExist });
             }
@@ -58,7 +56,7 @@
         [HttpGet]
         public async Task<IActionResult> EditCake(string id, string userMessage = null)
         {
-            Dessert cakeForEdit = await this.cakesService.GetCakeByIdAsync(id);
+            Dessert cakeForEdit = await this.cakesService.GetDessertByIdAsync(id, DessertType.Cake);
 
             if (cakeForEdit == null)
             {
@@ -75,7 +73,7 @@
         public async Task<IActionResult> EditCake(EditCakeViewModel userIputModel)
         {
             userIputModel.PriceInfo = userIputModel.PriceInfo.Where(pi => pi.Price != null && pi.Pieces != null).ToList();
-            Dessert originalCake = await this.cakesService.GetCakeByIdForEditAsync(userIputModel.Id);
+            Dessert originalCake = await this.cakesService.GetDessertByIdForEditAsync(userIputModel.Id, DessertType.Cake);
 
             if (originalCake == null || !this.ModelState.IsValid)
             {
@@ -90,7 +88,7 @@
                 return this.RedirectToAction(nameof(this.EditCake), new { userMessage = GlobalConstants.UserMessage.NoChangesHaveBeenMade });
             }
 
-            await this.cakesService.UpdateCakeDataAsync(originalCake, userIputCakeData);
+            await this.cakesService.UpdateDessertDataAsync(originalCake, userIputCakeData);
 
             return this.RedirectToAction("CakeDetails", "Cakes", new { area = string.Empty, id = originalCake.Id, userMessage = GlobalConstants.UserMessage.SuccessfullyEditedCake });
         }
@@ -98,14 +96,14 @@
         [HttpGet]
         public async Task<IActionResult> DeletedCake(string id)
         {
-            Dessert cake = await this.cakesService.GetCakeByIdForEditAsync(id);
+            Dessert cake = await this.cakesService.GetDessertByIdForEditAsync(id, DessertType.Cake);
 
             if (cake == null)
             {
                 return this.RedirectToAction("AllCakes", "Cakes", new { userMessage = GlobalConstants.UserMessage.CakeDoesNotExist });
             }
 
-            await this.cakesService.DeteleCake(cake);
+            await this.cakesService.DeleteDessert(cake);
 
             return this.RedirectToAction("AllCakes", "Cakes", new { userMessage = GlobalConstants.UserMessage.SuccessfullyDeletedCake + cake.Name });
         }
@@ -120,7 +118,7 @@
                                 .Where(c => c.Price > 0.00m & c.Pieces > 0)
                                 .ToList();
 
-            await this.cakesService.AddNewCake(cake);
+            await this.cakesService.AddNewDessert(cake);
         }
 
         private bool CheckIfCakeHasBeenEdited(Dessert originalCake, Dessert userIputCakeData, bool isCakeImageUpdated)

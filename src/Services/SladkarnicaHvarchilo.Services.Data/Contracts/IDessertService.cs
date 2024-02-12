@@ -4,27 +4,28 @@
     using System.Threading.Tasks;
 
     using SladkarnicaHvarchilo.Data.Models;
+    using SladkarnicaHvarchilo.Data.Models.Enums;
 
     public interface IDessertService
     {
-        Task AddNewCake(Dessert cake);
+        Task AddNewDessert(Dessert cake);
 
-        Task<bool> CheckIfCakeAlreadyExists(string cakeName);
+        Task<bool> CheckIfDessertAlreadyExists(string cakeName, DessertType type);
 
-        Task DeteleCake(Dessert cake);
+        Task DeleteDessert(Dessert cake);
 
-        IQueryable<Dessert> GetAllCakesInSale();
+        IQueryable<Dessert> GetAllDesserInSaleByType(DessertType type);
 
-        Task<Dessert> GetCakeByIdAsync(string id);
+        Task<Dessert> GetDessertByIdAsync(string id, DessertType type);
 
-        Task<Dessert> GetCakeByIdForEditAsync(string id);
+        Task<Dessert> GetDessertByIdForEditAsync(string id, DessertType type);
 
-        IQueryable<Dessert> GetCakesAccoringToFilters(string selectedOrderCriteria, string searchQuery);
+        IQueryable<Dessert> GetDessertsAccoringToFilters(string selectedOrderCriteria, string searchQuery, DessertType type);
 
-        IQueryable<Dessert> GetCakesByOrderCriteria(string selectedOrderCriteria);
+        IQueryable<Dessert> GetDessertByOrderCriteria(string selectedOrderCriteria, DessertType type);
 
-        IQueryable<Dessert> GetSearchedCakes(string searchQuery);
+        IQueryable<Dessert> GetDessertsContainingTheQuery(string searchQuery, DessertType type);
 
-        Task UpdateCakeDataAsync(Dessert originalCake, Dessert userIputCakeData);
+        Task UpdateDessertDataAsync(Dessert originalCake, Dessert userIputCakeData);
     }
 }

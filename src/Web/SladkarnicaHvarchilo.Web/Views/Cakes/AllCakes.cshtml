@@ -47,54 +47,7 @@
                     <p class="searchDessertResultText">Резултат: @this.Model.Cakes.Length @searchedTypeNoun</p>
                 }
             </div>
-            <style>
-                .orderBySection {
-                    z-index: 2 !important
-                }
-
-                .orderByDropDownBtn {
-                    background-color: transparent !important;
-                    border-color: transparent !important;
-                    color: black !important;
-                    font-size: 1.2em !important;
-                    font-weight: bold !important;
-                }
-
-                .orderByDropDownBtn:hover {
-                    background-color: rgba(240, 240, 240, 0.97) !important;
-                }
-
-                .orderByDropDownBtn:focus {
-                    background-color: rgba(220, 220, 220, 0.97) !important;
-                }
-
-                .orderByDropDownLayout {
-                    display: none;
-                    z-index: 2 !important;
-                    width: 14em !important;
-                    background-color: rgba(220, 220, 220, 0.97) !important;
-                    border-color: transparent !important;
-                    animation: fallDownAnimationNoDelay !important;
-                }
-
-                .orderByDropDownBtn:focus .orderByDropDownLayout {
-                     animation: fallDownAnimationNoDelay !important;
-                     display: block !important;
-                }
-
-                .orderByDropDownText {
-                    z-index: 2 !important;
-                    color: black;
-                    border-color: transparent;
-                    outline: none !important;
-                }
-
-                .orderByDropDownText:hover {
-                    background-color: darkgray !important;
-                    color: white !important;
-                }
-            </style>
-            <div class="fallDownAnimationSmallDelay mb-5">
+            <div class="orderBySection fallDownAnimationSmallDelay mb-5">
                 <div class="dropdown">
                     <button class="btn dropdown-toggle orderByDropDownBtn" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
                         Подреди по
@@ -102,7 +55,7 @@
                     <ul class="dropdown-menu orderByDropDownLayout" aria-labelledby="dropdownMenuButton1">
                         @foreach (string orderCriteria in this.Model.OrderCriteria)
                         {
-                            <li>
+                            <li class="zoomAnimationNoDelay">
                                 <button class="btn m-auto orderByDropDownText" onclick="this.form.submit()" name="selectedOrderCriteria" value="@orderCriteria">@orderCriteria</button>
                             </li>
                         }
@@ -111,15 +64,18 @@
                 </div>
             </div>
         </form>
-        <div class="allCakesInfoSection" style="z-index: -1 !important">
+        <div class="allCakesInfoSection" style="gap: 2em !important; justify-content: center !important">
             @foreach (var cake in this.Model.Cakes)
             {
                 <a class="cakeShortInfoSection" asp-action="CakeDetails" asp-controller="Cakes" asp-route-id="@cake.Id">
-                    <img class="card cakeShortInfoPhoto mt-2" style="z-index: -1 !important" src="~/img/Cakes/@cake.ImageFileDirectoryPath" alt="No Image">
-                    <p class="card-title cakeShortInfoNameText zoomAnimationSmallDelay">@cake.Name</p>
+                    <img class="card cakeShortInfoPhoto mt-2" src="~/img/Cakes/@cake.ImageFileDirectoryPath" alt="Няма снимка">
+                    <p class="card-title cakeShortInfoNameText swipeLeftAnimationSmallDelay">@cake.Name</p>
+
                     @foreach (PriceInfoViewModel priceInfo in cake.PriceInfo)
                     {
-                        <p class="cakeShortInfoPriceText mb-2 zoomAnimationMediumDelay"><text class="regularFontText">@priceInfo.FormatedPrice лв.</text> за <text class="regularFontText">@priceInfo.Pieces</text> парчета</p>
+                        <p class="cakeShortInfoPriceText mb-2 swipeRigthAnimationMediumDelay" style="font-size: 1em !important;">
+                            <text class="regularFontText">@priceInfo.Pieces </text><text> парчета </text><text class="regularFontText">@priceInfo.FormatedPrice лв.</text>
+                        </p>
                     }
                 </a>
             }
@@ -132,7 +88,7 @@
 
     @if (this.User.IsInRole(GlobalConstants.AdministratorRoleName))
     {
-        <div class="addDessertBtnMargin text-center">
+        <div class="addDessertBtnMargin text-center slideUpAnimationWithDelay">
             <a class="btn btn-success" asp-area="Administration" asp-controller="Cakemanager" asp-action="AddNewCake">Добави торта</a>
         </div>
     }
