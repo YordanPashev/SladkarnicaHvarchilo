@@ -26,7 +26,7 @@
                 <p class="modelDessertNameText" id="caption">@this.Model.Name</p>
                 <img class="modal-content" id="dessertPhoto">
             </div>
-            <div class="mt-5">
+            <div class="text-start mt-5">
                 <img alt="Няма икона" src="~/img/Common/Price icon.png" class="dessertDetaislIcon"><text class="dessertLabelText"> Цена</text>
             </div>
             @foreach (PriceInfoViewModel priceInfo in this.Model.PriceInfo)
@@ -39,7 +39,7 @@
         <div>
             <div class="dessertTitleText mb-0">@this.ViewData["Title"]</div>
             <div class="dessertDescriptionText">@this.Model.Description</div>
-            <div class="mb-0">
+            <div class="text-start mb-0 ">
                 <img alt="Няма икона" src="~/img/Common/Ingredients icon.png" class="dessertDetaislIcon"><text class="dessertLabelText"> Съставки</text>
             </div>
             <div class="ingredientsText mt-0 mb-4">
@@ -47,14 +47,14 @@
             </div>
             @if (!string.IsNullOrEmpty(this.Model.Allergens))
             {
-                <div class="mb-0">
+                <div class="text-start mb-0">
                     <img alt="No image" src="~/img/Common/Allergens icon.png" class="dessertDetaislIcon"><text class="dessertLabelText"> Алергени</text>
                 </div>
-                <div class="mt-0 mb-4">
+                <div class="text-start mt-0 mb-4">
                     <text class="allergernsText">@this.Model.Allergens</text>
                 </div>
             }
-            <div class="mb-0">
+            <div class="text-start mb-0">
                 <img alt="Няма икона" src="~/img/Common/Food info icon .png" class="dessertDetaislIcon"><text class="dessertLabelText"> Хранителни информация</text>
                 <button id="displayFoodInfoBtn" class="btn btn-info foodInfoBtnMargin" onclick="displayFoodInfo()" title="Информация за хранителните стойности"><i class="fa-solid fa-list"></i></button>
                 <button id="hideFoodInfoBtn" class="btn btn-danger foodInfoBtnMargin" style="display: none;" onclick="hideFoodInfo()" title="Скрий хранителните стойности"><i class="fa-solid fa-xmark"></i></button>
