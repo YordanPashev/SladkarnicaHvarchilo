@@ -14,21 +14,19 @@
         @this.ViewBag.UserMessage
     </h1>
 }
-<h1 class="dessertTitle text-center"><strong>@this.ViewData["Title"]</strong></h1>
 
+<h1 class="allDesertsTitle text-center fw-bold">@this.ViewData["Title"]</h1>
 
 <div class="container contentSection zoomAnimationNoDelay mt-4">
 
     @if (this.Model.Cakes.Length > 0)
     {
-        <style>
-        </style>
         <form method="get" asp-controller="Cakes" asp-action="AllCakes" autocomplete="off">
             <div class="searchDessertSection fallDownAnimationSmallDelay">
                 <div class="searchDessertText">
                     @if (this.Model.SearchQuery == null)
                     {
-                        <input type="text" id="SearchQuery" name="SearchQuery" placeholder="Въведи име на торта" />
+                        <input type="text" id="SearchQuery" name="SearchQuery" placeholder="Търси" />
                     }
                     else
                     {
@@ -44,7 +42,7 @@
                 @if (this.Model.SearchQuery != null)
                 {
                     string searchedTypeNoun = this.Model.Cakes.Length == 1 ? "торта" : "торти";
-                    <p class="searchDessertResultText">Резултат: @this.Model.Cakes.Length @searchedTypeNoun</p>
+                    <p class="searchDessertResultText"> Намерени са @this.Model.Cakes.Length @searchedTypeNoun</p>
                 }
             </div>
             <div class="orderBySection fallDownAnimationSmallDelay mb-5">
@@ -55,7 +53,7 @@
                     <ul class="dropdown-menu orderByDropDownLayout" aria-labelledby="dropdownMenuButton1">
                         @foreach (string orderCriteria in this.Model.OrderCriteria)
                         {
-                            <li class="zoomAnimationNoDelay">
+                            <li class="orderCriteriaZoonAnimation">
                                 <button class="btn m-auto orderByDropDownText" onclick="this.form.submit()" name="selectedOrderCriteria" value="@orderCriteria">@orderCriteria</button>
                             </li>
                         }
@@ -64,7 +62,7 @@
                 </div>
             </div>
         </form>
-        <div class="allCakesInfoSection" style="gap: 2em !important; justify-content: center !important">
+        <div class="allCakesInfoSection">
             @foreach (var cake in this.Model.Cakes)
             {
                 <a class="cakeShortInfoSection" asp-action="CakeDetails" asp-controller="Cakes" asp-route-id="@cake.Id">
@@ -73,7 +71,7 @@
 
                     @foreach (PriceInfoViewModel priceInfo in cake.PriceInfo)
                     {
-                        <p class="cakeShortInfoPriceText mb-2 swipeRigthAnimationMediumDelay" style="font-size: 1em !important;">
+                        <p class="cakeShortInfoPriceText mb-2 swipeRigthAnimationMediumDelay">
                             <text class="regularFontText">@priceInfo.Pieces </text><text> парчета </text><text class="regularFontText">@priceInfo.FormatedPrice лв.</text>
                         </p>
                     }

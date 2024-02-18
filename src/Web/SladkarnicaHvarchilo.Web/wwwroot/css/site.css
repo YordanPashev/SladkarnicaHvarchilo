@@ -13,12 +13,33 @@ for details on configuring this project to bundle and minify static web assets. 
         max-width: 100em !important;
     }
 
+    .allCakesInfoSection {
+        grid-template-columns: repeat(3, 1fr) !important;
+    }
+
     .cakeShortInfoPhoto {
         width: 19em !important;
     }
 }
 
-@media (min-width: 400px) and (max-width: 888px) {
+@media (min-width: 888px) and (max-width: 1200px) {
+    html {
+        position: relative;
+        min-height: 100%;
+        font-size: 10pt;
+    }
+
+    .allCakesInfoSection {
+        grid-template-columns: repeat(3, 1fr) !important;
+    }
+
+    .cakeShortInfoPhoto {
+        width: 16em !important;
+    }
+}
+
+
+@media (min-width: 406px) and (max-width: 888px) {
     html {
         position: relative;
         min-height: 100%;
@@ -29,12 +50,16 @@ for details on configuring this project to bundle and minify static web assets. 
         max-width: 100em !important;
     }
 
+    .allCakesInfoSection {
+        grid-template-columns: repeat(2, 1fr) !important;
+    }
+
     .cakeShortInfoPhoto {
-        width: 15.5em !important;
+        width: 16em !important;
     }
 }
 
-@media (max-width: 400px) {
+@media (min-width: 300px) and (max-width: 406px) {
     html {
         position: relative;
         min-height: 100%;
@@ -45,12 +70,16 @@ for details on configuring this project to bundle and minify static web assets. 
         max-width: 70em !important;
     }
 
+    .allCakesInfoSection {
+        grid-template-columns: repeat(2, 1fr) !important;
+    }
+
     .cakeShortInfoPhoto {
-        width: 15.5em !important;
+        width: 16em !important;
     }
 }
 
-@media (max-width: 300px) {
+@media (min-width: 150px) and (max-width: 300px) {
     html {
         position: relative;
         min-height: 100%;
@@ -73,8 +102,12 @@ for details on configuring this project to bundle and minify static web assets. 
         width: 100% !important;
     }
 
+    .allCakesInfoSection {
+        grid-template-columns: repeat(2, 1fr) !important;
+    }
+
     .cakeShortInfoPhoto {
-        width: 15.5em !important;
+        width: 16em !important;
     }
 }
 
@@ -95,6 +128,10 @@ for details on configuring this project to bundle and minify static web assets. 
 
     .contentSection {
         max-width: 70em !important;
+    }
+
+    .allCakesInfoSection {
+        grid-template-columns: repeat(2, 1fr) !important;
     }
 
     .cakeShortInfoPhoto {
@@ -218,18 +255,19 @@ body {
     justify-content: flex-start;
     align-items: center;
     gap: 0.5em;
+    font-family: Nunito ExtraLight, sans-serif;
 }
 
-.navBarItems > ul {
-    display: flex;
-    flex-direction: row !important;
-    gap: 1em;
-    list-style-type: none;
-    font-size: 1.5em;
-    align-content: center;
-    padding-top: 0.4em;
-    color: White;
-}
+    .navBarItems > ul {
+        display: flex;
+        flex-direction: row !important;
+        gap: 1em;
+        list-style-type: none;
+        font-size: 1.5em;
+        align-content: center;
+        padding-top: 0.4em;
+        color: White;
+    }
 
 .navBarLoginSection {
     display: flex;
@@ -270,28 +308,29 @@ body {
     margin-bottom: 1em;
 }
 
-.inputNavButtonsSection > div > input {
-    width: 10em !important;
-    font-size: 1.2em;
-}
+    .inputNavButtonsSection > div > input {
+        width: 10em !important;
+        font-size: 1.2em;
+    }
 
 .addSectionPriceBtn {
     padding-top: 2.1em;
 }
 
 .foodInfoBtnMargin {
-    margin-bottom: 1.6em !important;
+    margin-bottom: 0.8em !important;
     margin-left: 0.3em !important;
+    border: 0.1em solid black !important;
 }
 
 .addDessertBtnMargin {
     margin: 6em 0;
 }
 
-.addDessertBtnMargin > a {
-    font-size: 1.2em;
-    width: 20%;
-}
+    .addDessertBtnMargin > a {
+        font-size: 1.2em;
+        width: 20%;
+    }
 /* ------------------------------ */
 
 
@@ -324,18 +363,18 @@ body {
     background-color: white;
 }
 
-.searchDessertText > input {
-    padding: 0.3em 1em 0.3em 1em !important;
-    border-color: transparent;
-    border-radius: 2em 0 0 2em;
-}
+    .searchDessertText > input {
+        padding: 0.3em 1em 0.3em 1em !important;
+        border-color: transparent;
+        border-radius: 2em 0 0 2em;
+    }
 
-.searchDessertText > input:focus,
-.searchDessertText > input:active {
-    border-color: transparent;
-    background-color: floralwhite;
-    outline: none;
-}
+        .searchDessertText > input:focus,
+        .searchDessertText > input:active {
+            border-color: transparent;
+            background-color: floralwhite;
+            outline: none;
+        }
 
 .searchDesserBtn {
     padding: 0.3em 0.3em !important;
@@ -344,32 +383,32 @@ body {
     background-color: #4BB543;
 }
 
-.searchDesserBtn:hover {
-    background-color: green;
-}
+    .searchDesserBtn:hover {
+        background-color: green;
+    }
 
-.searchDesserBtn > button:hover {
-    color: greenyellow !important;
-}
+    .searchDesserBtn > button:hover {
+        color: greenyellow !important;
+    }
 
-.searchDesserBtn > button {
-    border-color: transparent; 
-    background-color: transparent; 
-    color: white !important;
-}
+    .searchDesserBtn > button {
+        border-color: transparent;
+        background-color: transparent;
+        color: white !important;
+    }
 
 .contentSection {
     margin: auto;
     margin-top: 6em !important;
+    padding-bottom: 10em;
     font-family: Nunito Regular;
 }
 
 .allCakesInfoSection {
-    display: flex;
     z-index: -2 !important;
-    gap: 1em;
-    justify-content: space-between !important;
-    flex-wrap: wrap !important;
+    margin: 0 auto;
+    display: grid;
+    grid-gap: 1em;
 }
 
 .orderBySection {
@@ -384,13 +423,13 @@ body {
     font-weight: bold !important;
 }
 
-.orderByDropDownBtn:hover {
-    background-color: rgba(240, 240, 240, 0.97) !important;
-}
+    .orderByDropDownBtn:hover {
+        background-color: rgba(240, 240, 240, 0.97) !important;
+    }
 
-.orderByDropDownBtn:focus {
-    background-color: rgba(220, 220, 220, 0.97) !important;
-}
+    .orderByDropDownBtn:focus {
+        background-color: rgba(220, 220, 220, 0.97) !important;
+    }
 
 .orderByDropDownLayout {
     display: none;
@@ -413,10 +452,10 @@ body {
     outline: none !important;
 }
 
-.orderByDropDownText:hover {
-    background-color: darkgray !important;
-    color: white !important;
-}
+    .orderByDropDownText:hover {
+        background-color: darkgray !important;
+        color: white !important;
+    }
 
 .foodInfoSectionPadding {
     padding-left: 3em !important;
@@ -428,15 +467,15 @@ body {
     justify-content: space-evenly;
 }
 
-.nutritionInfo > div > label {
-    padding-top: 0.25em;
-    font-size: 1.2em;
-}
+    .nutritionInfo > div > label {
+        padding-top: 0.25em;
+        font-size: 1.2em;
+    }
 
-.nutritionInfo > div > div,
-.nutritionInfo > div > input {
-    width: 6em;
-}
+    .nutritionInfo > div > div,
+    .nutritionInfo > div > input {
+        width: 6em;
+    }
 
 .inputSection > div > form > div > label {
     font-size: 1.2em !important;
@@ -458,17 +497,18 @@ body {
     padding: 0.5em !important;
 }
 
-.cakeShortInfoSection:hover {
-    float: left !important;
-    text-align: center !important;
-    overflow: hidden !important;
-    transition: 0.7s !important;
-    background-color: rgba(180, 180, 180, 0.2);
-    border-radius: 1em !important;
-}
+    .cakeShortInfoSection:hover {
+        float: left !important;
+        text-align: center !important;
+        overflow: hidden !important;
+        transition: 1s !important;
+        background-color: rgba(180, 180, 180, 0.2);
+        border-radius: 1em !important;
+    }
 
 .cakeShortInfoPhoto {
     z-index: -2 !important;
+    margin: 0 auto !important;
     border: none !important;
     border-radius: 1em !important;
     background-color: transparent !important;
@@ -484,8 +524,8 @@ body {
 }
 
 .cakeShortInfoPriceText {
+    font-size: 1em !important;
     text-align: center;
-    font-size: 1.6em;
     font-weight: bold;
     margin-top: -0.6em;
     padding: 0em 0.3em;
@@ -496,20 +536,18 @@ body {
 
 .dessertDetailsBox {
     text-align: center;
-    padding-left: 6em !important;
     display: flex !important;
     gap: 1em !important;
     background-color: transparent !important;
 }
 
-.dessertDetailsBox > div {
-    flex-grow: 1 !important;
-    flex-basis: 0 !important;
-}
+    .dessertDetailsBox > div {
+        flex-grow: 1 !important;
+        flex-basis: 0 !important;
+    }
 
 .dessertPhotoSize {
-    width: 500px;
-    height: 300px;
+    width: 35em;
     object-fit: cover;
 }
 
@@ -536,11 +574,11 @@ body {
     border-radius: 1em;
 }
 
-.userErrorMessage > h4 {
-    font-weight: bold;
-    font-style: italic;
-    color: red;
-}
+    .userErrorMessage > h4 {
+        font-weight: bold;
+        font-style: italic;
+        color: red;
+    }
 
 /* Text */
 
@@ -575,7 +613,6 @@ body {
     height: 1.5em;
     font-size: 1.6em;
     background-color: transparent;
-    margin-bottom: 1em !important;
 }
 
 .dessertLabelText {
@@ -583,7 +620,7 @@ body {
     font-weight: bold;
 }
 
-.foondInfoLabel {
+.foodInfoLabel {
     display: flex;
     gap: 0.4em;
 }
@@ -592,15 +629,25 @@ body {
     text-align: right !important;
 }
 
-.dessertTitle {
-    padding-top: 2em;
-    font-family: Nunito Regular;
+.foodInfoHeadersBorder {
+    border-bottom: 0.1em solid gray;
+}
+
+.allDesertsTitle {
     font-size: 3em;
+    padding-top: 1em;
+    font-family: Nunito Regular;
+}
+
+.dessertDetailsTitle {
+    padding-top: 0.4em;
+    font-family: Nunito Regular;
+    font-size: 5em;
 }
 
 .searchDessertResultText {
-    font-size: 1.2em; 
-    font-style: italic; 
+    font-size: 1.2em;
+    font-style: italic;
     color: #777777
 }
 /* ------------------------------ */
@@ -616,9 +663,9 @@ body {
     transition: 0.3s;
 }
 
-#myImg:hover {
-    opacity: 0.7;
-}
+    #myImg:hover {
+        opacity: 0.7;
+    }
 
 /* The Modal (background) */
 
@@ -684,12 +731,12 @@ body {
     color: red;
 }
 
-.close:hover,
-.close:focus {
-    color: darkgreen;
-    text-decoration: none;
-    cursor: pointer;
-}
+    .close:hover,
+    .close:focus {
+        color: darkgreen;
+        text-decoration: none;
+        cursor: pointer;
+    }
 
 .modelDessertNameText {
     font-size: 3em !important;
@@ -707,6 +754,11 @@ body {
 .zoomAnimationNoDelay {
     animation-name: zoom;
     animation-duration: 1s;
+}
+
+.orderCriteriaZoonAnimation {
+    animation-name: zoom;
+    animation-duration: 0.6s;
 }
 
 .swipeLeftAnimationNoDelay {
@@ -763,6 +815,18 @@ body {
     animation-duration: 0.75s;
 }
 
+.dessertInfoTitleAnimation {
+    animation: fall-down-animation-dessert-info-title;
+    animation-duration: 0.5s;
+}
+
+.dessertInfoDetailsAnimation {
+    animation-fill-mode: both;
+    animation-delay: 0.5s;
+    animation-name: slide-up-animation-dessert-info-details;
+    animation-duration: 0.75s;
+}
+
 @keyframes swipe-right-animation {
     from {
         opacity: 0;
@@ -799,6 +863,18 @@ body {
     }
 }
 
+@keyframes fall-down-animation-dessert-info-title {
+    from {
+        opacity: 0;
+        transform: translateY(-10em);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
 @keyframes fall-down-animation-dissapear {
     from {
         opacity: 1;
@@ -822,3 +898,17 @@ body {
         transform: translateY(0);
     }
 }
+
+@keyframes slide-up-animation-dessert-info-details {
+    from {
+        opacity: 0;
+        transform: translateY(+50em);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+

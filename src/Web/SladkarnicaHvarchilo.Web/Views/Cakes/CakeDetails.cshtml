@@ -17,7 +17,9 @@
     <br />
 }
 
-<div class="contentSection fallDownAnimationNoDelay">
+<h1 class="dessertDetailsTitle text-center fw-bold dessertInfoTitleAnimation">@this.ViewData["Title"]</h1>
+
+<div class="contentSection dessertInfoDetailsAnimation mt-5" id="contentSection">
     <div class="dessertDetailsBox">
         <div>
             <img class="dessertPhotoSize" id="myImg" alt="@this.Model.Name" src="~/img/Cakes/@this.Model.ImageFileDirectoryPath">
@@ -36,11 +38,10 @@
                 </div>
             }
         </div>
-        <div>
-            <div class="dessertTitleText mb-0">@this.ViewData["Title"]</div>
+        <div style="padding-left: 3em;">
             <div class="dessertDescriptionText">@this.Model.Description</div>
             <div class="text-start mb-0 ">
-                <img alt="Няма икона" src="~/img/Common/Ingredients icon.png" class="dessertDetaislIcon"><text class="dessertLabelText"> Съставки</text>
+                <img alt="Няма икона" src="~/img/Common/Ingredients icon.png" class="dessertDetaislIcon mb-3"><text class="dessertLabelText"> Съставки</text>
             </div>
             <div class="ingredientsText mt-0 mb-4">
                 <text>@this.Model.Ingredients</text>
@@ -48,49 +49,49 @@
             @if (!string.IsNullOrEmpty(this.Model.Allergens))
             {
                 <div class="text-start mb-0">
-                    <img alt="No image" src="~/img/Common/Allergens icon.png" class="dessertDetaislIcon"><text class="dessertLabelText"> Алергени</text>
+                    <img alt="No image" src="~/img/Common/Allergens icon.png" class="dessertDetaislIcon mb-2"><text class="dessertLabelText"> Алергени</text>
                 </div>
                 <div class="text-start mt-0 mb-4">
                     <text class="allergernsText">@this.Model.Allergens</text>
                 </div>
             }
             <div class="text-start mb-0">
-                <img alt="Няма икона" src="~/img/Common/Food info icon .png" class="dessertDetaislIcon"><text class="dessertLabelText"> Хранителни информация</text>
-                <button id="displayFoodInfoBtn" class="btn btn-info foodInfoBtnMargin" onclick="displayFoodInfo()" title="Информация за хранителните стойности"><i class="fa-solid fa-list"></i></button>
-                <button id="hideFoodInfoBtn" class="btn btn-danger foodInfoBtnMargin" style="display: none;" onclick="hideFoodInfo()" title="Скрий хранителните стойности"><i class="fa-solid fa-xmark"></i></button>
+                <img alt="Няма икона" src="~/img/Common/Food info icon .png" class="dessertDetaislIcon mb-2"><text class="dessertLabelText"> Хранителни информация</text>
+                <button id="displayFoodInfoBtn" class="btn btn-light foodInfoBtnMargin" onclick="displayFoodInfo()" title="Информация за хранителните стойности"><i class="fa-solid fa-list"></i></button>
+                <button id="hideFoodInfoBtn" class="btn btn-light foodInfoBtnMargin" style="display: none;" onclick="hideFoodInfo()" title="Скрий хранителните стойности"><i class="fa-solid fa-xmark"></i></button>
             </div>
             <div class="foodInfoSectionPadding">
                 <table id="foodInfoSection" class="foodInfoTable" style="display: none;">
-                    <tr style="border-bottom: 0.1em solid gray;">
-                        <td class="foondInfoLabel fw-bold">Стойности</td>
+                    <tr class="foodInfoHeadersBorder">
+                        <td class="foodInfoLabel fw-bold">Стойности</td>
                         <td class="foondInfoValue fw-bold">за 100 гр.</td>
                     </tr>
                     <tr>
-                        <td class="foondInfoLabel">Енергия</td>
+                        <td class="foodInfoLabel">Енергия</td>
                         <td class="foondInfoValue">@this.Model.NutritionInfo.Energy</td>
                     </tr>
                     <tr>
-                        <td class="foondInfoLabel">Мазнини</td>
+                        <td class="foodInfoLabel">Мазнини</td>
                         <td class="foondInfoValue">@this.Model.NutritionInfo.Fat гр.</td>
                     </tr>
                     <tr>
-                        <td class="foondInfoLabel">- от които наситени</td>
+                        <td class="foodInfoLabel">- от които наситени</td>
                         <td class="foondInfoValue">@this.Model.NutritionInfo.SaturatedFat гр.</td>
                     </tr>
                     <tr>
-                        <td class="foondInfoLabel">Въглехидрати</td>
+                        <td class="foodInfoLabel">Въглехидрати</td>
                         <td class="foondInfoValue">@this.Model.NutritionInfo.Carbs гр.</td>
                     </tr>
                     <tr>
-                        <td class="foondInfoLabel">- от които захари</td>
+                        <td class="foodInfoLabel">- от които захари</td>
                         <td class="foondInfoValue">@this.Model.NutritionInfo.Sugar гр.</td>
                     </tr>
                     <tr>
-                        <td class="foondInfoLabel">Белтъчини</td>
+                        <td class="foodInfoLabel">Белтъчини</td>
                         <td class="foondInfoValue">@this.Model.NutritionInfo.Protein гр.</td>
                     </tr>
                     <tr>
-                        <td class="foondInfoLabel">Сол</td>
+                        <td class="foodInfoLabel">Сол</td>
                         <td class="foondInfoValue">@this.Model.NutritionInfo.Salt гр.</td>
                     </tr>
                 </table>
@@ -127,14 +128,19 @@
 
 <script>
 
+    window.addEventListener("load", (event) => {
+        removeScrolling();
+        restoreScrolling(null, 1500)
+    });
+
     function displayFoodInfo() {
         document.getElementById('displayFoodInfoBtn').style.display = "none";
         document.getElementById('hideFoodInfoBtn').style.display = "inline";
         removeScrolling();
         document.getElementById('foodInfoSection').style.display = "block";
         document.getElementById('foodInfoSection').className = 'swipeLeftAnimationNoDelay';
-
-        restoreScrolling (500, null)
+        var test = document.getElementById('foodInfoSection');
+        restoreScrolling(null, 500)
     };
 
     function hideFoodInfo() {
@@ -148,8 +154,7 @@
 
     function removeScrolling() {
         $('html, body').css({
-            overflow: 'hidden',
-            height: '100%'
+            overflow: 'hidden'
         });
     }
 
@@ -160,7 +165,6 @@
             }
             $('html, body').css({
                 overflow: 'auto',
-                height: 'auto'
             });
         }, delayTime);
     }
@@ -171,6 +175,7 @@
     var img = document.getElementById("myImg");
     var modalImg = document.getElementById("dessertPhoto");
     img.onclick = function () {
+        document.getElementById("contentSection").classList.remove("dessertInfoDetailsAnimation");
         modal.style.display = "block";
         modalImg.src = this.src;
     }
