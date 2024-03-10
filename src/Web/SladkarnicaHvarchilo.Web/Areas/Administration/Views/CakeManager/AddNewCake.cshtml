@@ -62,11 +62,11 @@
                 <div id="addSecondPiecesOptionSection" class="nutritionInfo" style="display: none;">
                     <div>
                         <label for="PriceInfo[1].Pieces" class="control-label">Брой парчета</label>
-                        <input name="PriceInfo[1].Pieces" placeholder="0" class="form-control" type="number" step="1" value="null" min="@GlobalConstants.PastryValidationConstants.PiecesMinValue" max="@GlobalConstants.PastryValidationConstants.PiecesMaxValue" />
+                        <input name="PriceInfo[1].Pieces" placeholder="0" class="form-control" type="number" step="1" value="" min="@GlobalConstants.PastryValidationConstants.PiecesMinValue" max="@GlobalConstants.PastryValidationConstants.PiecesMaxValue" />
                     </div>
                     <div>
                         <label for="PriceInfo[1].Price" class="control-label">Цена (лв.)</label>
-                        <input name="PriceInfo[1].Price" placeholder="0.00" class="form-control" type="number" step=".01" value="null" min="@GlobalConstants.PastryValidationConstants.PriceMinValue" max="@GlobalConstants.PastryValidationConstants.PriceMaxValue" />
+                        <input name="PriceInfo[1].Price" placeholder="0.00" class="form-control" type="number" step=".01" value="" min="@GlobalConstants.PastryValidationConstants.PriceMinValue" max="@GlobalConstants.PastryValidationConstants.PriceMaxValue" />
                     </div>
                     <div class="secondPieceSectionEmptyCol"></div>
                 </div>
@@ -104,7 +104,7 @@
                         <input name="NutritionInfo.SaturatedFats" placeholder="0.00" class="form-control" type="number" step=".01" min="@GlobalConstants.NutritionInfoConstants.MacrosMinValue" max="@GlobalConstants.NutritionInfoConstants.MacrosMaxValue" required />
                     </div>
                     <div>
-                        <label for="NutritionInfo.Sugar" class="control-label" style="text-align:">Захар</label>
+                        <label for="NutritionInfo.Sugar" class="control-label">Захар</label>
                         <input name="NutritionInfo.Sugar" placeholder="0.00" class="form-control" type="number" step=".01" min="@GlobalConstants.NutritionInfoConstants.MacrosMinValue" max="@GlobalConstants.NutritionInfoConstants.MacrosMaxValue" required />
                     </div>
                     <div>
@@ -148,8 +148,8 @@
         document.getElementById('addSecondPiecesOptionSection').style.display = "none";
         document.getElementById('removeSecondPiecesOptionBtn').style.display = "none";
 
-        $('#secondOptionPeices').val(null);
-        $('#secondOptionPrice').val(null);
+        $('#secondOptionPeices').val('');
+        $('#secondOptionPrice').val('');
     }
 
 </script>

@@ -98,32 +98,39 @@
             </div>
         </div>
     </div>
-    <div>
-        @if (this.User.IsInRole(GlobalConstants.AdministratorRoleName))
-        {
-            <p class="d-flex justify-content-center container mt-3">
-                <div class="mb-2" style="font-size: 1.5em;">
-                    <i><strong>Администраторска секция</strong></i>
-                </div>
-                <div class="container text-center" style="width: 40%; backdrop-filter: blur(100px); border: 2px solid; border-color: white; border-radius: 15px">
-                    <i class="fa fa-apple"></i>
-                    <div>
-                        <p style="font-size: 1.5em;"><strong>Тортата е добавена на:</strong> @this.Model.CreatedOn.ToString(GlobalConstants.AdministrationSettingsDateTimeFormat)</p>
-                        @if (this.Model.ModifiedOn != null)
-                        {
-                            <p style="font-size: 1.5em;"><i><strong>Последни промени са направени на:</strong></i> @this.Model.ModifiedOn.Value.ToString(GlobalConstants.AdministrationSettingsDateTimeFormat)</p>
-                        }
-                        <br />
+    @if (this.User.IsInRole(GlobalConstants.AdministratorRoleName))
+    {
+        <div>
+            <div class="container text-center" style="width: 40%; padding-top: 5em;">
+                <div>
+                    <div class="adminSectionText">
+                        <p>
+                            <strong>Добавена на </strong>
+                        </p>
+                        <p>
+                            @this.Model.CreatedOn.ToString(GlobalConstants.AdministrationSettingsDateTimeFormat)
+                        </p>
                     </div>
-                    <p class="d-grid gap-2 mx-auto">
-                        <a class="btn btn-secondary" style="font-size: 1.5em;" asp-area="Administration" asp-controller="CakeManager" asp-action="EditCake" asp-route-id="@this.Model.Id">Редактирай</a>
-                        <a class="btn btn-danger" style="font-size: 1.5em;" onclick="return confirm('Сигурни ли сте, че искате да премахнете торта @this.Model.Name ?');" asp-area="Administration" asp-controller="CakeManager" asp-action="DeleteCake" asp-route-id="@this.Model.Id">Премахни</a>
-                        <input class="btn btn-dark" style="font-size: 1.5em;" value="Назад" onclick="history.back()">
-                    </p>
+                    @if (this.Model.ModifiedOn != null)
+                    {
+                        <div class="adminSectionText">
+                            <p>
+                                <strong>Последни промени на </strong>
+                            </p>
+                            <p>
+                                @this.Model.ModifiedOn.Value.ToString(GlobalConstants.AdministrationSettingsDateTimeFormat)
+                            </p>
+                        </div>
+                    }
+                    <br />
                 </div>
-            </p>
-        }
-    </div>
+                <div class="container d-flex gap-2 mx-auto justify-content-center">
+                    <a class="btn editDessertBtn" asp-area="Administration" asp-controller="CakeManager" asp-action="EditCake" asp-route-id="@this.Model.Id" title="Редактирай"><i class="fa-solid fa-pen-to-square"></i></a>
+                    <a class="btn btn-danger deletedsrtBtn" onclick="return confirm('Сигурни ли сте, че искате да премахнете торта @this.Model.Name ?');" asp-area="Administration" asp-controller="CakeManager" asp-action="DeleteCake" asp-route-id="@this.Model.Id" title="Изтрий"><i class="fa-solid fa-trash"></i></a>
+                </div>
+            </div>
+        </div>
+    }
 </div>
 
 <script>
@@ -134,22 +141,28 @@
     });
 
     function displayFoodInfo() {
-        document.getElementById('displayFoodInfoBtn').style.display = "none";
-        document.getElementById('hideFoodInfoBtn').style.display = "inline";
         removeScrolling();
         document.getElementById('foodInfoSection').style.display = "block";
         document.getElementById('foodInfoSection').className = 'swipeLeftAnimationNoDelay';
         var test = document.getElementById('foodInfoSection');
         restoreScrolling(null, 500)
+
+        setTimeout(function () {
+            document.getElementById('displayFoodInfoBtn').style.display = "none";
+            document.getElementById('hideFoodInfoBtn').style.display = "inline";
+        }, 600);
     };
 
     function hideFoodInfo() {
-        document.getElementById('displayFoodInfoBtn').style.display = "inline";
-        document.getElementById('hideFoodInfoBtn').style.display = "none";
 
         removeScrolling();
         document.getElementById('foodInfoSection').classList.add('fallDownAnimationNoDissapear');
         restoreScrolling('foodInfoSection', 800)
+
+        setTimeout(function () {
+            document.getElementById('displayFoodInfoBtn').style.display = "inline";
+            document.getElementById('hideFoodInfoBtn').style.display = "none";
+        }, 800);
     };
 
     function removeScrolling() {
@@ -160,7 +173,7 @@
 
     function restoreScrolling(elementId, delayTime) {
         setTimeout(function () {
-            if (elementId != null){
+            if (elementId != null) {
                 document.getElementById(elementId).style.display = "none";
             }
             $('html, body').css({

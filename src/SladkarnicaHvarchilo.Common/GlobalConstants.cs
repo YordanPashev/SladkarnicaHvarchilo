@@ -10,7 +10,7 @@
 
         public const string AdministratorRoleName = "Administrator";
 
-        public const string AdministrationSettingsDateTimeFormat = "dd/MM/yyyy, HH:mm:ss";
+        public const string AdministrationSettingsDateTimeFormat = "dd.MM.yyyyг., HH:mm ч.";
 
         public static class NutritionInfoConstants
         {
